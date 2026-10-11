@@ -22,13 +22,17 @@ supabase/.branches/
 supabase/.temp/
 
 # Flutter SDK lokal di dalam repo — JANGAN commit (ratusan MB/GB)
-# NOTE: pola di-anchor agar tidak mengabaikan florea/android/app/src/
-**/florea/src/
-florea/florea/
+# NOTE: pola di-anchor agar tidak mengabaikan serena/android/app/src/
+**/serena/src/
+serena/serena/
+# Skeleton lama pasca-rebrand (florea/ terkunci OS saat migrasi, tinggal SDK
+# lokal + folder kosong) — aman dihapus manual setelah sesi ini ditutup
+florea/
 
 # Dokumen & desain besar — tidak ikut repo kode (sesuai pilihan user)
 *.pdf
 CAPSTONE PROJECT UI_UX FLOREA/
+CAPSTONE PROJECT UI_UX SERENA/
 
 # OS
 Thumbs.db

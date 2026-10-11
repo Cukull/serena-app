@@ -1,4 +1,4 @@
-package com.example.florea
+package com.example.serena
 
 import io.flutter.embedding.android.FlutterActivity
 

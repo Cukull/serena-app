@@ -1,9 +1,9 @@
-# Floréa — Ringkasan Tech Stack (Untuk Persetujuan Kelompok)
+# Serena — Ringkasan Tech Stack (Untuk Persetujuan Kelompok)
 
 > Status: Proposal — mohon persetujuan sebelum coding dimulai
-> Project: Floréa — Balance Your Mind, Study & Life
+> Project: Serena — Balance Your Mind, Study & Life
 > Base: Flutter + Dart (revisi dari React Native)
-> Sumber: FLOREA_TECH_STACK.md + Project Board + Desain UI/UX
+> Sumber: SERENA_TECH_STACK.md + Project Board + Desain UI/UX
 
 ## 1. Konteks Singkat
 Aplikasi mobile untuk mahasiswa agar seimbang antara akademik dan kesehatan mental.

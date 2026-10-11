@@ -1,4 +1,4 @@
-# Floréa — Database Schema (Supabase / PostgreSQL)
+# Serena — Database Schema (Supabase / PostgreSQL)
 
 > Pasangan dari `DATABASE_ERD.md`. Jalankan sebagai migrasi Supabase.
 > Prasyarat: extension `pgcrypto` untuk `gen_random_uuid()`.

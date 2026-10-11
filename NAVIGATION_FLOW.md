@@ -1,4 +1,4 @@
-# Floréa — Navigation Flow (GetX)
+# Serena — Navigation Flow (GetX)
 
 > Terkait: `FEATURE_SPECIFICATION.md`, `AUTH_FLOW.md`
 > Pola: `GetMaterialApp` + `GetPage` (`app_pages.dart`) + `AuthMiddleware` + `MainShell` (IndexedStack).

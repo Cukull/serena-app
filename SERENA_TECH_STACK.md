@@ -1,8 +1,8 @@
-# Floréa — Technical Stack (Flutter)
+# Serena — Technical Stack (Flutter)
 
 > **Status:** Proposal for confirmation before implementation
 >
-> **Project:** Floréa — *Balance Your Mind, Study & Life*
+> **Project:** Serena — *Balance Your Mind, Study & Life*
 >
 > **Academic Context:** Semester 7 — Teknik Informatika
 >
@@ -14,7 +14,7 @@
 
 ## 1. Document Purpose
 
-Dokumen ini mendefinisikan teknologi utama yang digunakan untuk membangun aplikasi mobile **Floréa** dengan **Flutter**.
+Dokumen ini mendefinisikan teknologi utama yang digunakan untuk membangun aplikasi mobile **Serena** dengan **Flutter**.
 
 Dokumen ini dibuat sebagai **baseline teknis untuk dikonfirmasi di OpenCode sebelum coding dimulai**. Setelah dikonfirmasi, perubahan besar terhadap stack sebaiknya dilakukan hanya jika ada kebutuhan teknis yang jelas.
 
@@ -22,7 +22,7 @@ Dokumen ini dibuat sebagai **baseline teknis untuk dikonfirmasi di OpenCode sebe
 
 ## 2. Project Context
 
-Berdasarkan project board dan mockup Floréa, aplikasi ditujukan untuk membantu mahasiswa menjaga keseimbangan antara produktivitas akademik dan kesejahteraan pribadi.
+Berdasarkan project board dan mockup Serena, aplikasi ditujukan untuk membantu mahasiswa menjaga keseimbangan antara produktivitas akademik dan kesejahteraan pribadi.
 
 Fitur utama yang teridentifikasi dari dokumen desain:
 
@@ -164,7 +164,7 @@ warning
 danger
 ```
 
-Nilai di atas hanya contoh sementara dari dokumen desain Floréa (tidak dikunci, akan diganti saat dev); token semantik tambahan adalah level implementasi dan tetap butuh konfirmasi UI.
+Nilai di atas hanya contoh sementara dari dokumen desain Serena (tidak dikunci, akan diganti saat dev); token semantik tambahan adalah level implementasi dan tetap butuh konfirmasi UI.
 
 ---
 
@@ -239,7 +239,7 @@ Aturan: jangan panggil Supabase langsung dari widget. Lewat `repositories/` + `c
 
 ## Recommended backend platform: Supabase
 
-| Supabase capability | Usage in Floréa |
+| Supabase capability | Usage in Serena |
 |---|---|
 | **Supabase Auth** | Login, register, session, password recovery |
 | **PostgreSQL** | Primary application database |
@@ -596,7 +596,7 @@ Atau file `.env` via package `flutter_dotenv` (jangan commit file asli):
 # 19. Recommended Project Structure
 
 ```text
-florea/
+serena/
 │
 ├── lib/
 │   ├── main.dart
@@ -699,7 +699,7 @@ florea/
 
 ## Development model
 
-Floréa akan dikembangkan dengan bantuan **OpenCode / AI coding agent**.
+Serena akan dikembangkan dengan bantuan **OpenCode / AI coding agent**.
 
 Agent tidak boleh membuat keputusan arsitektur besar secara otomatis tanpa mengikuti dokumen proyek yang sudah dikonfirmasi.
 
@@ -787,7 +787,7 @@ go_router / auto_route (gunakan GetX routing agar satu sistem)
 Riverpod / Bloc (gunakan GetX agar konsisten)
 ```
 
-This is intended to keep the semester project maintainable and focused on the documented Floréa feature set.
+This is intended to keep the semester project maintainable and focused on the documented Serena feature set.
 
 ---
 
@@ -933,7 +933,7 @@ These documents should be created before asking the agent to implement the compl
 
 ## Source / Basis
 
-The feature list, product purpose, target users/stakeholders, design typography, and documented color values in this document are based on the Floréa project board and UI/UX mockup supplied with the project. Implementation technologies are now Flutter/Dart decisions for the project and should be treated as **pending confirmation** until approved by the project team.
+The feature list, product purpose, target users/stakeholders, design typography, and documented color values in this document are based on the Serena project board and UI/UX mockup supplied with the project. Implementation technologies are now Flutter/Dart decisions for the project and should be treated as **pending confirmation** until approved by the project team.
 
 ## Changelog
 

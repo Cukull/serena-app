@@ -1,4 +1,4 @@
-# Floréa — Database ERD
+# Serena — Database ERD
 
 > Status: Proposal — validasi sebelum migrasi Supabase
 > DB: PostgreSQL (Supabase) | Auth: Supabase Auth (`auth.users`)

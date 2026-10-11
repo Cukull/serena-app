@@ -6,13 +6,13 @@ import 'package:florea/app/app_pages.dart';
 import 'package:florea/app/app_routes.dart';
 import 'package:florea/app/bindings/app_bindings.dart';
 
-class FloreaApp extends StatelessWidget {
-  const FloreaApp({super.key});
+class SerenaApp extends StatelessWidget {
+  const SerenaApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Florea',
+      title: 'Serena',
       theme: AppTheme.light,
       initialRoute: Routes.login,
       getPages: AppPages.routes,
