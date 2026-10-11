@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'package:florea/app/app.dart';
+import 'package:serena/app/app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import 'package:florea/app/app_routes.dart';
-import 'package:florea/services/supabase_client.dart';
+import 'package:serena/app/app_routes.dart';
+import 'package:serena/services/supabase_client.dart';
 
 /// Session + onboarding state. Didaftarkan permanent di AppBindings.
 /// Diisi dari Supabase session + tabel profiles saat splash/auth berubah.

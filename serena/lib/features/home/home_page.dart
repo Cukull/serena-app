@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:florea/controllers/main_controller.dart';
+import 'package:serena/controllers/main_controller.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:florea/core/theme/app_theme.dart';
-import 'package:florea/app/app_pages.dart';
-import 'package:florea/app/app_routes.dart';
-import 'package:florea/app/bindings/app_bindings.dart';
+import 'package:serena/core/theme/app_theme.dart';
+import 'package:serena/app/app_pages.dart';
+import 'package:serena/app/app_routes.dart';
+import 'package:serena/app/bindings/app_bindings.dart';
 
 class SerenaApp extends StatelessWidget {
   const SerenaApp({super.key});
