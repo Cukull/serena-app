@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Florea - Home')),
+      appBar: AppBar(title: const Text('Serena - Home')),
       body: Wrap(
         spacing: 12,
         children: [

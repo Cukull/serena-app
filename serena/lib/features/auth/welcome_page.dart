@@ -7,234 +7,180 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:serena/app/app_routes.dart';
 import 'package:serena/core/theme/app_colors.dart';
 
-/// Awal screen Florea — Splash / Welcome "Get Started".
-/// Meniru contoh `login.png`: logo, tagline, pill fitur,
-/// ilustrasi streak+mood, tombol Get Started + Sign in.
+/// Welcome Serena — susunan persis contoh:
+/// logo besar → nama SERENA → deskripsi → pills
+/// (Wellness, Focus, Sleep, Progress) → ilustrasi
+/// (Streak, Mood, figur di meja) → Get Started → Sign in.
+/// - Hanya 2 warna brand: Soft Blue + Soft Purple (+ netral).
+/// - 100% ikon Lucide, font Plus Jakarta Sans, tanpa gap kosong.
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
+  // --- Token 2-warna (tint dari 2 hue brand) ---
+  static const _blueBg = Color(0xFFEAF6FC);
+  static const _blueText = Color(0xFF2596C9);
+  static const _purpleBg = Color(0xFFEFEDFF);
+  static const _purpleText = Color(0xFF6B7CF8);
+
   @override
   Widget build(BuildContext context) {
+    final screenW = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: AppColors.gradientBackground,
         ),
         child: Stack(
           children: [
-            // Decorative soft blobs
+            // Blob dekoratif — hanya 2 hue brand.
             Positioned(
-              top: -80,
-              left: -60,
-              child: _blob(220, const Color(0xFFD6E9FF).withOpacity(0.7)),
+              top: -screenW * 0.26,
+              left: -screenW * 0.22,
+              child: _blob(screenW * 0.62, const Color(0xFFD9EFFF)),
             ),
             Positioned(
-              top: 40,
-              right: -70,
-              child: _blob(200, const Color(0xFFE7DEFF).withOpacity(0.8)),
-            ),
-            Positioned(
-              bottom: 120,
-              left: -80,
-              child: _blob(240, const Color(0xFFE8F4FF).withOpacity(0.6)),
+              top: screenW * 0.06,
+              right: -screenW * 0.24,
+              child: _blob(screenW * 0.56, const Color(0xFFE2DCFF)),
             ),
             SafeArea(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // Logo + name
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 56,
-                          height: 56,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFFDCEEFF), Color(0xFFE7DEFF)],
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 2,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.cardShadow.withOpacity(0.35),
-                                blurRadius: 16,
-                                offset: const Offset(0, 6),
-                              ),
-                            ],
-                          ),
-                          child: const Icon(
-                            LucideIcons.flower2,
-                            color: Color(0xFF6A8DFF),
-                            size: 30,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        RichText(
-                          text: TextSpan(
-                            style: GoogleFonts.fraunces(
+              child: CustomScrollView(
+                physics: const ClampingScrollPhysics(),
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(24, 8, 24, 14),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Ruang napas atas: mendorong logo turun agar
+                          // tidak menempel status bar sekaligus mengisi
+                          // void di layar jangkung (bukan di tengah konten).
+                          const Spacer(flex: 2),
+                          // 1) Logo besar di atas
+                          const _SerenaMarkBig()
+                              .animate()
+                              .fadeIn(duration: 400.ms)
+                              .slideY(begin: -0.15),
+                          const SizedBox(height: 10),
+                          // 2) Nama Serena
+                          Text(
+                            'SERENA',
+                            style: GoogleFonts.plusJakartaSans(
                               fontSize: 32,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0.5,
+                              height: 1.0,
                               color: AppColors.ink,
-                              fontWeight: FontWeight.w600,
                             ),
-                            children: const [
-                              TextSpan(text: 'Flor'),
-                              TextSpan(
-                                text: 'e',
-                                style: TextStyle(color: Color(0xFF5AB8FF)),
+                          ).animate().fadeIn(delay: 80.ms),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Balance Your Mind, Study & Life.',
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.mutedGray,
+                            ),
+                          ).animate().fadeIn(delay: 120.ms),
+                          const SizedBox(height: 10),
+                          // 3) Description
+                          Text(
+                            'Your safe space to stay productive\nwhile taking care of your mental well-being.',
+                            textAlign: TextAlign.center,
+                            softWrap: true,
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 13.5,
+                              height: 1.55,
+                              color: AppColors.bodyGray,
+                            ),
+                          ).animate().fadeIn(delay: 160.ms),
+                          const SizedBox(height: 14),
+                          // 4) Pills: satu gaya (bg putih, border struktural,
+// ikon aksen bergantian biru/ungu). Wrap rata tengah.
+                          const Wrap(
+                            alignment: WrapAlignment.center,
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              _Pill(
+                                icon: LucideIcons.sprout,
+                                label: 'Wellness',
+                                accent: _blueText,
                               ),
-                              TextSpan(text: 'a '),
-                              TextSpan(
-                                text: '🌸',
-                                style: TextStyle(fontSize: 24),
+                              _Pill(
+                                icon: LucideIcons.timer,
+                                label: 'Focus',
+                                accent: _purpleText,
+                              ),
+                              _Pill(
+                                icon: LucideIcons.moon,
+                                label: 'Sleep',
+                                accent: _blueText,
+                              ),
+                              _Pill(
+                                icon: LucideIcons.trendingUp,
+                                label: 'Progress',
+                                accent: _purpleText,
                               ),
                             ],
-                          ),
-                        ),
-                      ],
-                    ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.2),
-
-                    const SizedBox(height: 12),
-                    Text(
-                      'Your safe space to stay productive\nwhile taking care of your mental well-being.',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.dmSans(
-                        fontSize: 15,
-                        height: 1.5,
-                        color: AppColors.bodyGray,
-                      ),
-                    ).animate().fadeIn(delay: 100.ms),
-
-                    const SizedBox(height: 16),
-                    // Feature pills
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: const [
-                        _Pill(
-                          emoji: '🧘',
-                          label: 'Wellness',
-                          bg: Color(0xFFE8F4FF),
-                          border: Color(0xFFBEE0FF),
-                          text: Color(0xFF2D9CDB),
-                        ),
-                        _Pill(
-                          emoji: '📚',
-                          label: 'Focus',
-                          bg: Color(0xFFF1ECFF),
-                          border: Color(0xFFD3C6FF),
-                          text: Color(0xFF7C5CFF),
-                        ),
-                        _Pill(
-                          emoji: '💤',
-                          label: 'Sleep',
-                          bg: Color(0xFFE6F9ED),
-                          border: Color(0xFFB8E8C8),
-                          text: Color(0xFF22A55B),
-                        ),
-                        _Pill(
-                          emoji: '📊',
-                          label: 'Progress',
-                          bg: Color(0xFFE8F4FF),
-                          border: Color(0xFFBEE0FF),
-                          text: Color(0xFF2D9CDB),
-                        ),
-                      ],
-                    ).animate().fadeIn(delay: 200.ms),
-
-                    const SizedBox(height: 20),
-                    // Illustration
-                    const _WelcomeIllustration()
-                        .animate()
-                        .fadeIn(delay: 300.ms)
-                        .slideY(begin: 0.15),
-
-                    const SizedBox(height: 24),
-                    // CTA
-                    Container(
-                      width: double.infinity,
-                      height: 56,
-                      decoration: BoxDecoration(
-                        gradient: AppColors.gradientPrimary,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.softPurple.withOpacity(0.4),
-                            blurRadius: 20,
-                            offset: const Offset(0, 10),
+                          ).animate().fadeIn(delay: 220.ms),
+                          const SizedBox(height: 12),
+                          // 5) Ilustrasi menempel tepat di bawah pills
+                          // (jarak 12px, tidak ada void tengah).
+                          const _StudyScene(),
+                          // Sisa ruang layar jangkung ditampung di sini —
+                          // di atas CTA (tempat yang wajar), bukan di
+                          // tengah konten.
+                          const Spacer(flex: 3),
+                          // 6) Get Started
+                          _GetStartedButton(
+                            onPressed: () => Get.toNamed(Routes.register),
+                          ).animate().fadeIn(delay: 380.ms),
+                          // 7) Daftar / masuk (satu Text.rich agar wrap aman
+                          // di layar sempit; hit area >= 44px).
+                          GestureDetector(
+                            onTap: () => Get.toNamed(Routes.login),
+                            behavior: HitTestBehavior.opaque,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 11,
+                              ),
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'Already have an account? ',
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 13,
+                                        color: AppColors.mutedGray,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: 'Sign in',
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w800,
+                                        color: _purpleText,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      child: ElevatedButton(
-                        onPressed: () => Get.toNamed(Routes.register),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          shadowColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Get Started',
-                              style: GoogleFonts.dmSans(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.3),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Icon(
-                                Icons.arrow_forward,
-                                size: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ).animate().fadeIn(delay: 400.ms),
-
-                    const SizedBox(height: 14),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Already have an account? ',
-                          style: GoogleFonts.dmSans(
-                            fontSize: 13,
-                            color: AppColors.mutedGray,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => Get.toNamed(Routes.login),
-                          child: Text(
-                            'Sign in',
-                            style: GoogleFonts.dmSans(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.skyBlue,
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -247,249 +193,671 @@ class WelcomePage extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.65),
+        shape: BoxShape.circle,
+      ),
     );
   }
 }
 
-class _Pill extends StatelessWidget {
-  final String emoji;
-  final String label;
-  final Color bg;
-  final Color border;
-  final Color text;
-
-  const _Pill({
-    required this.emoji,
-    required this.label,
-    required this.bg,
-    required this.border,
-    required this.text,
-  });
+/// Logo besar Serena — versi jumbo dari contoh (kotak gradien + "S").
+/// Outer 32 = inner halo 24 + padding 8 (concentric).
+class _SerenaMarkBig extends StatelessWidget {
+  const _SerenaMarkBig();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: bg,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: border),
+        color: Colors.white.withValues(alpha: 0.55),
+        shape: BoxShape.circle,
       ),
-      child: Text(
-        '$emoji $label',
-        style: GoogleFonts.dmSans(
-          fontSize: 13,
-          fontWeight: FontWeight.w600,
-          color: text,
+      child: Container(
+        width: 104,
+        height: 104,
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFFCDE9FD), Color(0xFFDDD8FF)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(32),
+          border: Border.all(color: Colors.white, width: 2.5),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.softPurple.withValues(alpha: 0.28),
+              blurRadius: 24,
+              offset: const Offset(0, 12),
+            ),
+            BoxShadow(
+              color: AppColors.softBlue.withValues(alpha: 0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        alignment: Alignment.center,
+        child: Container(
+          width: 64,
+          height: 64,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [AppColors.softBlue, AppColors.softPurple],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            shape: BoxShape.circle,
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            'S',
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 36,
+              fontWeight: FontWeight.w800,
+              fontStyle: FontStyle.italic,
+              height: 1.0,
+              color: Colors.white,
+            ),
+          ),
         ),
       ),
     );
   }
 }
 
-class _WelcomeIllustration extends StatelessWidget {
-  const _WelcomeIllustration();
+class _Pill extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color accent;
+
+  const _Pill({
+    required this.icon,
+    required this.label,
+    required this.accent,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250,
-      child: Stack(
-        alignment: Alignment.center,
+    return Container(
+      constraints: const BoxConstraints(minHeight: 36),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        // Stadium + border struktural 1px (bukan untuk elevasi).
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: const Color(0xFFE2E8F5)),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.softPurple.withValues(alpha: 0.08),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          // Desk
-          Positioned(
-            bottom: 28,
-            child: Container(
-              width: 230,
-              height: 10,
-              decoration: BoxDecoration(
-                color: const Color(0xFFCDE6FF),
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 110,
-            child: Container(width: 8, height: 30, color: const Color(0xFFCDE6FF)),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 110,
-            child: Container(width: 8, height: 30, color: const Color(0xFFCDE6FF)),
-          ),
-          // Person
-          Positioned(
-            bottom: 36,
-            child: Column(
-              children: [
-                Container(
-                  width: 64,
-                  height: 64,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFE3C2),
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 3),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
-                        blurRadius: 12,
-                      ),
-                    ],
-                  ),
-                  child: const Center(
-                    child: Text('🧑‍💻', style: TextStyle(fontSize: 32)),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Container(
-                  width: 90,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFB9D9FF),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Icon(
-                    LucideIcons.headphones,
-                    color: Color(0xFF3B82F6),
-                    size: 22,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Laptop + chart
-          Positioned(
-            bottom: 36,
-            left: 60,
-            child: Container(
-              width: 74,
-              height: 50,
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.cardShadow.withOpacity(0.4),
-                    blurRadius: 12,
-                  ),
-                ],
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _bar(14, const Color(0xFF5AB8FF)),
-                  _bar(20, const Color(0xFF8B7CF8)),
-                  _bar(26, const Color(0xFF22C55E)),
-                  _bar(18, const Color(0xFFFFB020)),
-                ],
-              ),
-            ),
-          ),
-          // Coffee
-          Positioned(
-            bottom: 36,
-            right: 62,
-            child: Container(
-              width: 52,
-              height: 42,
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFE8D1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.white, width: 2),
-              ),
-              child: const Center(
-                child: Text('☕', style: TextStyle(fontSize: 22)),
-              ),
-            ),
-          ),
-          // Streak card
-          Positioned(
-            top: 8,
-            left: 0,
-            child: _floatCard(
-              title: '✅ Streak',
-              big: '14 🔥',
-              sub: 'days consistent',
-              bigColor: const Color(0xFF22C55E),
-            ),
-          ),
-          // Mood card
-          Positioned(
-            top: 8,
-            right: 0,
-            child: _floatCard(
-              title: '☀️ Mood',
-              big: '8.4',
-              sub: '● Feeling good',
-              bigColor: const Color(0xFF2D9CDB),
+          Icon(icon, size: 15, color: accent),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: AppColors.ink,
             ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _bar(double h, Color c) {
-    return Container(
-      width: 8,
-      height: h,
-      decoration:
-          BoxDecoration(color: c, borderRadius: BorderRadius.circular(4)),
+/// CTA — press scale selalu 0.96, hit area 56px.
+class _GetStartedButton extends StatefulWidget {
+  final VoidCallback onPressed;
+  const _GetStartedButton({required this.onPressed});
+
+  @override
+  State<_GetStartedButton> createState() => _GetStartedButtonState();
+}
+
+class _GetStartedButtonState extends State<_GetStartedButton> {
+  double _scale = 1.0;
+
+  void _set(bool pressed) => setState(() => _scale = pressed ? 0.96 : 1.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) => _set(true),
+      onTapUp: (_) => _set(false),
+      onTapCancel: () => _set(false),
+      child: AnimatedScale(
+        scale: _scale,
+        duration: const Duration(milliseconds: 120),
+        curve: Curves.easeOut,
+        child: Container(
+          width: double.infinity,
+          height: 56,
+          decoration: BoxDecoration(
+            gradient: AppColors.gradientPrimary,
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.softPurple.withValues(alpha: 0.38),
+                blurRadius: 22,
+                offset: const Offset(0, 12),
+              ),
+              BoxShadow(
+                color: AppColors.softBlue.withValues(alpha: 0.22),
+                blurRadius: 8,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: widget.onPressed,
+              borderRadius: BorderRadius.circular(18),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Get Started',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.28),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Icon(
+                      LucideIcons.arrowRight,
+                      size: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
+}
 
-  Widget _floatCard({
-    required String title,
-    required String big,
-    required String sub,
-    required Color bigColor,
-  }) {
+// ---------------------------------------------------------------------------
+// Preview dashboard aplikasi: Streak + Mood sejajar, lalu satu kartu
+// "Today's Tasks" (header + 3 tile stat + week bars + progress).
+// Satu bahasa visual (kartu data), tanpa figur rakitan.
+// ---------------------------------------------------------------------------
+
+class _StudyScene extends StatelessWidget {
+  const _StudyScene();
+
+  @override
+  Widget build(BuildContext context) {
+    final screenW = MediaQuery.of(context).size.width;
+    final w = (screenW - 48).clamp(300.0, 360.0);
+
+    return SizedBox(
+      width: w,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Streak + Mood: IntrinsicHeight + stretch agar tingginya
+          // selalu sama. (stretch langsung di dalam Column tak
+          // terbatas melempar "forces an infinite height".)
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: const [
+                Expanded(child: _StreakCard()),
+                SizedBox(width: 12),
+                Expanded(child: _MoodCard()),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          const _DashPreview(),
+        ],
+      ),
+    );
+  }
+}
+
+/// Miniatur dashboard Serena: header tugas + chip timer,
+/// 3 tile stat, week bars, progress. Hanya 2 hue + netral.
+class _DashPreview extends StatelessWidget {
+  const _DashPreview();
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      width: 118,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.cardShadow.withOpacity(0.5),
-            blurRadius: 16,
-            offset: const Offset(0, 8),
+            color: AppColors.softPurple.withValues(alpha: 0.12),
+            blurRadius: 20,
+            offset: const Offset(0, 12),
+          ),
+          BoxShadow(
+            color: AppColors.softBlue.withValues(alpha: 0.08),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: GoogleFonts.dmSans(
-              fontSize: 11,
-              color: AppColors.mutedGray,
-              fontWeight: FontWeight.w600,
+          Row(
+            children: [
+              const _TintIcon(
+                icon: LucideIcons.clipboardCheck,
+                bg: WelcomePage._blueBg,
+                fg: WelcomePage._blueText,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Today's Tasks",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.ink,
+                      ),
+                    ),
+                    Text(
+                      '3 of 5 done',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 11,
+                        color: AppColors.mutedGray,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: WelcomePage._purpleBg,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      LucideIcons.timer,
+                      size: 13,
+                      color: WelcomePage._purpleText,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '25:00',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        color: WelcomePage._purpleText,
+                        fontFeatures: const [
+                          FontFeature.tabularFigures(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const Row(
+            children: [
+              Expanded(
+                child: _StatTile(
+                  icon: LucideIcons.clipboardList,
+                  value: '12/15',
+                  label: 'Tasks',
+                  bg: WelcomePage._blueBg,
+                  fg: WelcomePage._blueText,
+                ),
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: _StatTile(
+                  icon: LucideIcons.timer,
+                  value: '2h 30m',
+                  label: 'Focus',
+                  bg: WelcomePage._purpleBg,
+                  fg: WelcomePage._purpleText,
+                ),
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: _StatTile(
+                  icon: LucideIcons.heart,
+                  value: '4.2/5',
+                  label: 'Mood',
+                  bg: WelcomePage._blueBg,
+                  fg: WelcomePage._blueText,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const SizedBox(
+            height: 34,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _Bar(12, AppColors.softBlue),
+                _Bar(20, AppColors.softPurple),
+                _Bar(28, AppColors.softBlue),
+                _Bar(17, AppColors.softPurple),
+                _Bar(24, AppColors.softBlue),
+                _Bar(14, AppColors.softPurple),
+                _Bar(22, AppColors.softBlue),
+              ],
             ),
           ),
+          const SizedBox(height: 8),
+          Container(
+            height: 7,
+            decoration: BoxDecoration(
+              color: WelcomePage._blueBg,
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: FractionallySizedBox(
+              alignment: Alignment.centerLeft,
+              widthFactor: 0.65,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: AppColors.gradientPrimary,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Tile stat kecil di dalam preview: tint 2 hue, teks ink.
+class _StatTile extends StatelessWidget {
+  final IconData icon;
+  final String value;
+  final String label;
+  final Color bg;
+  final Color fg;
+
+  const _StatTile({
+    required this.icon,
+    required this.value,
+    required this.label,
+    required this.bg,
+    required this.fg,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: bg,
+        // Konsentris: 20 (kartu) = 12 + 8 padding.
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: fg),
+          const SizedBox(height: 4),
           Text(
-            big,
-            style: GoogleFonts.dmSans(
-              fontSize: 20,
+            value,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 12.5,
               fontWeight: FontWeight.w800,
-              color: bigColor,
+              color: AppColors.ink,
+              fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
           Text(
-            sub,
-            style: GoogleFonts.dmSans(
+            label,
+            style: GoogleFonts.plusJakartaSans(
               fontSize: 10,
               color: AppColors.mutedGray,
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _Card extends StatelessWidget {
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  const _Card({
+    required this.child,
+    this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: padding,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        // Skala radius terkunci: kartu 20, isi dalam 12.
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.softPurple.withValues(alpha: 0.1),
+            blurRadius: 18,
+            offset: const Offset(0, 10),
+          ),
+          BoxShadow(
+            color: AppColors.softBlue.withValues(alpha: 0.08),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: child,
+    );
+  }
+}
+
+class _CardLabel extends StatelessWidget {
+  final String text;
+  const _CardLabel(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: GoogleFonts.plusJakartaSans(
+        fontSize: 11,
+        color: AppColors.mutedGray,
+        fontWeight: FontWeight.w700,
+      ),
+    );
+  }
+}
+
+class _TintIcon extends StatelessWidget {
+  final IconData icon;
+  final Color bg;
+  final Color fg;
+  const _TintIcon({required this.icon, required this.bg, required this.fg});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 32,
+      height: 32,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: bg,
+        // Konsentris: 20 (kartu) = 12 + 8 padding.
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Icon(icon, size: 16, color: fg),
+    );
+  }
+}
+
+class _StreakCard extends StatelessWidget {
+  const _StreakCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return _Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _TintIcon(
+                icon: LucideIcons.flame,
+                bg: WelcomePage._purpleBg,
+                fg: WelcomePage._purpleText,
+              ),
+              SizedBox(width: 6),
+              _CardLabel('Streak'),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            '14 days',
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 22,
+              fontWeight: FontWeight.w800,
+              color: AppColors.ink,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+          Text(
+            'consistent',
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 11,
+              color: AppColors.mutedGray,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MoodCard extends StatelessWidget {
+  const _MoodCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return _Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _TintIcon(
+                icon: LucideIcons.sun,
+                bg: WelcomePage._blueBg,
+                fg: WelcomePage._blueText,
+              ),
+              SizedBox(width: 6),
+              _CardLabel('Mood'),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            '8.4',
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 22,
+              fontWeight: FontWeight.w800,
+              color: AppColors.ink,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 7,
+                height: 7,
+                decoration: const BoxDecoration(
+                  color: AppColors.softBlue,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 5),
+              Flexible(
+                child: Text(
+                  'Feeling good',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 11,
+                    color: AppColors.mutedGray,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Bar extends StatelessWidget {
+  final double h;
+  final Color c;
+  const _Bar(this.h, this.c);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 9,
+      height: h,
+      decoration: BoxDecoration(
+        color: c.withValues(alpha: 0.9),
+        borderRadius: BorderRadius.circular(4),
       ),
     );
   }

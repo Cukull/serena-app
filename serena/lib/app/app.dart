@@ -6,13 +6,13 @@ import 'package:serena/app/app_pages.dart';
 import 'package:serena/app/app_routes.dart';
 import 'package:serena/app/bindings/app_bindings.dart';
 
-class FloreaApp extends StatelessWidget {
-  const FloreaApp({super.key});
+class SerenaApp extends StatelessWidget {
+  const SerenaApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Florea',
+      title: 'Serena',
       theme: AppTheme.light,
       initialRoute: Routes.welcome,
       getPages: AppPages.routes,
