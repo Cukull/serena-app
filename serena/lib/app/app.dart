@@ -14,7 +14,7 @@ class SerenaApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Serena',
       theme: AppTheme.light,
-      initialRoute: Routes.login,
+      initialRoute: AppRoutes.landing,
       getPages: AppPages.routes,
       initialBinding: AppBindings(),
       debugShowCheckedModeBanner: false,

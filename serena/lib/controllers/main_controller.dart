@@ -13,8 +13,8 @@ class MainController extends GetxController {
 
   /// Pindah tab dari mana saja (termasuk dari halaman detail).
   void goTab(int i) {
-    if (Get.currentRoute != Routes.main) {
-      Get.offAllNamed(Routes.main);
+    if (Get.currentRoute != AppRoutes.main) {
+      Get.offAllNamed(AppRoutes.main);
     }
     switchTab(i);
   }

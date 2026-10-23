@@ -8,7 +8,8 @@ import 'package:serena/controllers/main_controller.dart';
 class AppBindings extends Bindings {
   @override
   void dependencies() {
-    Get.put<AuthController>(AuthController(), permanent: true);
-    Get.lazyPut<MainController>(MainController.new);
+    Get
+      ..put<AuthController>(AuthController(), permanent: true)
+      ..lazyPut<MainController>(MainController.new);
   }
 }
