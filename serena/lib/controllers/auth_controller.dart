@@ -18,6 +18,6 @@ class AuthController extends GetxController {
   Future<void> logout() async {
     await Supa.client.auth.signOut();
     markSession(loggedIn: false, onboarded: false);
-    Get.offAllNamed(Routes.login);
+    Get.offAllNamed(AppRoutes.login);
   }
 }

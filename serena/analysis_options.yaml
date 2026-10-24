@@ -1,4 +1,6 @@
 analyzer:
+  errors:
+    public_member_api_docs: ignore
   exclude:
     - build/**
     - android/**
