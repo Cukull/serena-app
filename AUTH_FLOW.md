@@ -1,4 +1,4 @@
-# Serena — Auth Flow (Supabase + Flutter)
+# Floréa — Auth Flow (Supabase + Flutter)
 
 > Stack: `supabase_flutter` + `GetX` (`GetMaterialApp` + `AuthMiddleware` + `AuthController`)
 > Terkait: `FEATURE_SPECIFICATION.md` (F1/F2), `DATABASE_SCHEMA.md` (profiles, user_goals)

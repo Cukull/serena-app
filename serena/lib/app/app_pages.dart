@@ -1,5 +1,3 @@
-// ignore_for_file: strict_raw_type, public_member_api_docs
-
 import 'package:get/get.dart';
 import 'package:serena/app/app_routes.dart';
 import 'package:serena/app/main_shell.dart';
@@ -31,91 +29,94 @@ import 'package:serena/features/wellness/sleep_page.dart';
 abstract class AppPages {
   static final routes = <GetPage>[
     GetPage(
-        name: AppRoutes.landing,
-        page: () => const LandingPage(),
-        binding: LandingBinding()),
+      name: Routes.landing,
+      page: () => const LandingPage(),
+      binding: LandingBinding(),
+      middlewares: [AuthMiddleware()],
+    ),
     GetPage(
-        name: AppRoutes.login,
-        page: () => const LoginPage(),
-        binding: LoginBinding()),
-    GetPage(name: AppRoutes.register, page: () => const RegisterPage()),
+      name: Routes.login,
+      page: () => const LoginPage(),
+      binding: LoginBinding(),
+    ),
+    GetPage(name: Routes.register, page: () => const RegisterPage()),
     GetPage(
-      name: AppRoutes.forgotPassword,
+      name: Routes.forgotPassword,
       page: () => const ForgotPasswordPage(),
     ),
-    GetPage(name: AppRoutes.verify, page: () => const VerifyPage()),
+    GetPage(name: Routes.verify, page: () => const VerifyPage()),
     GetPage(
-      name: AppRoutes.onboarding,
+      name: Routes.onboarding,
       page: () => const OnboardingPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.main,
+      name: Routes.main,
       page: () => const MainShell(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.plannerCreate,
+      name: Routes.plannerCreate,
       page: () => const CreateTaskPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.plannerDetail,
+      name: Routes.plannerDetail,
       page: () => const TaskDetailPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.plannerEdit,
+      name: Routes.plannerEdit,
       page: () => const EditTaskPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.pomodoro,
+      name: Routes.pomodoro,
       page: () => const PomodoroPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.deepFocus,
+      name: Routes.deepFocus,
       page: () => const DeepFocusPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.examMode,
+      name: Routes.examMode,
       page: () => const ExamModePage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.focusHistory,
+      name: Routes.focusHistory,
       page: () => const FocusHistoryPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.mood,
+      name: Routes.mood,
       page: () => const MoodPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.habits,
+      name: Routes.habits,
       page: () => const HabitsPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.sleep,
+      name: Routes.sleep,
       page: () => const SleepPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.editProfile,
+      name: Routes.editProfile,
       page: () => const EditProfilePage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.settings,
+      name: Routes.settings,
       page: () => const SettingsPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: AppRoutes.achievements,
+      name: Routes.achievements,
       page: () => const AchievementsPage(),
       middlewares: [AuthMiddleware()],
     ),

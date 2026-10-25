@@ -5,5 +5,5 @@ class Supa {
 }
 
 Future<void> initSupabase({required String url, required String anonKey}) {
-  return Supabase.initialize(url: url, anonKey: anonKey);
+  return Supabase.initialize(url: url, publishableKey: anonKey);
 }

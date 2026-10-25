@@ -1,29 +1,59 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:serena/app/app.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:serena/core/validators/validators.dart';
+import 'package:serena/models/task.dart';
+
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const SerenaApp());
+  group('AppValidators', () {
+    test('email valid diterima', () {
+      expect(AppValidators.email('a@b.co'), isNull);
+    });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    test('email tanpa @ ditolak', () {
+      expect(AppValidators.email('a-b.co'), isNotNull);
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    test('email kosong ditolak', () {
+      expect(AppValidators.email(''), isNotNull);
+    });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    test('password < 8 karakter ditolak', () {
+      expect(AppValidators.password('1234567'), isNotNull);
+    });
+
+    test('password >= 8 karakter diterima', () {
+      expect(AppValidators.password('12345678'), isNull);
+    });
+  });
+
+  group('Task serialization', () {
+    test('fromJson membaca enum priority/status', () {
+      final task = Task.fromJson({
+        'id': '1',
+        'user_id': 'u1',
+        'title': 'Kerjakan laporan',
+        'priority': 'urgent',
+        'status': 'in_progress',
+        'progress': 40,
+      });
+
+      expect(task.priority, TaskPriority.urgent);
+      expect(task.status, TaskStatus.inProgress);
+      expect(task.progress, 40);
+    });
+
+    test('toJson menulis nilai enum ke string db', () {
+      const task = Task(
+        id: '1',
+        userId: 'u1',
+        title: 'Belajar',
+        priority: TaskPriority.high,
+        status: TaskStatus.completed,
+        progress: 100,
+      );
+
+      expect(task.toJson()['priority'], 'high');
+      expect(task.toJson()['status'], 'completed');
+    });
   });
 }

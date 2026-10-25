@@ -85,7 +85,15 @@ class LoginPage extends GetView<LoginController> {
                         isLoading: controller.isLoading.value,
                         onPressed: controller.submit,
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 6),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: controller.goToForgotPassword,
+                          child: const Text('Forgot password?'),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
                       const AppDividerLabel(),
                       const SizedBox(height: 18),
                       AppGoogleButton(
