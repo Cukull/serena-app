@@ -1,4 +1,4 @@
-# Serena — Feature Specification (POV User)
+# Floréa — Feature Specification (POV User)
 
 > Sumber: breakdown board POV User (8 kolom, owner UI: Kanaya Tabitha Putri)
 > Stack: Flutter + Dart + GetX + Supabase
