@@ -42,6 +42,17 @@ FocusStatus focusStatusFromDb(String? value) => switch (value) {
 
 /// Sesi fokus (tabel `focus_sessions`).
 class FocusSession {
+  const FocusSession({
+    required this.id,
+    required this.userId,
+    required this.mode,
+    required this.plannedMinutes,
+    required this.startedAt,
+    this.actualMinutes,
+    this.endedAt,
+    this.status = FocusStatus.active,
+    this.note,
+  });
   factory FocusSession.fromJson(Map<String, dynamic> json) => FocusSession(
         id: json['id'] as String,
         userId: json['user_id'] as String,
@@ -55,17 +66,6 @@ class FocusSession {
         status: focusStatusFromDb(json['status'] as String?),
         note: json['note'] as String?,
       );
-  const FocusSession({
-    required this.id,
-    required this.userId,
-    required this.mode,
-    required this.plannedMinutes,
-    required this.startedAt,
-    this.actualMinutes,
-    this.endedAt,
-    this.status = FocusStatus.active,
-    this.note,
-  });
 
   final String id;
   final String userId;

@@ -55,7 +55,6 @@ class WelcomePage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(24, 8, 24, 14),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           // Ruang napas atas: mendorong logo turun agar
                           // tidak menempel status bar sekaligus mengisi
@@ -664,8 +663,7 @@ class _StatTile extends StatelessWidget {
 class _Card extends StatelessWidget {
   const _Card({
     required this.child,
-    this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-  });
+  }) : padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 10);
   final Widget child;
   final EdgeInsetsGeometry padding;
 

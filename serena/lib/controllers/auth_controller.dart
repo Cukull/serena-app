@@ -127,7 +127,9 @@ class AuthController extends GetxController {
       await authRepo.resetPassword(email);
       Get.back();
       Get.snackbar(
-          'Terkirim', 'Link reset password sudah dikirim ke email Anda.');
+        'Terkirim',
+        'Link reset password sudah dikirim ke email Anda.',
+      );
     } on AuthError catch (e) {
       errorMessage.value = e.message;
     } on Object {
@@ -151,7 +153,9 @@ class AuthController extends GetxController {
       Get.offAllNamed(onboardingDone.value ? Routes.main : Routes.onboarding);
     } on Object {
       Get.snackbar(
-          'Belum terverifikasi', 'Klik link verifikasi di email dulu.');
+        'Belum terverifikasi',
+        'Klik link verifikasi di email dulu.',
+      );
     } finally {
       isLoading.value = false;
     }

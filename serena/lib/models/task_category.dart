@@ -1,12 +1,5 @@
 /// Kategori task (tabel `task_categories`).
 class TaskCategory {
-  factory TaskCategory.fromJson(Map<String, dynamic> json) => TaskCategory(
-        id: json['id'] as String,
-        userId: json['user_id'] as String,
-        name: json['name'] as String,
-        color: json['color'] as String?,
-        icon: json['icon'] as String?,
-      );
   const TaskCategory({
     required this.id,
     required this.userId,
@@ -14,6 +7,13 @@ class TaskCategory {
     this.color,
     this.icon,
   });
+  factory TaskCategory.fromJson(Map<String, dynamic> json) => TaskCategory(
+        id: json['id'] as String,
+        userId: json['user_id'] as String,
+        name: json['name'] as String,
+        color: json['color'] as String?,
+        icon: json['icon'] as String?,
+      );
 
   final String id;
   final String userId;

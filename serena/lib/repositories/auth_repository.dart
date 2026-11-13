@@ -13,16 +13,19 @@ class AuthError implements Exception {
 
 String _friendly(String? raw) {
   final m = raw?.toLowerCase() ?? '';
-  if (m.contains('invalid login credentials'))
+  if (m.contains('invalid login credentials')) {
     return 'Email atau password salah.';
-  if (m.contains('email not confirmed'))
+  }
+  if (m.contains('email not confirmed')) {
     return 'Email belum diverifikasi. Cek inbox Anda.';
+  }
   if (m.contains('already registered') ||
       m.contains('already been registered')) {
     return 'Email sudah terdaftar.';
   }
-  if (m.contains('password should be at least'))
+  if (m.contains('password should be at least')) {
     return 'Password minimal 8 karakter.';
+  }
   return raw ?? 'Terjadi kesalahan. Coba lagi.';
 }
 

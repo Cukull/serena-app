@@ -52,6 +52,19 @@ TaskStatus taskStatusFromDb(String? value) => switch (value) {
 
 /// Task (tabel `tasks`).
 class Task {
+  const Task({
+    required this.id,
+    required this.userId,
+    required this.title,
+    this.categoryId,
+    this.description,
+    this.deadline,
+    this.priority = TaskPriority.medium,
+    this.status = TaskStatus.pending,
+    this.progress = 0,
+    this.reminderAt,
+    this.completedAt,
+  });
   factory Task.fromJson(Map<String, dynamic> json) => Task(
         id: json['id'] as String,
         userId: json['user_id'] as String,
@@ -71,19 +84,6 @@ class Task {
             ? null
             : DateTime.parse(json['completed_at'] as String),
       );
-  const Task({
-    required this.id,
-    required this.userId,
-    required this.title,
-    this.categoryId,
-    this.description,
-    this.deadline,
-    this.priority = TaskPriority.medium,
-    this.status = TaskStatus.pending,
-    this.progress = 0,
-    this.reminderAt,
-    this.completedAt,
-  });
 
   final String id;
   final String userId;

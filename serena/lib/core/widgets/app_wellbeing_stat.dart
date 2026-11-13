@@ -433,8 +433,11 @@ class StreakMoodDeskCard extends StatelessWidget {
 }
 
 class _IconBox extends StatelessWidget {
-  const _IconBox(
-      {required this.emoji, required this.size, required this.color});
+  const _IconBox({
+    required this.emoji,
+    required this.size,
+    required this.color,
+  });
   final String emoji;
   final double size;
   final Color color;

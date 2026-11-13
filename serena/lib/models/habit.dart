@@ -23,17 +23,6 @@ HabitFrequency habitFrequencyFromDb(String? value) => switch (value) {
 
 /// Habit (tabel `habits`).
 class Habit {
-  factory Habit.fromJson(Map<String, dynamic> json) => Habit(
-        id: json['id'] as String,
-        userId: json['user_id'] as String,
-        title: json['title'] as String,
-        description: json['description'] as String?,
-        frequency: habitFrequencyFromDb(json['frequency'] as String?),
-        targetPerWeek: json['target_per_week'] as int?,
-        color: json['color'] as String?,
-        icon: json['icon'] as String?,
-        isActive: json['is_active'] as bool? ?? true,
-      );
   const Habit({
     required this.id,
     required this.userId,
@@ -45,6 +34,17 @@ class Habit {
     this.icon,
     this.isActive = true,
   });
+  factory Habit.fromJson(Map<String, dynamic> json) => Habit(
+        id: json['id'] as String,
+        userId: json['user_id'] as String,
+        title: json['title'] as String,
+        description: json['description'] as String?,
+        frequency: habitFrequencyFromDb(json['frequency'] as String?),
+        targetPerWeek: json['target_per_week'] as int?,
+        color: json['color'] as String?,
+        icon: json['icon'] as String?,
+        isActive: json['is_active'] as bool? ?? true,
+      );
 
   final String id;
   final String userId;
@@ -71,14 +71,6 @@ class Habit {
 
 /// Log harian habit (tabel `habit_logs`).
 class HabitLog {
-  factory HabitLog.fromJson(Map<String, dynamic> json) => HabitLog(
-        id: json['id'] as String,
-        habitId: json['habit_id'] as String,
-        userId: json['user_id'] as String,
-        loggedDate: DateTime.parse(json['logged_date'] as String),
-        isCompleted: json['is_completed'] as bool? ?? true,
-        note: json['note'] as String?,
-      );
   const HabitLog({
     required this.id,
     required this.habitId,
@@ -87,6 +79,14 @@ class HabitLog {
     this.isCompleted = true,
     this.note,
   });
+  factory HabitLog.fromJson(Map<String, dynamic> json) => HabitLog(
+        id: json['id'] as String,
+        habitId: json['habit_id'] as String,
+        userId: json['user_id'] as String,
+        loggedDate: DateTime.parse(json['logged_date'] as String),
+        isCompleted: json['is_completed'] as bool? ?? true,
+        note: json['note'] as String?,
+      );
 
   final String id;
   final String habitId;

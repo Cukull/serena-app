@@ -1,5 +1,14 @@
 /// Log tidur (tabel `sleep_logs`).
 class SleepLog {
+  const SleepLog({
+    required this.id,
+    required this.userId,
+    required this.sleepDate,
+    this.bedtime,
+    this.wakeTime,
+    this.quality,
+    this.note,
+  });
   factory SleepLog.fromJson(Map<String, dynamic> json) => SleepLog(
         id: json['id'] as String,
         userId: json['user_id'] as String,
@@ -13,15 +22,6 @@ class SleepLog {
         quality: json['quality'] as int?,
         note: json['note'] as String?,
       );
-  const SleepLog({
-    required this.id,
-    required this.userId,
-    required this.sleepDate,
-    this.bedtime,
-    this.wakeTime,
-    this.quality,
-    this.note,
-  });
 
   final String id;
   final String userId;

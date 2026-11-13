@@ -1,5 +1,13 @@
 /// Goal/interest pengguna (tabel `user_goals`), diisi saat onboarding.
 class UserGoal {
+  const UserGoal({
+    required this.id,
+    required this.userId,
+    required this.title,
+    this.description,
+    this.targetDate,
+    this.isCompleted = false,
+  });
   factory UserGoal.fromJson(Map<String, dynamic> json) => UserGoal(
         id: json['id'] as String,
         userId: json['user_id'] as String,
@@ -10,14 +18,6 @@ class UserGoal {
             : DateTime.parse(json['target_date'] as String),
         isCompleted: json['is_completed'] as bool? ?? false,
       );
-  const UserGoal({
-    required this.id,
-    required this.userId,
-    required this.title,
-    this.description,
-    this.targetDate,
-    this.isCompleted = false,
-  });
 
   final String id;
   final String userId;
