@@ -1,0 +1,79 @@
+/* ==========================================================================
+   FLOATING BOTTOM NAVIGATION COMPONENT
+   ========================================================================== */
+
+.bottom-nav-dock-container {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.bottom-nav-dock {
+  pointer-events: auto;
+  width: 330px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid #ffffff;
+  border-radius: var(--radius-dock);
+  box-shadow: var(--shadow-nav);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-tab-item {
+  flex: 1;
+  height: 62px;
+  border-radius: var(--radius-3xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: var(--color-nav-inactive);
+  transition: all var(--transition-normal);
+  user-select: none;
+}
+
+.nav-tab-item:hover:not(.active) {
+  background: rgba(139, 124, 248, 0.08);
+  color: var(--color-primary-deep);
+}
+
+.nav-tab-item.active {
+  background: var(--gradient-nav-active);
+  box-shadow: var(--shadow-nav-active);
+  color: #ffffff;
+}
+
+.nav-tab-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform var(--transition-fast);
+}
+
+.nav-tab-item.active .nav-tab-icon {
+  transform: translateY(-1px);
+}
+
+.nav-tab-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+}
+
+.nav-tab-item.active .nav-tab-label {
+  font-weight: 700;
+  color: #ffffff;
+}

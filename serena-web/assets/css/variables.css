@@ -1,0 +1,81 @@
+/* ==========================================================================
+   SERENA DESIGN SYSTEM - CSS VARIABLES & DESIGN TOKENS
+   Diambil langsung dan diselaraskan dari desain Figma Serena
+   ========================================================================== */
+
+:root {
+  /* --- Color Palette --- */
+  --color-page-bg: linear-gradient(142deg, #FAF7F2 0%, #EAF7FC 40%, #F0EEFF 100%);
+  --color-page-bg-solid: #FAF7F2;
+
+  /* Primary Brand Colors */
+  --color-primary-deep: #14307A;
+  --color-primary-accent: #3A70D8;
+  --color-primary-blue: #5BA8F5;
+  --color-primary-purple: #8B6CF0;
+  --color-primary-violet: #8B7CF8;
+  --color-primary-cyan: #63C7F7;
+  --color-primary-dot: #6F7DF6;
+
+  /* Text Colors */
+  --color-text-primary: #1B2340;
+  --color-text-secondary: #6B7391;
+  --color-text-muted: #9BA3B8;
+  --color-text-link: #1F6F78;
+  --color-nav-inactive: #8A91AD;
+
+  /* Accent & Status Colors */
+  --color-success: #7CF2B2;
+  --color-success-dark: #2DD4BF;
+  --color-danger: #E5646B;
+  --color-danger-dark: #C2444C;
+  --color-danger-accent: #FF383C;
+  --color-danger-border: #F2A2AA;
+  --color-tag-danger-bg: #FFD9DC;
+  --color-tag-info-bg: #DCEBFB;
+  --color-tag-info-text: #2F6DB5;
+
+  /* Focus Hero Card Gradients */
+  --gradient-hero: linear-gradient(149deg, #8B5CF6 0%, #5B8DEF 52%, #2DD4BF 100%);
+  --gradient-nav-active: linear-gradient(163deg, #5BA8F5 0%, #8B6CF0 100%);
+  --gradient-stat-1: linear-gradient(135deg, #6FA8F5 0%, #A66BF0 100%);
+  --gradient-stat-2: linear-gradient(135deg, #6FA8F5 0%, #A66BF0 100%);
+  --gradient-stat-3: linear-gradient(135deg, #6C8CF0 0%, #34C3A8 100%);
+  --gradient-progress: linear-gradient(90deg, #F0708A 0%, #E5646B 100%);
+  --gradient-avatar: linear-gradient(135deg, #FFB88C 0%, #E58AB8 100%);
+  --gradient-deadline-card: linear-gradient(156deg, #FFF7F7 0%, #FFEDEF 100%);
+
+  /* Ambient Glow Colors */
+  --glow-green: #7ED957;
+  --glow-purple: #8B7CF8;
+  --glow-blue: #63C7F7;
+
+  /* --- Typography --- */
+  --font-family-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-serif: 'Playfair Display', Georgia, serif;
+
+  /* --- Shadows --- */
+  --shadow-card: 0px 6px 18px rgba(60, 70, 130, 0.08);
+  --shadow-card-sm: 0px 2px 10px rgba(80, 100, 180, 0.06);
+  --shadow-hero: 0px 16px 32px rgba(91, 141, 239, 0.35);
+  --shadow-nav: 0px 2px 6px rgba(70, 80, 150, 0.06), 0px 14px 32px rgba(70, 80, 150, 0.16);
+  --shadow-nav-active: 0px 10px 20px rgba(124, 107, 240, 0.38);
+  --shadow-pill-button: 0px 8px 18px -6px rgba(30, 40, 120, 0.35);
+  --shadow-deadline: 0px 6px 18px rgba(229, 100, 107, 0.12);
+
+  /* --- Radii --- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-2xl: 24px;
+  --radius-3xl: 26px;
+  --radius-dock: 34px;
+  --radius-hero: 44px 18px 44px 18px;
+  --radius-pill: 9999px;
+
+  /* --- Transitions --- */
+  --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}

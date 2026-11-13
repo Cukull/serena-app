@@ -1,0 +1,62 @@
+<!-- USER GREETING & FOCUS BANNER COMPONENT -->
+<section class="focus-section">
+  <!-- Greeting -->
+  <div class="user-greeting">
+    <h1 class="greeting-title">Selamat pagi, Sahal 👋</h1>
+    <p class="greeting-subtitle">Yuk, buat hari ini produktif dan tenang.</p>
+  </div>
+
+  <div style="height: 18px;"></div>
+
+  <!-- Focus Hero Card -->
+  <div class="focus-hero-card" id="focusHeroCard">
+    <!-- Decorative background elements -->
+    <div class="hero-deco-container">
+      <div class="hero-deco-radial"></div>
+      <div class="hero-deco-stripe-1"></div>
+      <div class="hero-deco-stripe-2"></div>
+      <!-- Hourglass illustration in SVG from Figma -->
+      <svg class="hero-artwork" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="15" y="10" width="50" height="100" rx="20" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.2)"/>
+        <!-- Upper sand -->
+        <path d="M22 25C22 25 35 45 40 45C45 45 58 25 58 25Z" fill="url(#heroSandGrad)"/>
+        <!-- Lower sand -->
+        <path d="M20 95C20 95 32 80 40 80C48 80 60 95 60 95Z" fill="url(#heroSandGrad)"/>
+        <!-- Flowing line -->
+        <line x1="40" y1="45" x2="40" y2="80" stroke="#B79BFF" stroke-width="2.5" stroke-dasharray="3 3"/>
+        <defs>
+          <linearGradient id="heroSandGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#C4A8FF"/>
+            <stop offset="100%" stop-color="#7BE3D0"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <!-- Top: Status badge & Big Timer -->
+    <div class="hero-top-info">
+      <div class="focus-status-badge">
+        <span class="pulsing-dot" id="pulseDot"></span>
+        <span class="focus-status-text" id="focusStatusText">Sedang fokus</span>
+      </div>
+      <div class="focus-timer-digits" id="focusTimerDisplay">18:42</div>
+    </div>
+
+    <!-- Bottom: Interactive Action Button -->
+    <button class="btn-pause-focus" id="btnPauseFocus" aria-label="Jeda atau lanjutkan sesi fokus">
+      <div class="btn-pause-icon" id="pauseBtnIcon">
+        <!-- Pause Icon SVG -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round">
+          <line x1="10" y1="5" x2="10" y2="19"></line>
+          <line x1="14" y1="5" x2="14" y2="19"></line>
+        </svg>
+      </div>
+      <span class="btn-pause-label" id="pauseBtnLabel">Jeda Fokus</span>
+      <div class="btn-pause-arrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2B6F78" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </div>
+    </button>
+  </div>
+</section>

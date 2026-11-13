@@ -1,0 +1,296 @@
+/* ==========================================================================
+   STATISTIK VIEW COMPONENT
+   Refactored from Figma (STATISTIK_HARIAN, STATISTIK_MINGGUAN, STATISTIK_BULANAN)
+   ========================================================================== */
+
+.statistik-view-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: slideUpFade 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Header with Back button */
+.statistik-top-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.btn-stat-back {
+  width: 36px;
+  height: 36px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: var(--shadow-card-sm);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-text-primary);
+  transition: transform var(--transition-fast);
+}
+
+.btn-stat-back:hover {
+  transform: translateX(-2px);
+}
+
+.statistik-page-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+
+/* Period Tab Switcher (Harian, Mingguan, Bulanan) */
+.period-tabs-wrapper {
+  width: 100%;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 22px;
+  box-shadow: 0px 4px 14px rgba(60, 70, 130, 0.08);
+  display: flex;
+  gap: 4px;
+}
+
+.period-tab-btn {
+  flex: 1;
+  height: 40px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-normal);
+}
+
+.period-tab-btn.active {
+  background: var(--gradient-nav-active);
+  box-shadow: 0px 4px 12px rgba(124, 107, 240, 0.3);
+  color: #ffffff;
+}
+
+/* Category Filter Pills (Tugas tersisa, Waktu fokus, Selesai) */
+.stat-filter-row {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.stat-filter-item {
+  flex: 1;
+  padding: 10px 6px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(139, 124, 248, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.stat-filter-item.active {
+  background: #ECE9FF;
+  border-color: #8B7CF8;
+}
+
+.stat-filter-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #8B7CF8;
+}
+
+.stat-filter-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1B2540;
+  text-align: center;
+}
+
+.stat-filter-item.active .stat-filter-label {
+  color: #6F5AF6;
+}
+
+/* Main Statistics Chart Card */
+.stat-chart-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 18px 16px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stat-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.stat-chart-metric-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.stat-chart-metric-val {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1B2540;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+.stat-trend-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.stat-trend-badge.neutral {
+  background: #F1F5F9;
+  color: #475569;
+}
+
+/* Interactive SVG Bar Chart */
+.stat-barchart-container {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding-bottom: 24px;
+  padding-left: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Y-Axis Scale */
+.barchart-y-axis {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 600;
+  color: #94A3B8;
+  user-select: none;
+}
+
+.barchart-bars {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.bar-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.bar-pill {
+  width: 14px;
+  background: linear-gradient(180deg, #A78BFA 0%, #C4B5FD 100%);
+  border-radius: 8px 8px 3px 3px;
+  transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+  min-height: 8px;
+}
+
+.bar-column.active .bar-pill {
+  background: var(--gradient-nav-active);
+  box-shadow: 0px 4px 10px rgba(124, 107, 240, 0.35);
+}
+
+.bar-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #94A3B8;
+  position: absolute;
+  bottom: 4px;
+}
+
+.bar-column.active .bar-label {
+  color: #6F5AF6;
+  font-weight: 800;
+}
+
+/* Highlights Grid (Tertinggi & Rata-rata) */
+.stat-highlights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.stat-highlight-tile {
+  background: #ffffff;
+  border: 1px solid rgba(70, 80, 150, 0.08);
+  box-shadow: 0px 2px 8px rgba(60, 70, 130, 0.04);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-highlight-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.stat-highlight-val {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1B2540;
+}
+
+/* Insight Card */
+.stat-insight-card {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(234, 247, 252, 0.95) 100%);
+  border: 1px solid rgba(99, 199, 247, 0.3);
+  border-radius: 18px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.stat-insight-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.stat-insight-text {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1B2540;
+  line-height: 1.45;
+}

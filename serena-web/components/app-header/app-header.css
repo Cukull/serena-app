@@ -1,0 +1,129 @@
+/* ==========================================================================
+   APP HEADER COMPONENT
+   ========================================================================== */
+
+.app-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Glassmorphic Logo Container */
+.logo-icon-box {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, rgba(99, 199, 247, 0.20) 0%, rgba(139, 124, 248, 0.20) 100%);
+  border: 1px solid rgba(99, 199, 247, 0.35);
+  box-shadow: inset 0px 1px 0px 1px rgba(255, 255, 255, 0.70),
+              0px 6px 20px rgba(99, 199, 247, 0.18);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform var(--transition-fast);
+}
+
+.logo-icon-box:hover {
+  transform: scale(1.04);
+}
+
+.logo-graphic {
+  width: 28px;
+  height: 28px;
+}
+
+/* Serena Brand Typography */
+.brand-title-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.brand-name {
+  font-family: var(--font-family-serif);
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 4.32px;
+  line-height: 1;
+}
+
+.brand-seren {
+  color: var(--color-primary-deep);
+}
+
+.brand-a {
+  color: var(--color-primary-accent);
+}
+
+.brand-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-primary-dot);
+  border-radius: 50%;
+  margin-bottom: 2px;
+}
+
+/* Right Header Actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-icon-round {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  background: #ffffff;
+  box-shadow: var(--shadow-card-sm);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-icon-round:hover {
+  transform: translateY(-1px);
+  box-shadow: 0px 4px 12px rgba(60, 70, 130, 0.12);
+}
+
+.notification-badge-dot {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 8px;
+  height: 8px;
+  background: var(--color-danger);
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+}
+
+.avatar-badge {
+  width: 40px;
+  height: 40px;
+  background: var(--gradient-avatar);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-family: var(--font-family-sans);
+  font-weight: 700;
+  font-size: 16px;
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(229, 138, 184, 0.25);
+  transition: transform var(--transition-fast);
+}
+
+.avatar-badge:hover {
+  transform: scale(1.05);
+}

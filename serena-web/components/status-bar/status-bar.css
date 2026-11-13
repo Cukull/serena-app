@@ -1,0 +1,81 @@
+/* ==========================================================================
+   STATUS BAR COMPONENT
+   ========================================================================== */
+
+.status-bar {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 14px 28px 4px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.status-bar-time {
+  font-family: var(--font-family-sans);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-text-primary);
+  letter-spacing: -0.2px;
+}
+
+.status-bar-icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Cellular signal bars */
+.cellular-signal {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  height: 12px;
+}
+
+.cellular-signal .bar {
+  width: 3px;
+  background-color: var(--color-text-primary);
+  border-radius: 1px;
+}
+
+.cellular-signal .bar-1 { height: 4px; }
+.cellular-signal .bar-2 { height: 7px; }
+.cellular-signal .bar-3 { height: 10px; }
+.cellular-signal .bar-4 { height: 12px; }
+
+/* Battery icon */
+.battery-icon {
+  width: 24px;
+  height: 12px;
+  position: relative;
+}
+
+.battery-body {
+  width: 20px;
+  height: 11px;
+  border: 1px solid var(--color-text-primary);
+  border-radius: 3.5px;
+  padding: 1.5px;
+  display: flex;
+  align-items: center;
+}
+
+.battery-level {
+  width: 14px;
+  height: 6px;
+  background-color: var(--color-text-primary);
+  border-radius: 1.5px;
+}
+
+.battery-cap {
+  position: absolute;
+  right: 1px;
+  top: 3.5px;
+  width: 2px;
+  height: 4px;
+  background-color: var(--color-text-primary);
+  border-radius: 0 1px 1px 0;
+}

@@ -1,0 +1,56 @@
+<!-- APP HEADER COMPONENT -->
+<header class="app-header">
+  <div class="brand-section">
+    <!-- Serena Glassmorphic Logo -->
+    <div class="logo-icon-box" title="Serena Brand">
+      <svg class="logo-graphic" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="serenaG1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#27BDFD"/>
+            <stop offset="50%" stop-color="#169EF8"/>
+            <stop offset="100%" stop-color="#0567C9"/>
+          </linearGradient>
+          <linearGradient id="serenaG2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#7BA9FF"/>
+            <stop offset="55%" stop-color="#6F77FA"/>
+            <stop offset="100%" stop-color="#5B3DF5"/>
+          </linearGradient>
+          <linearGradient id="serenaG3" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#77D9FE"/>
+            <stop offset="50%" stop-color="#74A4FD"/>
+            <stop offset="100%" stop-color="#5B35FA"/>
+          </linearGradient>
+        </defs>
+        <!-- Petal left top -->
+        <path d="M16 4C18 8 20 12 24 14C20 16 16 20 16 28C16 20 12 16 8 14C12 12 14 8 16 4Z" fill="url(#serenaG1)"/>
+        <!-- Petal accent lower -->
+        <path d="M16 12C18 15 21 17 25 18C21 19 18 22 17 26C16 22 13 19 9 18C13 17 15 15 16 12Z" fill="url(#serenaG2)" opacity="0.9"/>
+        <!-- Central radiant spark -->
+        <circle cx="16" cy="16" r="3.5" fill="url(#serenaG3)"/>
+      </svg>
+    </div>
+
+    <div class="brand-title-wrap">
+      <div class="brand-name">
+        <span class="brand-seren">SEREN</span><span class="brand-a">A</span>
+      </div>
+      <div class="brand-dot"></div>
+    </div>
+  </div>
+
+  <div class="header-actions">
+    <!-- Notification Bell Button -->
+    <button class="btn-icon-round" id="notificationBtn" aria-label="Notifikasi" title="Notifikasi baru">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B2340" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+      </svg>
+      <span class="notification-badge-dot"></span>
+    </button>
+
+    <!-- User Profile Avatar -->
+    <div class="avatar-badge" title="Sahal's Profile">
+      SA
+    </div>
+  </div>
+</header>
