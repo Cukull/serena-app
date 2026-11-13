@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#EBFAFE" />
+  <meta name="description" content="SERENA — a gentle space for mental health and wellness." />
+  <title>SERENA — Onboarding & Authentication</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --soft-blue: #4E5FE8;
+      --accent: #6A52E8;
+      --aqua: #6FE3D2;
+      --light-blue: #E8F7FD;
+      --lavender: #E8E3FC;
+      --white: #FFFFFF;
+      --ink: #241F45;
+      --muted: #7F7B9E;
+      --line: #E6E2F6;
+      --field: #F5F3FD;
+      --gradient: linear-gradient(135deg, #4E5FE8 0%, #6C55EA 100%);
+      --screen: radial-gradient(95% 55% at 0% 0%, #D6F2FB 0%, rgba(214,242,251,0) 58%),
+                radial-gradient(90% 55% at 100% 100%, #D2CAF8 0%, rgba(210,202,248,0) 64%),
+                linear-gradient(180deg, #EBFAFE 0%, #F7FBFA 40%, #EFEBFD 68%, #DFD9FA 100%);
+      --shadow: 0 28px 70px rgba(72, 57, 160, .20);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--ink);
+      background: var(--light-blue);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 34px 18px;
+      overflow-x: hidden;
+      background: var(--screen);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    button, input { font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+
+    .ambient { position: fixed; inset: 0; overflow: hidden; pointer-events: none; }
+    .ambient::before, .ambient::after {
+      content: ''; position: absolute; border-radius: 50%; opacity: .16;
+    }
+    .ambient::before { width: 500px; height: 500px; top: -310px; left: -180px; background: var(--aqua); opacity: .22; }
+    .ambient::after { width: 620px; height: 620px; right: -390px; bottom: -410px; background: var(--accent); opacity: .14; }
+
+    .app-device {
+      position: relative;
+      z-index: 1;
+      width: min(390px, 100%);
+      height: min(820px, calc(100vh - 42px));
+      min-height: 650px;
+      overflow: hidden;
+      border: 8px solid var(--white);
+      border-radius: 37px;
+      background: var(--screen);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+    .status-bar {
+      position: absolute; z-index: 10; top: 0; left: 0; right: 0; height: 35px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; background: transparent; color: var(--ink);
+      font-size: 9px; font-weight: 800; letter-spacing: .01em;
+    }
+    .status-icons { display: flex; align-items: center; gap: 5px; }
+    .status-icons svg { width: 13px; height: 13px; }
+    .app-screen {
+      position: absolute; inset: 35px 0 0; display: none; flex-direction: column;
+      background: transparent; overflow: hidden;
+    }
+    .app-screen.active { display: flex; animation: screenIn .35s ease both; }
+    @keyframes screenIn { from { opacity: 0; transform: translateX(9px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* Brand splash */
+    .splash-screen { align-items: center; justify-content: center; text-align: center; padding: 28px; }
+    .brand-lockup { display: flex; flex-direction: column; align-items: center; }
+    .brand-mark { width: 77px; height: 77px; margin-bottom: 15px; }
+    .brand-name { font-size: 39px; font-weight: 800; letter-spacing: -.075em; line-height: 1; }
+    .brand-subtitle { margin-top: 11px; padding-left: .36em; font-size: 9px; font-weight: 800; letter-spacing: .36em; color: var(--muted); }
+    .splash-tagline { max-width: 230px; margin: 25px 0 0; color: var(--muted); font-size: 11px; line-height: 1.8; font-weight: 600; }
+    .loading-dots { display: flex; gap: 6px; margin-top: 38px; }
+    .loading-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--soft-blue); animation: pulse 1s ease-in-out infinite; }
+    .loading-dots span:nth-child(2) { animation-delay: .15s; }
+    .loading-dots span:nth-child(3) { animation-delay: .3s; }
+    @keyframes pulse { 0%, 80%, 100% { opacity: .35; transform: scale(.8); } 40% { opacity: 1; transform: scale(1.15); } }
+
+    /* Onboarding */
+    .onboarding-screen { padding: 19px 20px 23px; }
+    .onboard-top { height: 31px; display: flex; justify-content: flex-end; align-items: center; }
+    .skip-btn, .text-back {
+      border: 0; background: transparent; color: var(--muted); cursor: pointer;
+      padding: 6px 1px; font-size: 10px; font-weight: 700;
+    }
+    .skip-btn:hover, .text-back:hover { color: var(--ink); }
+    .illustration-wrap {
+      height: 330px; margin: 4px -3px 0; display: grid; place-items: center;
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 27px;
+      background: linear-gradient(155deg, #E9F9FD 0%, #EDE8FC 100%);
+      box-shadow: 0 18px 38px rgba(84, 67, 172, .10);
+      overflow: hidden;
+    }
+    .illustration { width: 100%; max-width: 305px; height: 100%; }
+    .onboard-copy { text-align: center; padding: 19px 9px 0; }
+    .eyebrow { color: var(--accent); font-size: 9px; font-weight: 800; letter-spacing: .19em; text-transform: uppercase; }
+    .onboard-copy h1 { margin: 8px 0 8px; color: var(--ink); font-size: 22px; line-height: 1.25; letter-spacing: -.055em; font-weight: 800; }
+    .onboard-copy p { max-width: 285px; margin: 0 auto; color: var(--muted); font-size: 10px; line-height: 1.8; font-weight: 500; }
+    .onboard-footer { margin-top: auto; padding: 16px 7px 2px; }
+    .pagination { display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 20px; }
+    .pagination span { width: 6px; height: 6px; border-radius: 99px; background: #CFCAE9; transition: width .2s ease, background .2s ease; }
+    .pagination span.active { width: 20px; background: var(--gradient); }
+    .next-btn {
+      width: 100%; height: 49px; border: 0; border-radius: 99px; cursor: pointer;
+      background: var(--gradient); color: var(--white); font-size: 11px; font-weight: 800;
+      box-shadow: 0 12px 24px rgba(82,99,240,.28); transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .next-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 28px rgba(82,99,240,.36); }
+    .next-btn:active { transform: translateY(0); }
+
+    /* Swipe-to-start control */
+    .swipe-wrap { width: 100%; }
+    .swipe-label { margin: 0 0 10px; text-align: center; color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .04em; }
+    .swipe-track {
+      --swipe-progress: 0px;
+      position: relative; width: 100%; height: 56px; padding: 5px;
+      display: flex; align-items: center; border-radius: 99px;
+      background: rgba(255,255,255,.78); border: 1px solid rgba(255,255,255,.95);
+      box-shadow: 0 10px 24px rgba(82,99,240,.12);
+      overflow: hidden; user-select: none;
+    }
+    .swipe-track::before {
+      content: ''; position: absolute; inset: 5px auto 5px 5px; width: calc(var(--swipe-progress) + 46px);
+      max-width: calc(100% - 10px); border-radius: 99px;
+      background: linear-gradient(90deg, #4E5FE8, #6FE3D2); opacity: .32;
+      transition: width .05s linear;
+    }
+    .swipe-hint { position: absolute; inset: 0; display: grid; place-items: center; padding-left: 42px; color: var(--muted); font-size: 9px; font-weight: 800; pointer-events: none; }
+    .swipe-thumb {
+      position: relative; z-index: 1; width: 44px; height: 44px; flex: 0 0 44px;
+      border: 0; border-radius: 50%; display: grid; place-items: center;
+      color: var(--white); background: var(--gradient); cursor: grab; touch-action: none;
+      box-shadow: 0 5px 12px rgba(82,99,240,.32); transform: translateX(var(--swipe-progress));
+      transition: transform .05s linear, box-shadow .18s ease;
+    }
+    .swipe-thumb:active { cursor: grabbing; box-shadow: 0 7px 18px rgba(82,99,240,.42); }
+    .swipe-thumb svg { width: 19px; height: 19px; }
+    .swipe-track.dragging .swipe-thumb { transition: none; }
+    .swipe-track.resetting .swipe-thumb, .swipe-track.resetting::before { transition: transform .25s ease, width .25s ease; }
+    .swipe-caption { margin-top: 8px; text-align: center; color: #9B96B5; font-size: 8px; }
+
+    /* Welcome */
+    .welcome-screen { padding: 22px 24px 25px; }
+    .welcome-visual { height: 360px; display: grid; place-items: center; margin: 12px -4px 0; border: 1px solid rgba(255,255,255,.9); border-radius: 28px; background: linear-gradient(155deg, #E9F9FD 0%, #EDE8FC 100%); box-shadow: 0 18px 38px rgba(84, 67, 172, .10); }
+    .welcome-visual svg { width: 100%; max-width: 300px; height: 100%; }
+    .welcome-copy { text-align: center; padding: 24px 5px 0; }
+    .welcome-copy h1 { margin: 0 0 9px; font-size: 26px; letter-spacing: -.06em; font-weight: 800; }
+    .welcome-copy p { margin: 0 auto; max-width: 280px; color: var(--muted); font-size: 10px; line-height: 1.8; }
+    .welcome-actions { display: grid; gap: 10px; margin-top: auto; padding: 18px 0 1px; }
+    .primary-btn, .secondary-btn {
+      width: 100%; height: 50px; border-radius: 99px; cursor: pointer; font-size: 11px; font-weight: 800;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .primary-btn { border: 0; background: var(--gradient); color: var(--white); box-shadow: 0 12px 24px rgba(82,99,240,.28); }
+    .secondary-btn { border: 1px solid var(--line); background: rgba(255,255,255,.82); color: var(--ink); box-shadow: 0 10px 24px rgba(84,67,172,.08); }
+    .primary-btn:hover, .secondary-btn:hover { transform: translateY(-2px); }
+
+    /* Auth screens */
+    .auth-screen { padding: 16px 22px 23px; }
+    .auth-nav { height: 34px; display: flex; align-items: center; justify-content: space-between; }
+    .back-btn, .nav-link { border: 0; padding: 4px 0; background: transparent; color: var(--ink); cursor: pointer; font-size: 10px; font-weight: 800; }
+    .back-btn { display: flex; align-items: center; gap: 5px; }
+    .nav-link { color: var(--soft-blue); }
+    .back-btn svg { width: 17px; height: 17px; }
+    .auth-heading { margin: 27px 0 23px; }
+    .auth-heading h1 { margin: 0 0 8px; font-size: 27px; letter-spacing: -.06em; line-height: 1.1; font-weight: 800; }
+    .auth-heading p { margin: 0; max-width: 290px; color: var(--muted); font-size: 10px; line-height: 1.7; }
+    .auth-content { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+    .auth-content::-webkit-scrollbar { display: none; }
+    .auth-form { display: none; }
+    .auth-form.active { display: block; animation: screenIn .25s ease both; }
+    .fields { display: grid; gap: 12px; }
+    .field {
+      height: 53px; width: 100%; display: flex; align-items: center; gap: 10px;
+      padding: 0 15px; border: 1px solid var(--line); border-radius: 99px; background: rgba(255,255,255,.86);
+      box-shadow: 0 6px 16px rgba(84,67,172,.05);
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    .field:focus-within { border-color: var(--soft-blue); box-shadow: 0 0 0 3px rgba(85,102,242,.16); }
+    .field svg { width: 16px; height: 16px; flex: 0 0 auto; color: var(--muted); }
+    .field input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 10px; font-weight: 600; }
+    .field input::placeholder { color: #A29DBB; }
+    .password-toggle { border: 0; padding: 4px; background: transparent; color: var(--muted); cursor: pointer; }
+    .password-toggle svg { width: 17px; height: 17px; }
+    .forgot-row { display: flex; justify-content: flex-end; margin: 12px 1px 20px; }
+    .inline-link { border: 0; padding: 0; background: transparent; color: var(--soft-blue); cursor: pointer; font-size: 9px; font-weight: 800; }
+    .submit-btn { width: 100%; height: 51px; border: 0; border-radius: 99px; background: var(--gradient); color: var(--white); cursor: pointer; font-size: 11px; font-weight: 800; box-shadow: 0 12px 24px rgba(82,99,240,.28); }
+    .submit-btn:hover { filter: brightness(.98); }
+    .social-area { display: grid; gap: 10px; margin: 23px -22px 0; padding: 20px 22px 0; border-top: 1px solid rgba(230,226,246,.9); }
+    .social-btn { width: 100%; height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 15px; border: 1px solid var(--line); border-radius: 99px; background: rgba(255,255,255,.86); color: var(--ink); cursor: pointer; font-size: 9px; font-weight: 700; box-shadow: 0 8px 20px rgba(84,67,172,.06); }
+    .social-logo { width: 20px; height: 20px; display: grid; place-items: center; font-size: 17px; font-weight: 800; }
+    .social-arrow { margin-left: auto; font-size: 17px; }
+    .auth-switch { margin: 17px 0 8px; text-align: center; color: var(--muted); font-size: 9px; }
+    .auth-switch button { border: 0; padding: 0; background: transparent; color: var(--soft-blue); cursor: pointer; font-size: inherit; font-weight: 800; }
+    .form-intro { margin: 0 0 17px; color: var(--muted); font-size: 10px; line-height: 1.7; }
+    .register-form .fields { gap: 10px; }
+    .register-form .field { height: 49px; }
+    .register-form .submit-btn, .forgot-form .submit-btn { margin-top: 17px; }
+    .forgot-icon { width: 58px; height: 58px; margin: 6px auto 17px; display: grid; place-items: center; border-radius: 20px; background: linear-gradient(155deg, #E9F9FD 0%, #EDE8FC 100%); color: var(--soft-blue); }
+    .forgot-icon svg { width: 27px; height: 27px; }
+    .forgot-form h2 { margin: 0 0 8px; text-align: center; font-size: 21px; letter-spacing: -.05em; }
+    .forgot-form .form-intro { margin: 0 auto 21px; max-width: 270px; text-align: center; }
+
+    .toast {
+      position: fixed; z-index: 20; left: 50%; bottom: 22px; width: min(360px, calc(100% - 32px));
+      padding: 13px 16px; transform: translate(-50%, 14px); opacity: 0; pointer-events: none;
+      border-radius: 14px; background: var(--ink); color: var(--white); box-shadow: 0 8px 25px rgba(36,31,69,.25);
+      font-size: 10px; line-height: 1.5; transition: opacity .2s ease, transform .2s ease;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 480px) {
+      body { padding: 0; background: var(--white); }
+      .ambient { display: none; }
+      .app-device { width: 100%; height: 100dvh; min-height: 620px; border: 0; border-radius: 0; box-shadow: none; }
+    }
+    @media (max-height: 740px) and (min-width: 481px) {
+      body { padding: 12px; }
+      .app-device { height: calc(100vh - 24px); min-height: 620px; }
+      .illustration-wrap { height: 275px; }
+      .welcome-visual { height: 305px; }
+      .onboard-copy { padding-top: 13px; }
+      .onboard-footer { padding-top: 10px; }
+      .pagination { margin-bottom: 13px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <main class="app-device" aria-label="SERENA mobile app prototype">
+    <div class="status-bar" aria-hidden="true">
+      <span>9:41</span>
+      <span class="status-icons">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 12.5h2V14H1zm3-2h2V14H4zm3-3h2V14H7zm3-2h2V14h-2zm3-2h2V14h-2z"/></svg>
+        <svg viewBox="0 0 16 16" fill="none"><path d="M1.5 5.5C5.2 2.3 10.8 2.3 14.5 5.5M4 8c2.3-2 5.7-2 8 0m-5.5 2.5c1-.8 2-.8 3 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="12.5" r="1" fill="currentColor"/></svg>
+        <svg viewBox="0 0 18 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M16 6v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="3" y="5" width="10" height="6" rx="1" fill="currentColor"/></svg>
+      </span>
+    </div>
+
+    <!-- SPLASH -->
+    <section class="app-screen splash-screen active" id="splashScreen" aria-label="SERENA splash screen">
+      <div class="brand-lockup">
+        <svg class="brand-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M50 84C31 73 20 56 23 37c20-2 35 8 39 27 10-18 17-34 17-50 17 24 14 52-5 68-8 7-16 10-24 12Z" fill="#6574F2"/>
+          <path d="M26 76C39 61 51 48 75 29" stroke="#241F45" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+        <div class="brand-name">serena</div>
+        <div class="brand-subtitle">MENTAL HEALTH & WELLNESS</div>
+      </div>
+      <p class="splash-tagline">A gentle space to pause, reconnect, and bloom at your own pace.</p>
+      <div class="loading-dots" aria-label="Loading"><span></span><span></span><span></span></div>
+    </section>
+
+    <!-- ONBOARDING 1 -->
+    <section class="app-screen onboarding-screen" id="onboard1" aria-label="Onboarding 1 of 3">
+      <div class="onboard-top"><button class="skip-btn" type="button" data-skip>Skip</button></div>
+      <div class="illustration-wrap">
+        <svg class="illustration" viewBox="0 0 320 330" fill="none" role="img" aria-label="Ilustrasi seseorang sedang mengambil jeda untuk bernapas">
+          <circle cx="160" cy="157" r="117" fill="#FFFFFF"/>
+          <circle cx="160" cy="157" r="94" fill="#EDE9FC"/>
+          <circle cx="83" cy="90" r="20" fill="#6574F2" opacity=".35"/>
+          <circle cx="245" cy="91" r="12" fill="#6574F2" opacity=".45"/>
+          <path d="M56 258c18-24 35-36 54-36m101 0c20 0 36 13 53 36" stroke="#6574F2" stroke-width="3" stroke-linecap="round" opacity=".65"/>
+          <path d="M95 258c18-12 38-18 65-18s48 6 66 18" fill="#6574F2" opacity=".22"/>
+          <path d="M119 216c-7-17-5-38 1-53 8-21 26-32 46-29 22 3 34 23 32 47-1 14-7 26-16 37l-63-2Z" fill="#241F45" opacity=".9"/>
+          <path d="M124 157c3-24 22-39 44-36 23 3 34 24 29 47l-8 34c-4 18-18 30-34 27-17-3-27-17-27-35l-4-37Z" fill="#6574F2"/>
+          <path d="M127 169c-9-7-16 1-13 12 2 9 8 13 15 12m65-12c9-7 16 1 13 12-2 9-8 13-15 12" stroke="#241F45" stroke-width="3" stroke-linecap="round"/>
+          <path d="M142 181c4 3 8 3 12 0m17 0c4 3 8 3 12 0" stroke="#241F45" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M153 198c7 5 15 5 21 0" stroke="#241F45" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M110 218c-16 13-24 28-26 45m125-46c15 10 24 24 28 45" stroke="#241F45" stroke-width="9" stroke-linecap="round"/>
+          <path d="M116 255c25 16 63 18 89 0" stroke="#241F45" stroke-width="9" stroke-linecap="round"/>
+          <path d="M82 147c-12-17-11-34 1-48m153 4c11 12 14 26 8 40" stroke="#6574F2" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 8"/>
+          <path d="M153 71c-10-14-6-28 5-34 9-5 20-1 23 7 10-7 22 1 19 12-2 8-9 12-18 12" fill="#FFFFFF" stroke="#6574F2" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M71 206c-9-20-5-33 8-39 13-6 25 0 28 14-13-3-23 6-25 25" fill="#6574F2"/>
+          <path d="M245 206c9-20 5-33-8-39-13-6-25 0-28 14 13-3 23 6 25 25" fill="#6574F2"/>
+          <path d="M93 70v17m-8-8h16m120 142v15m-7-7h14" stroke="#6574F2" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="onboard-copy">
+        <div class="eyebrow">YOUR SAFE SPACE</div>
+        <h1>A moment just for you</h1>
+        <p>Take a breath and slow things down. SERENA gives you a gentle space to pause and reconnect with yourself.</p>
+      </div>
+      <div class="onboard-footer">
+        <div class="pagination" aria-label="Page 1 of 3"><span class="active"></span><span></span><span></span></div>
+        <button class="next-btn" type="button" data-next>Next</button>
+      </div>
+    </section>
+
+    <!-- ONBOARDING 2 -->
+    <section class="app-screen onboarding-screen" id="onboard2" aria-label="Onboarding 2 of 3">
+      <div class="onboard-top"><button class="skip-btn" type="button" data-skip>Skip</button></div>
+      <div class="illustration-wrap">
+        <svg class="illustration" viewBox="0 0 320 330" fill="none" role="img" aria-label="Ilustrasi jurnal dan refleksi diri">
+          <circle cx="160" cy="158" r="117" fill="#FFFFFF"/>
+          <circle cx="160" cy="158" r="94" fill="#EDE9FC"/>
+          <path d="M67 236c19-22 44-32 93-32s75 10 93 32" fill="#6574F2" opacity=".2"/>
+          <path d="M105 220c-2-27 7-50 24-62 11-8 26-11 40-8 23 4 39 25 40 52l-2 22-102-4Z" fill="#241F45"/>
+          <path d="M132 157c1-24 17-39 38-37 23 2 36 21 31 46l-7 33c-4 17-17 28-33 26-17-2-29-16-28-34l-1-34Z" fill="#6574F2"/>
+          <path d="M136 169c-9-7-16 1-13 12 2 9 8 13 15 12m63-12c9-7 16 1 13 12-2 9-8 13-15 12" stroke="#241F45" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M151 181c4 3 8 3 12 0m16 0c4 3 8 3 12 0m-25 18c7 4 14 4 20 0" stroke="#241F45" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M113 213c-16 8-25 21-28 40m121-40c16 9 25 22 29 40" stroke="#241F45" stroke-width="9" stroke-linecap="round"/>
+          <path d="M118 259c14 9 28 14 43 14 17 0 34-5 48-14" stroke="#241F45" stroke-width="9" stroke-linecap="round"/>
+          <path d="M42 156c10-16 25-20 37-10 10 9 10 24-1 33-15 0-27-7-36-23Z" fill="#6574F2"/>
+          <path d="M240 113c13-15 29-13 36 0 5 11 0 24-13 29-13-3-21-13-23-29Z" fill="#6574F2"/>
+          <rect x="50" y="94" width="48" height="62" rx="7" fill="#FFFFFF" stroke="#6574F2" stroke-width="3" transform="rotate(-12 50 94)"/>
+          <path d="m62 111 22-5m-19 16 22-5m-19 16 13-3" stroke="#6574F2" stroke-width="3" stroke-linecap="round"/>
+          <rect x="230" y="178" width="48" height="62" rx="7" fill="#FFFFFF" stroke="#6574F2" stroke-width="3" transform="rotate(12 230 178)"/>
+          <path d="m242 196 21 4m-24 11 21 4m-23 11 13 2" stroke="#6574F2" stroke-width="3" stroke-linecap="round"/>
+          <path d="M148 79c-3-13 4-24 15-26 11-2 21 5 21 16 9 2 13 12 8 20-6 9-19 10-28 2" stroke="#6574F2" stroke-width="3" stroke-linecap="round"/>
+          <path d="M160 60v13m-6-7h12" stroke="#6574F2" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="95" cy="202" r="5" fill="#6574F2"/><circle cx="228" cy="81" r="5" fill="#6574F2"/>
+        </svg>
+      </div>
+      <div class="onboard-copy">
+        <div class="eyebrow">GET TO KNOW YOU</div>
+        <h1>Understand your feelings</h1>
+        <p>Check in with your emotions, reflect on your day, and discover little patterns that help you understand yourself.</p>
+      </div>
+      <div class="onboard-footer">
+        <div class="pagination" aria-label="Page 2 of 3"><span></span><span class="active"></span><span></span></div>
+        <button class="next-btn" type="button" data-next>Next</button>
+      </div>
+    </section>
+
+    <!-- ONBOARDING 3 -->
+    <section class="app-screen onboarding-screen" id="onboard3" aria-label="Onboarding 3 of 3">
+      <div class="onboard-top"><button class="skip-btn" type="button" data-skip>Skip</button></div>
+      <div class="illustration-wrap">
+        <svg class="illustration" viewBox="0 0 320 330" fill="none" role="img" aria-label="Ilustrasi kebiasaan perawatan diri dan pertumbuhan">
+          <circle cx="160" cy="158" r="117" fill="#FFFFFF"/>
+          <circle cx="160" cy="158" r="94" fill="#EDE9FC"/>
+          <path d="M77 230c21-21 48-31 83-31s62 10 83 31" fill="#6574F2" opacity=".22"/>
+          <rect x="112" y="113" width="96" height="133" rx="15" fill="#FFFFFF" stroke="#6574F2" stroke-width="3" transform="rotate(-7 112 113)"/>
+          <rect x="127" y="132" width="66" height="94" rx="9" fill="#EDE9FC"/>
+          <path d="M146 151c8-9 19-9 27 0 8 9 2 21-13 31-15-10-22-22-14-31Z" fill="#6574F2"/>
+          <path d="M143 198h36m-31 10h26" stroke="#6574F2" stroke-width="3" stroke-linecap="round"/>
+          <path d="M91 132c-10-19-5-35 10-40 14-5 27 5 27 21-13-3-25 4-31 19" fill="#6574F2"/>
+          <path d="M222 88c10-16 26-18 37-7 10 11 7 27-6 34-12-7-22-16-31-27Z" fill="#6574F2"/>
+          <path d="M72 250c-5-19 2-35 17-39 14-4 25 7 23 22-12-2-24 6-27 22" fill="#6574F2"/>
+          <path d="M218 250c5-19-2-35-17-39-14-4-25 7-23 22 12-2 24 6 27 22" fill="#6574F2"/>
+          <path d="M160 89c-9-14-5-28 7-33 12-5 25 3 24 17 12 2 17 14 10 23-8 10-22 9-31 0" stroke="#6574F2" stroke-width="3" stroke-linecap="round"/>
+          <path d="M160 73c0 8-1 13-5 19m14-15 8 10" stroke="#6574F2" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="82" cy="91" r="5" fill="#6574F2"/><circle cx="245" cy="176" r="6" fill="#6574F2"/>
+          <path d="M105 273c18 12 37 18 55 18 20 0 39-6 56-18" stroke="#241F45" stroke-width="8" stroke-linecap="round"/>
+          <path d="M126 250c8 7 19 11 34 11 14 0 26-4 34-11" stroke="#241F45" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="onboard-copy">
+        <div class="eyebrow">GROW AT YOUR OWN PACE</div>
+        <h1>Small steps, brighter days</h1>
+        <p>Build gentle routines with mindful activities and self-care tools. Every small step you take matters.</p>
+      </div>
+      <div class="onboard-footer">
+        <div class="pagination" aria-label="Page 3 of 3"><span></span><span></span><span class="active"></span></div>
+        <div class="swipe-wrap">
+          <p class="swipe-label">You're all set. Let's begin your journey.</p>
+          <div class="swipe-track" id="swipeTrack">
+            <span class="swipe-hint" id="swipeHint">Swipe to Get Started</span>
+            <button class="swipe-thumb" id="swipeThumb" type="button" role="slider" aria-label="Swipe to Get Started" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-orientation="horizontal" tabindex="0">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <div class="swipe-caption">Drag the blue handle all the way to the right</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WELCOME AFTER ONBOARDING -->
+    <section class="app-screen welcome-screen" id="welcomeScreen" aria-label="Welcome to SERENA">
+      <div class="onboard-top"><button class="text-back" type="button" data-back-onboarding>Back</button></div>
+      <div class="welcome-visual">
+        <svg viewBox="0 0 320 330" fill="none" role="img" aria-label="Ilustrasi daun dan hati sebagai simbol wellness">
+          <circle cx="160" cy="160" r="116" fill="#FFFFFF"/>
+          <circle cx="160" cy="160" r="94" fill="#EDE9FC"/>
+          <path d="M157 246c-33-23-62-53-70-88-7-34 12-59 39-58 21 1 34 21 35 43 13-34 38-54 62-42 28 13 28 48 8 77-17 25-43 49-74 68Z" fill="#6574F2"/>
+          <path d="M159 247c-4-55 3-97 30-144" stroke="#241F45" stroke-width="4" stroke-linecap="round"/>
+          <path d="M158 189c-18-20-36-28-55-30m65 7c17-17 31-25 49-30" stroke="#241F45" stroke-width="3" stroke-linecap="round"/>
+          <path d="M149 120c-10-13-5-27 7-32 11-5 23 1 24 14 12 3 16 15 9 24-8 10-23 8-30-1" fill="#FFFFFF" stroke="#6574F2" stroke-width="3"/>
+          <path d="M75 263c25 15 53 23 84 23 33 0 62-8 88-23" stroke="#6574F2" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+        </svg>
+      </div>
+      <div class="welcome-copy">
+        <div class="eyebrow">WELCOME TO SERENA</div>
+        <h1>A kinder way to care for you.</h1>
+        <p>Your personal space for mental wellness, mindful moments, and little steps toward feeling better.</p>
+      </div>
+      <div class="welcome-actions">
+        <button class="primary-btn" type="button" data-auth="login">Sign In</button>
+        <button class="secondary-btn" type="button" data-auth="register">Create Account</button>
+      </div>
+    </section>
+
+    <!-- AUTHENTICATION -->
+    <section class="app-screen auth-screen" id="authScreen" aria-label="SERENA account access">
+      <nav class="auth-nav">
+        <button class="back-btn" type="button" id="authBack">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m0 0 7-7m-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+        <button class="nav-link" type="button" id="authNavLink">Sign Up</button>
+      </nav>
+      <header class="auth-heading">
+        <h1 id="authTitle">Sign In</h1>
+        <p id="authDescription">Welcome back. Take a moment for yourself and continue your wellness journey.</p>
+      </header>
+      <div class="auth-content">
+        <form class="auth-form login-form active" id="loginForm" novalidate>
+          <div class="fields">
+            <label class="field">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="m5 7 7 5 7-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <input id="loginEmail" type="email" placeholder="Email address" autocomplete="email" required aria-label="Email address" />
+            </label>
+            <label class="field">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" required aria-label="Password" />
+              <button class="password-toggle" type="button" data-toggle="loginPassword" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg></button>
+            </label>
+          </div>
+          <div class="forgot-row"><button class="inline-link" type="button" data-auth="forgot">Forgot Password?</button></div>
+          <button class="submit-btn" type="submit">Sign In</button>
+          <div class="social-area">
+            <button class="social-btn" type="button" data-social="Google"><span class="social-logo">G</span><span>Continue with Google</span><span class="social-arrow">→</span></button>
+            <button class="social-btn" type="button" data-social="Apple"><span class="social-logo">●</span><span>Continue with Apple</span><span class="social-arrow">→</span></button>
+          </div>
+          <p class="auth-switch">Don't have an account? <button type="button" data-auth="register">Sign Up</button></p>
+        </form>
+
+        <form class="auth-form register-form" id="registerForm" novalidate>
+          <p class="form-intro">Create your SERENA account and make space for a healthier, kinder routine.</p>
+          <div class="fields">
+            <label class="field">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M5 20c.7-3.2 3-5 7-5s6.3 1.8 7 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <input id="registerName" type="text" placeholder="Full name" autocomplete="name" required aria-label="Full name" />
+            </label>
+            <label class="field">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="m5 7 7 5 7-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <input id="registerEmail" type="email" placeholder="Email address" autocomplete="email" required aria-label="Email address" />
+            </label>
+            <label class="field">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <input id="registerPassword" type="password" placeholder="Password (min. 8 characters)" autocomplete="new-password" required aria-label="Create password" />
+              <button class="password-toggle" type="button" data-toggle="registerPassword" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg></button>
+            </label>
+            <label class="field">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <input id="registerConfirm" type="password" placeholder="Confirm password" autocomplete="new-password" required aria-label="Confirm password" />
+            </label>
+          </div>
+          <button class="submit-btn" type="submit" style="margin-top:17px">Create Account</button>
+          <p class="auth-switch">Already have an account? <button type="button" data-auth="login">Sign In</button></p>
+        </form>
+
+        <form class="auth-form forgot-form" id="forgotForm" novalidate>
+          <div class="forgot-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="8" y="20" width="32" height="22" rx="5" stroke="currentColor" stroke-width="2.4"/><path d="M15 20v-6a9 9 0 0 1 18 0v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="24" cy="30" r="2.2" fill="currentColor"/><path d="M24 32v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <h2>Forgot Password?</h2>
+          <p class="form-intro">Enter the email address linked to your account. We'll send you a link to reset your password.</p>
+          <div class="fields">
+            <label class="field">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="m5 7 7 5 7-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <input id="forgotEmail" type="email" placeholder="Email address" autocomplete="email" required aria-label="Email address" />
+            </label>
+          </div>
+          <button class="submit-btn" type="submit">Send Reset Link</button>
+          <p class="auth-switch">Remember your password? <button type="button" data-auth="login">Sign In</button></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const screens = [...document.querySelectorAll('.app-screen')];
+    const authForms = [...document.querySelectorAll('.auth-form')];
+    const authTitle = document.getElementById('authTitle');
+    const authDescription = document.getElementById('authDescription');
+    const authNavLink = document.getElementById('authNavLink');
+    const authBack = document.getElementById('authBack');
+    const toast = document.getElementById('toast');
+    const swipeTrack = document.getElementById('swipeTrack');
+    const swipeThumb = document.getElementById('swipeThumb');
+    let toastTimer;
+    let currentAuth = 'login';
+    let swipeActive = false;
+    let swipeProgress = 0;
+    let swipeMax = 0;
+    let swipePointerOffset = 22;
+    let swipeCompleting = false;
+
+    const authCopy = {
+      login: ['Sign In', 'Welcome back. Take a moment for yourself and continue your wellness journey.'],
+      register: ['Create Account', 'Create an account and begin your journey to a more mindful you.'],
+      forgot: ['Reset Password', 'A small step to get you back to your SERENA space.']
+    };
+
+    function showScreen(id) {
+      screens.forEach(screen => screen.classList.toggle('active', screen.id === id));
+      if (id === 'authScreen') showAuth('login');
+    }
+
+    function showAuth(view) {
+      const selected = authCopy[view] ? view : 'login';
+      currentAuth = selected;
+      authForms.forEach(form => form.classList.toggle('active', form.id === `${selected}Form`));
+      authTitle.textContent = authCopy[selected][0];
+      authDescription.textContent = authCopy[selected][1];
+      authNavLink.textContent = selected === 'register' ? 'Sign In' : 'Sign Up';
+      authNavLink.style.visibility = selected === 'forgot' ? 'hidden' : 'visible';
+      document.querySelector('.auth-content').scrollTop = 0;
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 3400);
+    }
+
+    function validEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+    }
+
+    // Splash automatically transitions into onboarding.
+    window.setTimeout(() => {
+      if (document.getElementById('splashScreen').classList.contains('active')) showScreen('onboard1');
+    }, 1350);
+
+    document.querySelectorAll('[data-next]').forEach(button => {
+      button.addEventListener('click', () => {
+        const current = button.closest('.app-screen');
+        showScreen(current.id === 'onboard1' ? 'onboard2' : 'onboard3');
+      });
+    });
+    document.querySelectorAll('[data-skip]').forEach(button => button.addEventListener('click', () => showScreen('welcomeScreen')));
+    document.querySelectorAll('[data-back-onboarding]').forEach(button => button.addEventListener('click', () => showScreen('onboard3')));
+    document.querySelectorAll('[data-auth]').forEach(button => {
+      button.addEventListener('click', () => {
+        showScreen('authScreen');
+        showAuth(button.dataset.auth);
+      });
+    });
+    authBack.addEventListener('click', () => showScreen('welcomeScreen'));
+    authNavLink.addEventListener('click', () => showAuth(currentAuth === 'register' ? 'login' : 'register'));
+
+    // Drag-only Get Started slider: clicking the handle will not advance.
+    function getSwipeMax() {
+      return Math.max(0, swipeTrack.clientWidth - swipeThumb.offsetWidth - 10);
+    }
+    function setSwipeProgress(value) {
+      swipeMax = getSwipeMax();
+      swipeProgress = Math.max(0, Math.min(swipeMax, value));
+      swipeTrack.style.setProperty('--swipe-progress', `${swipeProgress}px`);
+      const percent = swipeMax ? Math.round((swipeProgress / swipeMax) * 100) : 0;
+      swipeThumb.setAttribute('aria-valuenow', String(percent));
+      document.getElementById('swipeHint').style.opacity = percent > 28 ? '0' : '1';
+    }
+    function completeSwipe() {
+      if (swipeCompleting) return;
+      swipeCompleting = true;
+      swipeTrack.classList.remove('dragging');
+      swipeTrack.classList.add('resetting');
+      setSwipeProgress(getSwipeMax());
+      swipeThumb.setAttribute('aria-valuenow', '100');
+      window.setTimeout(() => {
+        swipeTrack.classList.remove('resetting');
+        showScreen('welcomeScreen');
+        setSwipeProgress(0);
+        swipeCompleting = false;
+      }, 180);
+    }
+    function resetSwipe() {
+      swipeTrack.classList.remove('dragging');
+      swipeTrack.classList.add('resetting');
+      setSwipeProgress(0);
+      window.setTimeout(() => swipeTrack.classList.remove('resetting'), 260);
+    }
+    swipeThumb.addEventListener('pointerdown', event => {
+      if (event.button !== undefined && event.button !== 0) return;
+      swipeActive = true;
+      swipeMax = getSwipeMax();
+      swipePointerOffset = event.clientX - swipeThumb.getBoundingClientRect().left;
+      swipeTrack.classList.remove('resetting');
+      swipeTrack.classList.add('dragging');
+      swipeThumb.setPointerCapture(event.pointerId);
+      event.preventDefault();
+    });
+    swipeThumb.addEventListener('pointermove', event => {
+      if (!swipeActive) return;
+      const trackRect = swipeTrack.getBoundingClientRect();
+      const thumbRect = swipeThumb.getBoundingClientRect();
+      const desired = event.clientX - trackRect.left - 5 - swipePointerOffset;
+      setSwipeProgress(desired);
+    });
+    function endSwipe() {
+      if (!swipeActive) return;
+      swipeActive = false;
+      const completion = swipeMax ? swipeProgress / swipeMax : 0;
+      if (completion >= .82) completeSwipe();
+      else resetSwipe();
+    }
+    swipeThumb.addEventListener('pointerup', endSwipe);
+    swipeThumb.addEventListener('pointercancel', endSwipe);
+    swipeThumb.addEventListener('lostpointercapture', () => { if (swipeActive) endSwipe(); });
+    swipeThumb.addEventListener('keydown', event => {
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        setSwipeProgress(swipeProgress + getSwipeMax() * .12);
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        setSwipeProgress(swipeProgress - getSwipeMax() * .12);
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        completeSwipe();
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        resetSwipe();
+      }
+      if (swipeMax && swipeProgress / swipeMax >= .98) completeSwipe();
+    });
+    window.addEventListener('resize', () => {
+      if (document.getElementById('onboard3').classList.contains('active')) setSwipeProgress(0);
+    });
+
+    document.querySelectorAll('[data-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        const input = document.getElementById(button.dataset.toggle);
+        input.type = input.type === 'password' ? 'text' : 'password';
+        button.setAttribute('aria-label', input.type === 'password' ? 'Show password' : 'Hide password');
+      });
+    });
+    document.querySelectorAll('[data-social]').forEach(button => {
+      button.addEventListener('click', () => showToast(`Sign in with ${button.dataset.social} masih berupa demo. Hubungkan OAuth untuk mengaktifkannya.`));
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      if (!validEmail(email)) return showToast('Email belum valid. Periksa kembali alamat emailmu.');
+      if (!password) return showToast('Password wajib diisi.');
+      showToast('Form login valid. Hubungkan ke API autentikasi SERENA.');
+    });
+    document.getElementById('registerForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const name = document.getElementById('registerName').value.trim();
+      const email = document.getElementById('registerEmail').value.trim();
+      const password = document.getElementById('registerPassword').value;
+      const confirm = document.getElementById('registerConfirm').value;
+      if (!name) return showToast('Nama lengkap belum diisi.');
+      if (!validEmail(email)) return showToast('Email belum valid.');
+      if (password.length < 8) return showToast('Gunakan password minimal 8 karakter.');
+      if (password !== confirm) return showToast('Password tidak cocok. Pastikan keduanya sama.');
+      showToast('Form registrasi valid. Hubungkan ke API register SERENA.');
+    });
+    document.getElementById('forgotForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const email = document.getElementById('forgotEmail').value.trim();
+      if (!validEmail(email)) return showToast('Masukkan alamat email yang valid.');
+      showToast('Email valid. Hubungkan ke endpoint forgot-password untuk mengirim reset link.');
+    });
+  </script>
+</body>
+</html>

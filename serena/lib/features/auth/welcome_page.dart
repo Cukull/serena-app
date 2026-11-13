@@ -17,10 +17,10 @@ class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
   // --- Token 2-warna (tint dari 2 hue brand) ---
-  static const _blueBg = Color(0xFFEAF6FC);
-  static const _blueText = Color(0xFF2596C9);
-  static const _purpleBg = Color(0xFFEFEDFF);
-  static const _purpleText = Color(0xFF6B7CF8);
+  static const _blueBg = AppColors.secondaryTint;
+  static const _blueText = AppColors.secondaryDark;
+  static const _purpleBg = AppColors.primaryTint;
+  static const _purpleText = AppColors.primary;
 
   @override
   Widget build(BuildContext context) {
