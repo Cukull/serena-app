@@ -5,8 +5,8 @@ import 'package:serena/core/widgets/app_glass.dart';
 
 class AppFormCard extends StatelessWidget {
   const AppFormCard({
-    super.key,
     required this.child,
+    super.key,
     this.padding = const EdgeInsets.all(AppSpacing.cardPadding),
   });
 

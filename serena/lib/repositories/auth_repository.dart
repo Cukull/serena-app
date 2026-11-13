@@ -1,6 +1,5 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'package:serena/services/supabase_client.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Kesalahan auth yang pesannya sudah ramah untuk ditampilkan ke user.
 class AuthError implements Exception {
@@ -14,12 +13,16 @@ class AuthError implements Exception {
 
 String _friendly(String? raw) {
   final m = raw?.toLowerCase() ?? '';
-  if (m.contains('invalid login credentials')) return 'Email atau password salah.';
-  if (m.contains('email not confirmed')) return 'Email belum diverifikasi. Cek inbox Anda.';
-  if (m.contains('already registered') || m.contains('already been registered')) {
+  if (m.contains('invalid login credentials'))
+    return 'Email atau password salah.';
+  if (m.contains('email not confirmed'))
+    return 'Email belum diverifikasi. Cek inbox Anda.';
+  if (m.contains('already registered') ||
+      m.contains('already been registered')) {
     return 'Email sudah terdaftar.';
   }
-  if (m.contains('password should be at least')) return 'Password minimal 8 karakter.';
+  if (m.contains('password should be at least'))
+    return 'Password minimal 8 karakter.';
   return raw ?? 'Terjadi kesalahan. Coba lagi.';
 }
 

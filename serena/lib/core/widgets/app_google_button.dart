@@ -31,7 +31,6 @@ class AppGoogleButton extends StatelessWidget {
         blur: AppBlur.input,
         borderRadius: AppRadius.input,
         color: AppColors.glassInput,
-        borderColor: AppColors.glassBorder,
         shadows: AppShadows.input,
         width: double.infinity,
         height: AppSizes.googleButtonHeight,

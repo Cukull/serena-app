@@ -55,7 +55,6 @@ class WelcomePage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(24, 8, 24, 14),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           // Ruang napas atas: mendorong logo turun agar
@@ -75,7 +74,7 @@ class WelcomePage extends StatelessWidget {
                               fontSize: 32,
                               fontWeight: FontWeight.w800,
                               letterSpacing: 0.5,
-                              height: 1.0,
+                              height: 1,
                               color: AppColors.ink,
                             ),
                           ).animate().fadeIn(delay: 80.ms),
@@ -257,7 +256,7 @@ class _SerenaMarkBig extends StatelessWidget {
               fontSize: 36,
               fontWeight: FontWeight.w800,
               fontStyle: FontStyle.italic,
-              height: 1.0,
+              height: 1,
               color: Colors.white,
             ),
           ),
@@ -268,15 +267,14 @@ class _SerenaMarkBig extends StatelessWidget {
 }
 
 class _Pill extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final Color accent;
-
   const _Pill({
     required this.icon,
     required this.label,
     required this.accent,
   });
+  final IconData icon;
+  final String label;
+  final Color accent;
 
   @override
   Widget build(BuildContext context) {
@@ -317,15 +315,15 @@ class _Pill extends StatelessWidget {
 
 /// CTA — press scale selalu 0.96, hit area 56px.
 class _GetStartedButton extends StatefulWidget {
-  final VoidCallback onPressed;
   const _GetStartedButton({required this.onPressed});
+  final VoidCallback onPressed;
 
   @override
   State<_GetStartedButton> createState() => _GetStartedButtonState();
 }
 
 class _GetStartedButtonState extends State<_GetStartedButton> {
-  double _scale = 1.0;
+  double _scale = 1;
 
   void _set(bool pressed) => setState(() => _scale = pressed ? 0.96 : 1.0);
 
@@ -413,7 +411,7 @@ class _StudyScene extends StatelessWidget {
 
     return SizedBox(
       width: w,
-      child: Column(
+      child: const Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           // Streak + Mood: IntrinsicHeight + stretch agar tingginya
@@ -422,15 +420,15 @@ class _StudyScene extends StatelessWidget {
           IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: const [
+              children: [
                 Expanded(child: _StreakCard()),
                 SizedBox(width: 12),
                 Expanded(child: _MoodCard()),
               ],
             ),
           ),
-          const SizedBox(height: 12),
-          const _DashPreview(),
+          SizedBox(height: 12),
+          _DashPreview(),
         ],
       ),
     );
@@ -613,12 +611,6 @@ class _DashPreview extends StatelessWidget {
 
 /// Tile stat kecil di dalam preview: tint 2 hue, teks ink.
 class _StatTile extends StatelessWidget {
-  final IconData icon;
-  final String value;
-  final String label;
-  final Color bg;
-  final Color fg;
-
   const _StatTile({
     required this.icon,
     required this.value,
@@ -626,6 +618,11 @@ class _StatTile extends StatelessWidget {
     required this.bg,
     required this.fg,
   });
+  final IconData icon;
+  final String value;
+  final String label;
+  final Color bg;
+  final Color fg;
 
   @override
   Widget build(BuildContext context) {
@@ -665,12 +662,12 @@ class _StatTile extends StatelessWidget {
 }
 
 class _Card extends StatelessWidget {
-  final Widget child;
-  final EdgeInsetsGeometry padding;
   const _Card({
     required this.child,
     this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
   });
+  final Widget child;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
@@ -699,8 +696,8 @@ class _Card extends StatelessWidget {
 }
 
 class _CardLabel extends StatelessWidget {
-  final String text;
   const _CardLabel(this.text);
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -716,10 +713,10 @@ class _CardLabel extends StatelessWidget {
 }
 
 class _TintIcon extends StatelessWidget {
+  const _TintIcon({required this.icon, required this.bg, required this.fg});
   final IconData icon;
   final Color bg;
   final Color fg;
-  const _TintIcon({required this.icon, required this.bg, required this.fg});
 
   @override
   Widget build(BuildContext context) {
@@ -846,9 +843,9 @@ class _MoodCard extends StatelessWidget {
 }
 
 class _Bar extends StatelessWidget {
+  const _Bar(this.h, this.c);
   final double h;
   final Color c;
-  const _Bar(this.h, this.c);
 
   @override
   Widget build(BuildContext context) {

@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'package:serena/app/app_routes.dart';
 import 'package:serena/models/profile.dart';
 import 'package:serena/repositories/auth_repository.dart';
 import 'package:serena/repositories/mood_repository.dart';
 import 'package:serena/repositories/profile_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Session + onboarding state. Didaftarkan permanent di AppBindings.
 /// Mendengarkan `onAuthStateChange` dan jadi satu-satunya sumber
@@ -127,7 +126,8 @@ class AuthController extends GetxController {
     try {
       await authRepo.resetPassword(email);
       Get.back();
-      Get.snackbar('Terkirim', 'Link reset password sudah dikirim ke email Anda.');
+      Get.snackbar(
+          'Terkirim', 'Link reset password sudah dikirim ke email Anda.');
     } on AuthError catch (e) {
       errorMessage.value = e.message;
     } on Object {
@@ -150,7 +150,8 @@ class AuthController extends GetxController {
       isLoggedIn.value = true;
       Get.offAllNamed(onboardingDone.value ? Routes.main : Routes.onboarding);
     } on Object {
-      Get.snackbar('Belum terverifikasi', 'Klik link verifikasi di email dulu.');
+      Get.snackbar(
+          'Belum terverifikasi', 'Klik link verifikasi di email dulu.');
     } finally {
       isLoading.value = false;
     }

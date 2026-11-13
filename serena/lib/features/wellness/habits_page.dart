@@ -70,7 +70,8 @@ class _AddHabitDialogState extends State<_AddHabitDialog> {
   }
 
   Future<void> _save() async {
-    final ok = await Get.find<HabitController>().createHabit(_title.text.trim());
+    final ok =
+        await Get.find<HabitController>().createHabit(_title.text.trim());
     if (ok) {
       Get.back();
       Get.snackbar('Berhasil', 'Habit ditambahkan.');
@@ -90,7 +91,7 @@ class _AddHabitDialogState extends State<_AddHabitDialog> {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Get.back(), child: const Text('Batal')),
+        TextButton(onPressed: Get.back, child: const Text('Batal')),
         ElevatedButton(onPressed: _save, child: const Text('Simpan')),
       ],
     );

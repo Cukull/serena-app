@@ -27,10 +27,12 @@ class AppLogoIcon extends StatelessWidget {
         borderRadius: radius,
         border: Border.all(color: AppColors.chipBorderSecondary),
         boxShadow: AppShadows.logo,
-        gradient: const LinearGradient(colors: [
-          AppColors.chipBorderPrimary,
-          AppColors.chipBorderSecondary,
-        ]),
+        gradient: const LinearGradient(
+          colors: [
+            AppColors.chipBorderPrimary,
+            AppColors.chipBorderSecondary,
+          ],
+        ),
       ),
       child: ClipRRect(
         borderRadius: radius,
@@ -82,7 +84,6 @@ class AppLogo extends StatelessWidget {
       blur: AppBlur.logo,
       borderRadius: BorderRadius.circular(AppRadius.xl),
       color: AppColors.glassBadge,
-      borderColor: AppColors.glassBorder,
       shadows: AppShadows.logo,
       width: size,
       height: size,

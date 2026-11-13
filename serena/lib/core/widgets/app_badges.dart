@@ -50,7 +50,6 @@ class AppFloatingBadge extends StatelessWidget {
       blur: AppBlur.badge,
       borderRadius: AppRadius.input,
       color: AppColors.glassBadge,
-      borderColor: AppColors.glassBorder,
       shadows: AppShadows.badge,
       padding: padding,
       child: child,

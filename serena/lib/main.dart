@@ -22,7 +22,7 @@ Future<void> main() async {
   if (session == null) {
     AuthController.bootLoggedIn = false;
     AuthController.bootOnboarded = false;
-    runApp(const SerenaApp(initialRoute: Routes.landing));
+    runApp(const SerenaApp());
     return;
   }
 

@@ -1,21 +1,5 @@
 /// Log mood (tabel `mood_logs`).
 class MoodLog {
-  const MoodLog({
-    required this.id,
-    required this.userId,
-    required this.moodScore,
-    this.moodLabel,
-    this.note,
-    required this.loggedAt,
-  });
-
-  final String id;
-  final String userId;
-  final int moodScore;
-  final String? moodLabel;
-  final String? note;
-  final DateTime loggedAt;
-
   factory MoodLog.fromJson(Map<String, dynamic> json) => MoodLog(
         id: json['id'] as String,
         userId: json['user_id'] as String,
@@ -24,6 +8,21 @@ class MoodLog {
         note: json['note'] as String?,
         loggedAt: DateTime.parse(json['logged_at'] as String).toLocal(),
       );
+  const MoodLog({
+    required this.id,
+    required this.userId,
+    required this.moodScore,
+    required this.loggedAt,
+    this.moodLabel,
+    this.note,
+  });
+
+  final String id;
+  final String userId;
+  final int moodScore;
+  final String? moodLabel;
+  final String? note;
+  final DateTime loggedAt;
 
   Map<String, dynamic> toJson() => {
         'id': id,

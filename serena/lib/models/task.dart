@@ -52,6 +52,25 @@ TaskStatus taskStatusFromDb(String? value) => switch (value) {
 
 /// Task (tabel `tasks`).
 class Task {
+  factory Task.fromJson(Map<String, dynamic> json) => Task(
+        id: json['id'] as String,
+        userId: json['user_id'] as String,
+        categoryId: json['category_id'] as String?,
+        title: json['title'] as String,
+        description: json['description'] as String?,
+        deadline: json['deadline'] == null
+            ? null
+            : DateTime.parse(json['deadline'] as String),
+        priority: taskPriorityFromDb(json['priority'] as String?),
+        status: taskStatusFromDb(json['status'] as String?),
+        progress: json['progress'] as int? ?? 0,
+        reminderAt: json['reminder_at'] == null
+            ? null
+            : DateTime.parse(json['reminder_at'] as String),
+        completedAt: json['completed_at'] == null
+            ? null
+            : DateTime.parse(json['completed_at'] as String),
+      );
   const Task({
     required this.id,
     required this.userId,
@@ -77,26 +96,6 @@ class Task {
   final int progress;
   final DateTime? reminderAt;
   final DateTime? completedAt;
-
-  factory Task.fromJson(Map<String, dynamic> json) => Task(
-        id: json['id'] as String,
-        userId: json['user_id'] as String,
-        categoryId: json['category_id'] as String?,
-        title: json['title'] as String,
-        description: json['description'] as String?,
-        deadline: json['deadline'] == null
-            ? null
-            : DateTime.parse(json['deadline'] as String),
-        priority: taskPriorityFromDb(json['priority'] as String?),
-        status: taskStatusFromDb(json['status'] as String?),
-        progress: json['progress'] as int? ?? 0,
-        reminderAt: json['reminder_at'] == null
-            ? null
-            : DateTime.parse(json['reminder_at'] as String),
-        completedAt: json['completed_at'] == null
-            ? null
-            : DateTime.parse(json['completed_at'] as String),
-      );
 
   Map<String, dynamic> toJson() => {
         'id': id,

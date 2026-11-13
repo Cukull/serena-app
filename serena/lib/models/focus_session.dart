@@ -42,13 +42,26 @@ FocusStatus focusStatusFromDb(String? value) => switch (value) {
 
 /// Sesi fokus (tabel `focus_sessions`).
 class FocusSession {
+  factory FocusSession.fromJson(Map<String, dynamic> json) => FocusSession(
+        id: json['id'] as String,
+        userId: json['user_id'] as String,
+        mode: focusModeFromDb(json['mode'] as String?),
+        plannedMinutes: json['planned_minutes'] as int,
+        actualMinutes: json['actual_minutes'] as int?,
+        startedAt: DateTime.parse(json['started_at'] as String).toLocal(),
+        endedAt: json['ended_at'] == null
+            ? null
+            : DateTime.parse(json['ended_at'] as String).toLocal(),
+        status: focusStatusFromDb(json['status'] as String?),
+        note: json['note'] as String?,
+      );
   const FocusSession({
     required this.id,
     required this.userId,
     required this.mode,
     required this.plannedMinutes,
-    this.actualMinutes,
     required this.startedAt,
+    this.actualMinutes,
     this.endedAt,
     this.status = FocusStatus.active,
     this.note,
@@ -63,20 +76,6 @@ class FocusSession {
   final DateTime? endedAt;
   final FocusStatus status;
   final String? note;
-
-  factory FocusSession.fromJson(Map<String, dynamic> json) => FocusSession(
-        id: json['id'] as String,
-        userId: json['user_id'] as String,
-        mode: focusModeFromDb(json['mode'] as String?),
-        plannedMinutes: json['planned_minutes'] as int,
-        actualMinutes: json['actual_minutes'] as int?,
-        startedAt: DateTime.parse(json['started_at'] as String).toLocal(),
-        endedAt: json['ended_at'] == null
-            ? null
-            : DateTime.parse(json['ended_at'] as String).toLocal(),
-        status: focusStatusFromDb(json['status'] as String?),
-        note: json['note'] as String?,
-      );
 
   Map<String, dynamic> toJson() => {
         'id': id,

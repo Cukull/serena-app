@@ -19,13 +19,13 @@ class SerenaBackground extends StatelessWidget {
         children: [
           const _Blob(
             color: AppColors.blobViolet,
-            alignment: const Alignment(1.2, -1.2),
+            alignment: Alignment(1.2, -1.2),
             size: 240,
             opacity: 0.75,
           ),
           const _Blob(
             color: AppColors.blobCyan,
-            alignment: const Alignment(-2, 0.38),
+            alignment: Alignment(-2, 0.38),
             size: 220,
             opacity: 0.6,
           ),
