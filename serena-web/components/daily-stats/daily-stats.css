@@ -1,0 +1,121 @@
+/* ==========================================================================
+   DAILY STATS COMPONENT
+   ========================================================================== */
+
+.daily-stats-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.stats-grid {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  width: 100%;
+}
+
+.stat-card {
+  flex: 1;
+  padding: 18px 8px 16px;
+  background: #ffffff;
+  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  text-align: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 10px 22px rgba(60, 70, 130, 0.12);
+}
+
+.stat-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+/* Stat 1 Icon - Checklist */
+.icon-box-checklist {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--gradient-stat-1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.checklist-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.checklist-box {
+  width: 4px;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 1px;
+}
+
+.checklist-line {
+  width: 14px;
+  height: 3px;
+  background-color: #ffffff;
+  border-radius: 1.5px;
+}
+
+/* Stat 2 Icon - Hourglass */
+.icon-box-hourglass {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Stat 3 Icon - Checkmark */
+.icon-box-completed {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--gradient-stat-3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+}
+
+.stat-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}

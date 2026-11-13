@@ -1,0 +1,249 @@
+/* ==========================================================================
+   DETAIL JADWAL KULIAH COMPONENT
+   Refactored from Figma to HTML (DETAIL_JADWAL_KULIAH)
+   ========================================================================== */
+
+.detail-jadwal-container {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 20px 18px 24px 18px;
+  box-shadow: 0px 14px 32px rgba(94, 120, 200, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: slideUpFade 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.detail-jadwal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jadwal-type-badge {
+  padding: 4px 12px;
+  background: rgba(107, 170, 255, 0.15);
+  color: #2A86D4;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.jadwal-today-badge {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #10B981;
+}
+
+.jadwal-main-title {
+  font-size: 23px;
+  font-weight: 800;
+  color: #1B2540;
+  line-height: 1.25;
+}
+
+.jadwal-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.jadwal-time-hero {
+  background: #F4F8FC;
+  border-radius: 18px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(42, 134, 212, 0.12);
+}
+
+.jadwal-time-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.jadwal-time-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #6B7A93;
+}
+
+.jadwal-time-value {
+  font-size: 19px;
+  font-weight: 800;
+  color: #1B2540;
+}
+
+.jadwal-time-duration {
+  font-size: 11px;
+  font-weight: 600;
+  color: #2A86D4;
+}
+
+.jadwal-time-icon-box {
+  width: 44px;
+  height: 44px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(42, 134, 212, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2A86D4;
+}
+
+/* Info Grid (Ruang & Dosen) */
+.jadwal-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.jadwal-info-tile {
+  background: #F4F8FC;
+  border-radius: 16px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.jadwal-tile-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background: #DDEFFA;
+  color: #2A86D4;
+}
+
+.jadwal-tile-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.jadwal-tile-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #6B7A93;
+}
+
+.jadwal-tile-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1B2540;
+}
+
+/* Reminder Card */
+.jadwal-reminder-card {
+  background: #F4F8FC;
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.jadwal-reminder-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(139, 124, 248, 0.15);
+  border-radius: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #8B7CF8;
+}
+
+.jadwal-reminder-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.jadwal-reminder-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #6B7A93;
+}
+
+.jadwal-reminder-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1B2540;
+}
+
+/* Linked Task Item */
+.jadwal-section-label {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1B2540;
+  margin-top: 4px;
+}
+
+.jadwal-linked-task {
+  background: #FFF7F7;
+  border: 1px solid #F2A2AA;
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.jadwal-linked-task:hover {
+  transform: translateY(-2px);
+}
+
+.jadwal-linked-task-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.jadwal-linked-task-tag {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #FF383C;
+}
+
+.jadwal-linked-task-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1B2540;
+}
+
+/* Back Button */
+.btn-jadwal-kembali {
+  width: 100%;
+  height: 46px;
+  background: #ffffff;
+  border: 1px solid rgba(27, 37, 64, 0.15);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: #1B2540;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 6px;
+  transition: all var(--transition-fast);
+}
+
+.btn-jadwal-kembali:hover {
+  background: #F8FAFC;
+  border-color: rgba(27, 37, 64, 0.3);
+}

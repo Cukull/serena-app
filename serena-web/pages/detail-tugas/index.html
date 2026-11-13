@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Serena — Detail Tugas</title>
+  <link rel="stylesheet" href="../home/home.css">
+  <link rel="stylesheet" href="../../components/detail-tugas/detail-tugas.css">
+</head>
+<body>
+  <div class="device-wrapper">
+    <div class="serena-app-frame">
+      <!-- Ambient Glow Orbs -->
+      <div class="ambient-glow-container">
+        <div class="glow-orb orb-purple-left"></div>
+        <div class="glow-orb orb-green-top"></div>
+        <div class="glow-orb orb-purple-bottom"></div>
+      </div>
+
+      <!-- Status Bar -->
+      <div class="status-bar">
+        <div class="status-bar-time" id="statusClock">9:41</div>
+        <div class="status-bar-icons">
+          <div class="cellular-signal"><div class="bar bar-1"></div><div class="bar bar-2"></div><div class="bar bar-3"></div><div class="bar bar-4"></div></div>
+          <div class="battery-icon"><div class="battery-body"><div class="battery-level"></div></div><div class="battery-cap"></div></div>
+        </div>
+      </div>
+
+      <main class="app-content-scroll" style="padding-top: 10px;">
+        <div class="detail-tugas-container">
+          <div class="detail-tugas-header">
+            <span class="tugas-deadline-badge">DEADLINE MENDEKAT</span>
+            <div class="tugas-header-icon-box" title="Urgent">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </div>
+          </div>
+
+          <h2 class="tugas-main-title">Tugas Web Development</h2>
+
+          <div class="tugas-badge-row">
+            <span class="tugas-badge-urgent">Segera</span>
+            <span class="tugas-badge-lms">LMS</span>
+          </div>
+
+          <div class="tugas-countdown-card">
+            <div class="tugas-countdown-info">
+              <span class="tugas-countdown-label">Sisa waktu</span>
+              <span class="tugas-countdown-time">06 jam 12 menit</span>
+            </div>
+            <div class="tugas-countdown-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <div class="tugas-info-grid">
+            <div class="tugas-info-tile">
+              <div class="tugas-tile-icon-box tugas-tile-icon-pink">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+              <div class="tugas-tile-text">
+                <span class="tugas-tile-label">Batas waktu</span>
+                <span class="tugas-tile-value">Hari ini,<br>23.59 WIB</span>
+              </div>
+            </div>
+
+            <div class="tugas-info-tile">
+              <div class="tugas-tile-icon-box tugas-tile-icon-blue">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <div class="tugas-tile-text">
+                <span class="tugas-tile-label">Pengumpulan</span>
+                <span class="tugas-tile-value">Unggah via<br>LMS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tugas-section-label">Tugas yang harus dikerjakan</div>
+
+          <div class="tugas-note-card">
+            <span class="tugas-note-title">Catatan</span>
+            <p class="tugas-note-body">
+              Buat website portofolio responsif dengan HTML & CSS (minimal 3 halaman), lengkap dengan navigasi dan galeri proyek. Kumpulkan dalam format .zip.
+            </p>
+          </div>
+
+          <div class="tugas-actions-row">
+            <a href="../../index.html" class="btn-tugas-kembali">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>Kembali</span>
+            </a>
+            <button class="btn-tugas-lihat" onclick="alert('Membuka tautan pengumpulan LMS...');">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              <span>Lihat Tugas</span>
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+</body>
+</html>

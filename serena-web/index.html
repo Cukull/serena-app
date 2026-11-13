@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Serena — Balance Your Mind, Study & Life</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+  <!-- Core Design Tokens & Layout -->
+  <link rel="stylesheet" href="./assets/css/variables.css">
+  <link rel="stylesheet" href="./assets/css/base.css">
+  <link rel="stylesheet" href="./assets/css/layout.css">
+
+  <!-- Modular Component Styles -->
+  <link rel="stylesheet" href="./components/status-bar/status-bar.css">
+  <link rel="stylesheet" href="./components/app-header/app-header.css">
+  <link rel="stylesheet" href="./components/focus-banner/focus-banner.css">
+  <link rel="stylesheet" href="./components/daily-stats/daily-stats.css">
+  <link rel="stylesheet" href="./components/upcoming-deadline/upcoming-deadline.css">
+  <link rel="stylesheet" href="./components/daily-agenda/daily-agenda.css">
+  <link rel="stylesheet" href="./components/bottom-nav/bottom-nav.css">
+
+  <!-- New Detail & Statistik Component Styles -->
+  <link rel="stylesheet" href="./components/detail-tugas/detail-tugas.css">
+  <link rel="stylesheet" href="./components/detail-jadwal/detail-jadwal.css">
+  <link rel="stylesheet" href="./components/statistik-view/statistik-view.css">
+
+  <style>
+    /* Generic tab view transition styles */
+    .view-generic-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+      gap: 16px;
+      min-height: 400px;
+      animation: fadeInView 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInView {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .generic-icon-box {
+      width: 68px;
+      height: 68px;
+      border-radius: 22px;
+      background: var(--gradient-nav-active);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      box-shadow: var(--shadow-nav-active);
+    }
+
+    .generic-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--color-text-primary);
+    }
+
+    .generic-desc {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      max-width: 280px;
+    }
+
+    /* Clickable cursor hints for interactive cards */
+    .clickable-card {
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .clickable-card:hover {
+      transform: translateY(-2px);
+    }
+    .clickable-card:active {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Outer Desktop Device Mockup Frame -->
+  <div class="device-wrapper">
+    <div class="serena-app-frame" role="region" aria-label="Aplikasi Mobile Serena">
+
+      <!-- Ambient Glow Orbs & Background Sparkles (From Figma) -->
+      <div class="ambient-glow-container" aria-hidden="true">
+        <div class="glow-orb orb-blue-top"></div>
+        <div class="glow-orb orb-green-top"></div>
+        <div class="glow-orb orb-purple-left"></div>
+        <div class="glow-orb orb-green-mid"></div>
+        <div class="glow-orb orb-purple-bottom"></div>
+        <!-- Sparkle Dots -->
+        <div class="sparkle-dot dot-1"></div>
+        <div class="sparkle-dot dot-2"></div>
+        <div class="sparkle-dot dot-3"></div>
+        <div class="sparkle-dot dot-4"></div>
+        <div class="sparkle-dot dot-5"></div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- 1. STATUS BAR COMPONENT                                          -->
+      <!-- ================================================================ -->
+      <div class="status-bar" id="statusBar">
+        <div class="status-bar-time" id="statusClock">9:41</div>
+        <div class="status-bar-icons">
+          <!-- Cellular Signal -->
+          <div class="cellular-signal" title="Signal: Full">
+            <div class="bar bar-1"></div>
+            <div class="bar bar-2"></div>
+            <div class="bar bar-3"></div>
+            <div class="bar bar-4"></div>
+          </div>
+          <!-- Battery -->
+          <div class="battery-icon" title="Battery: 85%">
+            <div class="battery-body">
+              <div class="battery-level"></div>
+            </div>
+            <div class="battery-cap"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- MAIN SCROLLABLE CONTENT VIEWPORT                                 -->
+      <!-- ================================================================ -->
+      <main class="app-content-scroll">
+
+        <!-- ============================================================== -->
+        <!-- 2. APP HEADER COMPONENT (Hidden in Detail Views)              -->
+        <!-- ============================================================== -->
+        <header class="app-header">
+          <div class="brand-section">
+            <!-- Glassmorphic Flower Logo -->
+            <div class="logo-icon-box" title="Serena Brand">
+              <svg class="logo-graphic" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="mainLogoG1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#27BDFD"/>
+                    <stop offset="50%" stop-color="#169EF8"/>
+                    <stop offset="100%" stop-color="#0567C9"/>
+                  </linearGradient>
+                  <linearGradient id="mainLogoG2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#7BA9FF"/>
+                    <stop offset="55%" stop-color="#6F77FA"/>
+                    <stop offset="100%" stop-color="#5B3DF5"/>
+                  </linearGradient>
+                  <linearGradient id="mainLogoG3" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#77D9FE"/>
+                    <stop offset="50%" stop-color="#74A4FD"/>
+                    <stop offset="100%" stop-color="#5B35FA"/>
+                  </linearGradient>
+                </defs>
+                <path d="M16 4C18 8 20 12 24 14C20 16 16 20 16 28C16 20 12 16 8 14C12 12 14 8 16 4Z" fill="url(#mainLogoG1)"/>
+                <path d="M16 12C18 15 21 17 25 18C21 19 18 22 17 26C16 22 13 19 9 18C13 17 15 15 16 12Z" fill="url(#mainLogoG2)" opacity="0.9"/>
+                <circle cx="16" cy="16" r="3.5" fill="url(#mainLogoG3)"/>
+              </svg>
+            </div>
+
+            <!-- Brand Typography -->
+            <div class="brand-title-wrap">
+              <div class="brand-name">
+                <span class="brand-seren">SEREN</span><span class="brand-a">A</span>
+              </div>
+              <div class="brand-dot"></div>
+            </div>
+          </div>
+
+          <div class="header-actions">
+            <!-- Notification Bell -->
+            <button class="btn-icon-round" id="notificationBtn" aria-label="Notifikasi" title="Notifikasi Baru">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B2340" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="notification-badge-dot"></span>
+            </button>
+
+            <!-- User Avatar -->
+            <div class="avatar-badge" title="Profil Sahal">
+              SA
+            </div>
+          </div>
+        </header>
+
+        <!-- ============================================================== -->
+        <!-- VIEW: BERANDA (HOME)                                           -->
+        <!-- ============================================================== -->
+        <div id="viewHome" style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
+
+          <!-- 3. GREETING & FOCUS BANNER HERO CARD -->
+          <section class="focus-section">
+            <div class="user-greeting">
+              <h1 class="greeting-title">Selamat pagi, Sahal 👋</h1>
+              <p class="greeting-subtitle">Yuk, buat hari ini produktif dan tenang.</p>
+            </div>
+
+            <div style="height: 18px;"></div>
+
+            <!-- Focus Hero Card -->
+            <div class="focus-hero-card" id="focusHeroCard">
+              <div class="hero-deco-container">
+                <div class="hero-deco-radial"></div>
+                <div class="hero-deco-stripe-1"></div>
+                <div class="hero-deco-stripe-2"></div>
+                <!-- Hourglass abstract artwork -->
+                <svg class="hero-artwork" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="15" y="10" width="50" height="100" rx="20" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.2)"/>
+                  <path d="M22 25C22 25 35 45 40 45C45 45 58 25 58 25Z" fill="url(#mainHeroSand)"/>
+                  <path d="M20 95C20 95 32 80 40 80C48 80 60 95 60 95Z" fill="url(#mainHeroSand)"/>
+                  <line x1="40" y1="45" x2="40" y2="80" stroke="#B79BFF" stroke-width="2.5" stroke-dasharray="3 3"/>
+                  <defs>
+                    <linearGradient id="mainHeroSand" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#C4A8FF"/>
+                      <stop offset="100%" stop-color="#7BE3D0"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+
+              <!-- Top Info -->
+              <div class="hero-top-info">
+                <div class="focus-status-badge">
+                  <span class="pulsing-dot" id="pulseDot"></span>
+                  <span class="focus-status-text" id="focusStatusText">Sedang fokus</span>
+                </div>
+                <div class="focus-timer-digits" id="focusTimerDisplay">18:42</div>
+              </div>
+
+              <!-- Jeda Fokus Interactive Action Button -->
+              <button class="btn-pause-focus" id="btnPauseFocus" aria-label="Jeda atau lanjutkan sesi fokus">
+                <div class="btn-pause-icon" id="pauseBtnIcon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round">
+                    <line x1="10" y1="5" x2="10" y2="19"></line>
+                    <line x1="14" y1="5" x2="14" y2="19"></line>
+                  </svg>
+                </div>
+                <span class="btn-pause-label" id="pauseBtnLabel">Jeda Fokus</span>
+                <div class="btn-pause-arrow">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2B6F78" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </section>
+
+          <!-- 4. STATISTIK HARIAN COMPONENT (Clickable -> Opens Statistik View) -->
+          <section class="daily-stats-section">
+            <div class="section-header-row" id="headerStatistikHarian" title="Klik untuk lihat rincian statistik">
+              <h2 class="section-title">Statistik Harian</h2>
+              <span class="see-all-link">Lihat grafik &rarr;</span>
+            </div>
+
+            <div class="stats-grid">
+              <!-- Stat 1: Tugas tersisa -->
+              <div class="stat-card clickable-card" id="statCardTasks" title="Klik untuk rincian tugas tersisa">
+                <div class="stat-icon-wrapper">
+                  <div class="icon-box-checklist">
+                    <div class="checklist-row"><span class="checklist-box"></span><span class="checklist-line"></span></div>
+                    <div class="checklist-row"><span class="checklist-box"></span><span class="checklist-line"></span></div>
+                    <div class="checklist-row"><span class="checklist-box"></span><span class="checklist-line"></span></div>
+                  </div>
+                </div>
+                <div class="stat-value" id="statRemainingTasks">3</div>
+                <div class="stat-label">Tugas tersisa</div>
+              </div>
+
+              <!-- Stat 2: Waktu fokus -->
+              <div class="stat-card clickable-card" id="statCardFocus" title="Klik untuk rincian waktu fokus">
+                <div class="stat-icon-wrapper">
+                  <svg class="icon-box-hourglass" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="12" y="5" width="20" height="34" rx="10" fill="#EAF1FE" stroke="#6FA8F5" stroke-width="2.8"/>
+                    <path d="M15 29C15 29 18 36 22 36C26 36 29 29 29 29Z" fill="url(#mainStatGrad2)"/>
+                    <rect x="9" y="3" width="26" height="4" rx="2" fill="url(#mainStatGrad2)"/>
+                    <rect x="9" y="37" width="26" height="4" rx="2" fill="url(#mainStatGrad2)"/>
+                    <defs>
+                      <linearGradient id="mainStatGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6FA8F5"/>
+                        <stop offset="100%" stop-color="#A66BF0"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="stat-value" id="statFocusTime">1j 40m</div>
+                <div class="stat-label">Waktu fokus</div>
+              </div>
+
+              <!-- Stat 3: Selesai -->
+              <div class="stat-card clickable-card" id="statCardDone" title="Klik untuk rincian tugas selesai">
+                <div class="stat-icon-wrapper">
+                  <div class="icon-box-completed">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                </div>
+                <div class="stat-value" id="statCompletedTasks">2</div>
+                <div class="stat-label">Selesai</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 5. TENGGAT TERDEKAT COMPONENT (Clickable -> Opens Detail Tugas) -->
+          <section class="upcoming-deadline-section">
+            <div class="section-header-row">
+              <h2 class="section-title">Tenggat Terdekat</h2>
+              <span class="see-all-link">Lihat semua</span>
+            </div>
+
+            <div class="deadline-card clickable-card" id="deadlineCard" title="Klik untuk lihat detail tugas">
+              <div class="deadline-card-header">
+                <span class="deadline-tag-text">DEADLINE MENDEKAT</span>
+                <svg class="deadline-icon-bell" viewBox="0 0 24 24" fill="none" stroke="#E5646B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="13" r="8"></circle>
+                  <path d="M12 9v4l2 2"></path>
+                  <path d="M5 3L2 6"></path>
+                  <path d="M22 6l-3-3"></path>
+                </svg>
+              </div>
+
+              <div class="deadline-card-body">
+                <div class="deadline-info">
+                  <h3 class="deadline-title">Tugas Web Development</h3>
+                  <p class="deadline-subtitle">Batas waktu: Hari ini, 23.59 WIB</p>
+                </div>
+
+                <div class="deadline-metrics">
+                  <div class="deadline-progress-bar" title="Progress: 58%">
+                    <div class="deadline-progress-fill"></div>
+                  </div>
+                  <div class="badge-group">
+                    <span class="badge-urgent">Segera</span>
+                    <span class="badge-lms">LMS</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 6. AGENDA HARI INI COMPONENT -->
+          <section class="daily-agenda-section">
+            <h2 class="section-title">Agenda Hari Ini</h2>
+            <div class="timeline-list">
+              <!-- Timeline Item 1: Kuliah UI/UX (Clickable -> Detail Jadwal) -->
+              <div class="timeline-item">
+                <div class="timeline-time-col">09:00</div>
+                <div class="timeline-track-col">
+                  <div class="timeline-dot dot-blue"></div>
+                  <div class="timeline-line"></div>
+                </div>
+                <div class="timeline-card clickable-card" id="agendaKuliahItem" title="Klik untuk lihat detail jadwal kuliah">
+                  <span class="agenda-category category-blue">KULIAH</span>
+                  <h3 class="agenda-title">Kuliah UI/UX Design</h3>
+                  <p class="agenda-meta">09:00–11:00 AM · Room E12</p>
+                  <div class="agenda-tags">
+                    <span class="tag-pill tag-pill-blue">Design</span>
+                    <span class="tag-pill tag-pill-purple">Sem. 6</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Timeline Item 2: Tugas Web Dev (Clickable -> Detail Tugas) -->
+              <div class="timeline-item">
+                <div class="timeline-time-col">09:00</div>
+                <div class="timeline-track-col">
+                  <div class="timeline-dot dot-danger"></div>
+                  <div class="timeline-line" style="opacity: 0.5;"></div>
+                </div>
+                <div class="timeline-card clickable-card" id="agendaTugasItem" title="Klik untuk lihat detail tugas">
+                  <span class="agenda-category category-danger">TUGAS</span>
+                  <h3 class="agenda-title">Kumpulkan Tugas Web Development</h3>
+                  <div class="agenda-tags">
+                    <span class="tag-pill tag-pill-danger">Segera</span>
+                    <span class="tag-pill tag-pill-purple">LMS</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- VIEW: DETAIL TUGAS                                             -->
+        <!-- ============================================================== -->
+        <div id="viewDetailTugas" style="display: none; width: 100%;">
+          <div class="detail-tugas-container">
+            <div class="detail-tugas-header">
+              <span class="tugas-deadline-badge">DEADLINE MENDEKAT</span>
+              <div class="tugas-header-icon-box" title="Urgent">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+              </div>
+            </div>
+
+            <h2 class="tugas-main-title">Tugas Web Development</h2>
+
+            <div class="tugas-badge-row">
+              <span class="tugas-badge-urgent">Segera</span>
+              <span class="tugas-badge-lms">LMS</span>
+            </div>
+
+            <div class="tugas-countdown-card">
+              <div class="tugas-countdown-info">
+                <span class="tugas-countdown-label">Sisa waktu</span>
+                <span class="tugas-countdown-time">06 jam 12 menit</span>
+              </div>
+              <div class="tugas-countdown-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <div class="tugas-info-grid">
+              <div class="tugas-info-tile">
+                <div class="tugas-tile-icon-box tugas-tile-icon-pink">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                </div>
+                <div class="tugas-tile-text">
+                  <span class="tugas-tile-label">Batas waktu</span>
+                  <span class="tugas-tile-value">Hari ini,<br>23.59 WIB</span>
+                </div>
+              </div>
+
+              <div class="tugas-info-tile">
+                <div class="tugas-tile-icon-box tugas-tile-icon-blue">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                </div>
+                <div class="tugas-tile-text">
+                  <span class="tugas-tile-label">Pengumpulan</span>
+                  <span class="tugas-tile-value">Unggah via<br>LMS</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="tugas-section-label">Tugas yang harus dikerjakan</div>
+
+            <div class="tugas-note-card">
+              <span class="tugas-note-title">Catatan</span>
+              <p class="tugas-note-body">
+                Buat website portofolio responsif dengan HTML & CSS (minimal 3 halaman), lengkap dengan navigasi dan galeri proyek. Kumpulkan dalam format .zip.
+              </p>
+            </div>
+
+            <div class="tugas-actions-row">
+              <button class="btn-tugas-kembali" id="btnTugasKembali">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                <span>Kembali</span>
+              </button>
+              <button class="btn-tugas-lihat" id="btnTugasLihat">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span>Lihat Tugas</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- VIEW: DETAIL JADWAL KULIAH                                     -->
+        <!-- ============================================================== -->
+        <div id="viewDetailJadwal" style="display: none; width: 100%;">
+          <div class="detail-jadwal-container">
+            <div class="detail-jadwal-header">
+              <span class="jadwal-type-badge">KULIAH</span>
+              <span class="jadwal-today-badge">Hari ini</span>
+            </div>
+
+            <h2 class="jadwal-main-title">Kuliah UI/UX Design</h2>
+
+            <div class="jadwal-badge-row">
+              <span class="tag-pill tag-pill-blue">Design</span>
+              <span class="tag-pill tag-pill-purple">Sem. 6</span>
+            </div>
+
+            <div class="jadwal-time-hero">
+              <div class="jadwal-time-info">
+                <span class="jadwal-time-label">Jadwal kuliah</span>
+                <span class="jadwal-time-value">09:00 – 11:00</span>
+                <span class="jadwal-time-duration">Durasi 2 jam</span>
+              </div>
+              <div class="jadwal-time-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <div class="jadwal-info-grid">
+              <div class="jadwal-info-tile">
+                <div class="jadwal-tile-icon-box">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <div class="jadwal-tile-text">
+                  <span class="jadwal-tile-label">Ruang</span>
+                  <span class="jadwal-tile-value">Room E12</span>
+                </div>
+              </div>
+
+              <div class="jadwal-info-tile">
+                <div class="jadwal-tile-icon-box">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </div>
+                <div class="jadwal-tile-text">
+                  <span class="jadwal-tile-label">Dosen</span>
+                  <span class="jadwal-tile-value">Dr. Ir. Hendra</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="jadwal-reminder-card">
+              <div class="jadwal-reminder-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+              </div>
+              <div class="jadwal-reminder-text">
+                <span class="jadwal-reminder-label">Pengingat</span>
+                <span class="jadwal-reminder-value">30 menit sebelum kuliah</span>
+              </div>
+            </div>
+
+            <div class="jadwal-section-label">Tugas hari ini</div>
+
+            <div class="jadwal-linked-task" id="linkedTugasItem" title="Klik untuk lihat detail tugas">
+              <div class="jadwal-linked-task-info">
+                <span class="jadwal-linked-task-tag">TUGAS · 23.59</span>
+                <span class="jadwal-linked-task-title">Kumpulkan Tugas Web Development</span>
+              </div>
+              <span class="badge-urgent">Segera</span>
+            </div>
+
+            <button class="btn-jadwal-kembali" id="btnJadwalKembali">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>Kembali</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- VIEW: STATISTIK (Harian, Mingguan, Bulanan)                    -->
+        <!-- ============================================================== -->
+        <div id="viewStatistik" style="display: none; width: 100%;">
+          <div class="statistik-view-container">
+            <!-- Top Bar with Back Button -->
+            <div class="statistik-top-bar">
+              <button class="btn-stat-back" id="btnStatBack" aria-label="Kembali ke Beranda" title="Kembali ke Beranda">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+              </button>
+              <h1 class="statistik-page-title">Statistik Belajar</h1>
+            </div>
+
+            <!-- Period Tabs: Harian, Mingguan, Bulanan -->
+            <div class="period-tabs-wrapper" role="tablist">
+              <button class="period-tab-btn active" data-period="harian" id="tabStatHarian">Harian</button>
+              <button class="period-tab-btn" data-period="mingguan" id="tabStatMingguan">Mingguan</button>
+              <button class="period-tab-btn" data-period="bulanan" id="tabStatBulanan">Bulanan</button>
+            </div>
+
+            <!-- Metric Filter: Tugas Tersisa, Waktu Fokus, Selesai -->
+            <div class="stat-filter-row">
+              <div class="stat-filter-item active" data-metric="tasks">
+                <div class="stat-filter-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 11 12 14 22 4"></polyline>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                  </svg>
+                </div>
+                <span class="stat-filter-label">Tugas tersisa</span>
+              </div>
+
+              <div class="stat-filter-item" data-metric="focus">
+                <div class="stat-filter-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <span class="stat-filter-label">Waktu fokus</span>
+              </div>
+
+              <div class="stat-filter-item" data-metric="done">
+                <div class="stat-filter-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="16 10 11 15 8 12"></polyline>
+                  </svg>
+                </div>
+                <span class="stat-filter-label">Selesai</span>
+              </div>
+            </div>
+
+            <!-- Main Chart Card -->
+            <div class="stat-chart-card">
+              <div class="stat-chart-header">
+                <div>
+                  <div class="stat-chart-metric-title" id="chartMetricTitle">Tugas tersisa · Hari ini</div>
+                  <div class="stat-chart-metric-val" id="chartMetricVal">3 tugas</div>
+                </div>
+                <div class="stat-trend-badge neutral" id="chartTrendBadge">
+                  <span id="chartTrendText">0% vs hari sebelumnya</span>
+                </div>
+              </div>
+
+              <!-- Bar Chart -->
+              <div class="stat-barchart-container" id="barChartContainer">
+                <div class="barchart-y-axis" id="chartYAxis">
+                  <span>6</span>
+                  <span>4</span>
+                  <span>2</span>
+                  <span>0</span>
+                </div>
+                <div class="barchart-bars" id="chartBarsWrapper">
+                  <div class="bar-column">
+                    <div class="bar-pill" style="height: 65%;"></div>
+                    <span class="bar-label">Sel</span>
+                  </div>
+                  <div class="bar-column">
+                    <div class="bar-pill" style="height: 35%;"></div>
+                    <span class="bar-label">Rab</span>
+                  </div>
+                  <div class="bar-column">
+                    <div class="bar-pill" style="height: 80%;"></div>
+                    <span class="bar-label">Kam</span>
+                  </div>
+                  <div class="bar-column">
+                    <div class="bar-pill" style="height: 50%;"></div>
+                    <span class="bar-label">Jum</span>
+                  </div>
+                  <div class="bar-column">
+                    <div class="bar-pill" style="height: 20%;"></div>
+                    <span class="bar-label">Sab</span>
+                  </div>
+                  <div class="bar-column">
+                    <div class="bar-pill" style="height: 35%;"></div>
+                    <span class="bar-label">Min</span>
+                  </div>
+                  <div class="bar-column active">
+                    <div class="bar-pill" style="height: 50%;"></div>
+                    <span class="bar-label">Sen</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Highlights -->
+            <div class="stat-highlights-grid">
+              <div class="stat-highlight-tile">
+                <span class="stat-highlight-label">Tertinggi</span>
+                <span class="stat-highlight-val" id="statValTertinggi">6 tugas</span>
+              </div>
+              <div class="stat-highlight-tile">
+                <span class="stat-highlight-label">Rata-rata</span>
+                <span class="stat-highlight-val" id="statValRata">4 tugas / hari</span>
+              </div>
+            </div>
+
+            <!-- Insight Card -->
+            <div class="stat-insight-card">
+              <div class="stat-insight-icon">💡</div>
+              <p class="stat-insight-text" id="statInsightText">
+                Tugas tersisamu sama seperti hari sebelumnya. Pertahankan ritme ini!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- GENERIC TAB VIEW (Jadwal, Fokus, Akun)                         -->
+        <!-- ============================================================== -->
+        <div class="view-generic-container" id="viewGeneric">
+          <div class="generic-icon-box">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          <h2 class="generic-title" id="genericViewTitle">Halaman</h2>
+          <p class="generic-desc" id="genericViewDesc">Konten halaman ini siap dikembangkan.</p>
+        </div>
+
+      </main>
+
+      <!-- ================================================================ -->
+      <!-- 7. FLOATING BOTTOM NAVIGATION DOCK                               -->
+      <!-- ================================================================ -->
+      <nav class="bottom-nav-dock-container" aria-label="Navigasi Utama">
+        <div class="bottom-nav-dock">
+          <!-- Tab 1: Beranda -->
+          <button class="nav-tab-item active" data-tab="home" id="tabBeranda">
+            <div class="nav-tab-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <span class="nav-tab-label">Beranda</span>
+          </button>
+
+          <!-- Tab 2: Jadwal -->
+          <button class="nav-tab-item" data-tab="jadwal" id="tabJadwal">
+            <div class="nav-tab-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <span class="nav-tab-label">Jadwal</span>
+          </button>
+
+          <!-- Tab 3: Fokus -->
+          <button class="nav-tab-item" data-tab="fokus" id="tabFokus">
+            <div class="nav-tab-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+            </div>
+            <span class="nav-tab-label">Fokus</span>
+          </button>
+
+          <!-- Tab 4: Akun -->
+          <button class="nav-tab-item" data-tab="akun" id="tabAkun">
+            <div class="nav-tab-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <span class="nav-tab-label">Akun</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- 8. iOS HOME INDICATOR PILL -->
+      <div class="home-indicator"></div>
+
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript -->
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>

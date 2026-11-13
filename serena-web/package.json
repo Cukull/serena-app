@@ -1,0 +1,18 @@
+{
+  "name": "serena-web",
+  "version": "1.0.0",
+  "description": "Serena Web Frontend — Modular HTML/CSS/JS Refactored from Figma Design",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "serena",
+    "figma-to-html",
+    "modular-css",
+    "mobile-first"
+  ],
+  "author": "Sahal & Tim Serena",
+  "license": "MIT"
+}

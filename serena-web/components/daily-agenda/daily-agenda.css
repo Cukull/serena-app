@@ -1,0 +1,144 @@
+/* ==========================================================================
+   DAILY AGENDA COMPONENT (TIMELINE)
+   ========================================================================== */
+
+.daily-agenda-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Left Time Column */
+.timeline-time-col {
+  width: 38px;
+  padding-top: 10px;
+  text-align: right;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  user-select: none;
+}
+
+/* Center Timeline Indicator (Dot & Track) */
+.timeline-track-col {
+  width: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-blue {
+  background-color: #6BAAFF;
+}
+
+.dot-danger {
+  background-color: var(--color-danger-accent);
+}
+
+.timeline-line {
+  width: 1.5px;
+  flex: 1;
+  background-color: rgba(200, 215, 245, 0.60);
+  margin-top: 4px;
+}
+
+/* Right Content Card */
+.timeline-card {
+  flex: 1;
+  padding: 11px 13px;
+  background: #ffffff;
+  box-shadow: var(--shadow-card-sm);
+  border-radius: var(--radius-lg);
+  border-left: 5px solid #A78BFA;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.timeline-card:hover {
+  transform: translateX(2px);
+  box-shadow: 0px 4px 14px rgba(80, 100, 180, 0.12);
+}
+
+.agenda-category {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.54px;
+}
+
+.category-blue {
+  color: #4A8FE0;
+}
+
+.category-danger {
+  color: var(--color-danger-accent);
+  font-weight: 800;
+}
+
+.agenda-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  line-height: 1.25;
+}
+
+.agenda-meta {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.agenda-tags {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+  flex-wrap: wrap;
+}
+
+.tag-pill {
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.tag-pill-blue {
+  background-color: rgba(107, 170, 255, 0.12);
+  color: #4A8FE0;
+}
+
+.tag-pill-purple {
+  background-color: rgba(167, 139, 248, 0.12);
+  color: #8B7CF8;
+}
+
+.tag-pill-danger {
+  background-color: rgba(255, 56, 60, 0.14);
+  color: var(--color-danger-accent);
+}

@@ -1,0 +1,129 @@
+<!-- STATISTIK VIEW COMPONENT -->
+<div class="statistik-view-container" id="statistikViewCard">
+  <!-- Top Bar with Back Button -->
+  <div class="statistik-top-bar">
+    <button class="btn-stat-back" id="btnStatBack" aria-label="Kembali ke Beranda" title="Kembali ke Beranda">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+    </button>
+    <h1 class="statistik-page-title">Statistik Belajar</h1>
+  </div>
+
+  <!-- Period Tabs: Harian, Mingguan, Bulanan -->
+  <div class="period-tabs-wrapper" role="tablist">
+    <button class="period-tab-btn active" data-period="harian" id="tabStatHarian">Harian</button>
+    <button class="period-tab-btn" data-period="mingguan" id="tabStatMingguan">Mingguan</button>
+    <button class="period-tab-btn" data-period="bulanan" id="tabStatBulanan">Bulanan</button>
+  </div>
+
+  <!-- Metric Filter: Tugas Tersisa, Waktu Fokus, Selesai -->
+  <div class="stat-filter-row">
+    <div class="stat-filter-item active" data-metric="tasks">
+      <div class="stat-filter-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 11 12 14 22 4"></polyline>
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+        </svg>
+      </div>
+      <span class="stat-filter-label">Tugas tersisa</span>
+    </div>
+
+    <div class="stat-filter-item" data-metric="focus">
+      <div class="stat-filter-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+      </div>
+      <span class="stat-filter-label">Waktu fokus</span>
+    </div>
+
+    <div class="stat-filter-item" data-metric="done">
+      <div class="stat-filter-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="16 10 11 15 8 12"></polyline>
+        </svg>
+      </div>
+      <span class="stat-filter-label">Selesai</span>
+    </div>
+  </div>
+
+  <!-- Main Chart Card -->
+  <div class="stat-chart-card">
+    <div class="stat-chart-header">
+      <div>
+        <div class="stat-chart-metric-title" id="chartMetricTitle">Tugas tersisa · Hari ini</div>
+        <div class="stat-chart-metric-val" id="chartMetricVal">3 tugas</div>
+      </div>
+      <div class="stat-trend-badge neutral" id="chartTrendBadge">
+        <span id="chartTrendText">0% vs hari sebelumnya</span>
+      </div>
+    </div>
+
+    <!-- Interactive SVG / CSS Bar Chart -->
+    <div class="stat-barchart-container" id="barChartContainer">
+      <!-- Y-Axis Scale -->
+      <div class="barchart-y-axis" id="chartYAxis">
+        <span>6</span>
+        <span>4</span>
+        <span>2</span>
+        <span>0</span>
+      </div>
+
+      <!-- Bars -->
+      <div class="barchart-bars" id="chartBarsWrapper">
+        <div class="bar-column">
+          <div class="bar-pill" style="height: 65%;"></div>
+          <span class="bar-label">Sel</span>
+        </div>
+        <div class="bar-column">
+          <div class="bar-pill" style="height: 35%;"></div>
+          <span class="bar-label">Rab</span>
+        </div>
+        <div class="bar-column">
+          <div class="bar-pill" style="height: 80%;"></div>
+          <span class="bar-label">Kam</span>
+        </div>
+        <div class="bar-column">
+          <div class="bar-pill" style="height: 50%;"></div>
+          <span class="bar-label">Jum</span>
+        </div>
+        <div class="bar-column">
+          <div class="bar-pill" style="height: 20%;"></div>
+          <span class="bar-label">Sab</span>
+        </div>
+        <div class="bar-column">
+          <div class="bar-pill" style="height: 35%;"></div>
+          <span class="bar-label">Min</span>
+        </div>
+        <div class="bar-column active">
+          <div class="bar-pill" style="height: 50%;"></div>
+          <span class="bar-label">Sen</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Highlights: Tertinggi & Rata-rata -->
+  <div class="stat-highlights-grid">
+    <div class="stat-highlight-tile">
+      <span class="stat-highlight-label">Tertinggi</span>
+      <span class="stat-highlight-val" id="statValTertinggi">6 tugas</span>
+    </div>
+    <div class="stat-highlight-tile">
+      <span class="stat-highlight-label">Rata-rata</span>
+      <span class="stat-highlight-val" id="statValRata">4 tugas / hari</span>
+    </div>
+  </div>
+
+  <!-- Motivational Insight Card -->
+  <div class="stat-insight-card">
+    <div class="stat-insight-icon">💡</div>
+    <p class="stat-insight-text" id="statInsightText">
+      Tugas tersisamu sama seperti hari sebelumnya. Pertahankan ritme ini!
+    </p>
+  </div>
+</div>

@@ -1,0 +1,185 @@
+/* ==========================================================================
+   FOCUS BANNER (HERO CARD) COMPONENT
+   ========================================================================== */
+
+/* User Greeting */
+.user-greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.greeting-title {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+  letter-spacing: -0.5px;
+}
+
+.greeting-subtitle {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+/* Focus Banner Hero Card */
+.focus-hero-card {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  padding: 24px 22px;
+  background: var(--gradient-hero);
+  box-shadow: var(--shadow-hero);
+  border-radius: var(--radius-hero);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: #ffffff;
+}
+
+/* Abstract Vector Overlays inside Hero Card */
+.hero-deco-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-deco-radial {
+  position: absolute;
+  width: 184px;
+  height: 174px;
+  right: -10px;
+  top: 5px;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 100%);
+  opacity: 0.6;
+}
+
+.hero-deco-stripe-1 {
+  position: absolute;
+  width: 100%;
+  height: 47px;
+  left: 0;
+  bottom: 26px;
+  background: #ffffff;
+  opacity: 0.14;
+}
+
+.hero-deco-stripe-2 {
+  position: absolute;
+  width: 100%;
+  height: 26px;
+  left: 0;
+  bottom: 0px;
+  background: #ffffff;
+  opacity: 0.20;
+}
+
+/* Decorative hourglass / abstract geometric artwork */
+.hero-artwork {
+  position: absolute;
+  right: 18px;
+  top: 34px;
+  width: 80px;
+  height: 120px;
+  opacity: 0.85;
+}
+
+/* Focus Status Badge */
+.focus-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pulsing-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-success);
+  border-radius: 50%;
+}
+
+.pulsing-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: rgba(124, 242, 178, 0.35);
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  50% { transform: scale(1.6); opacity: 0.2; }
+  100% { transform: scale(0.8); opacity: 0.8; }
+}
+
+.focus-status-text {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+}
+
+/* Big Timer Digits */
+.focus-timer-digits {
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Action Button: Jeda Fokus */
+.btn-pause-focus {
+  position: relative;
+  z-index: 2;
+  width: 214px;
+  height: 52px;
+  padding: 0 16px 0 6px;
+  background: #ffffff;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-pill-button);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-pause-focus:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 12px 24px -4px rgba(30, 40, 120, 0.40);
+}
+
+.btn-pause-focus:active {
+  transform: translateY(0);
+}
+
+.btn-pause-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #8B5CF6 0%, #38BDF8 100%);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.btn-pause-label {
+  flex: 1;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #1E5A63;
+  text-align: left;
+}
+
+.btn-pause-arrow {
+  display: flex;
+  align-items: center;
+}
