@@ -66,7 +66,12 @@ Berdasarkan instruksi, semua kartu di Beranda (`home`) dapat diklik untuk langsu
 | **Agenda: Kumpulkan Tugas** | Klik item agenda tugas | Menuju ke **Detail Tugas** |
 | **Agenda: Kuliah UI/UX** | Klik item `Kuliah UI/UX Design` | Menuju ke **Detail Jadwal Kuliah** (09:00–11:00, Room E12, Dosen, pengingat, tugas hari ini) |
 | **Header / Kartu Statistik** | Klik header `Statistik Harian` atau salah satu dari 3 kartu | Menuju ke **Statistik Belajar** (Grafik dinamis dengan tab Harian, Mingguan, Bulanan) |
-| **Tombol Kembali** | Klik tombol `Kembali` atau panah `←` | Kembali secara mulus ke tampilan **Beranda** |
+| **Tab Navigasi: Jadwal** | Klik tab `Jadwal` di bottom dock | Menuju ke **Dasbor Perencana & Jadwal Mingguan** |
+| **Tombol (+) di Jadwal** | Klik ikon `+` di kanan atas header jadwal | Menuju ke form **Tambahkan Tugas Baru** |
+| **Tombol [Konfirmasi]** | Klik tombol `Konfirmasi` pada kartu Batas Waktu | Menuju ke alur **Konfirmasi Pengumpulan** & **Terkonfirmasi** |
+| **Tombol [Nanti]** | Klik tombol `Nanti` pada kartu tugas | Menuju ke alur **Tunda Tugas** & **Penundaan Tersimpan** |
+| **Tombol [Mulai Fokus] / [Lanjutkan]** | Klik tombol fokus pada kartu tugas | Menuju ke mode **Sesi Tugas (Timer Pomodoro Interaktif)** |
+| **Tombol Kembali** | Klik tombol `Kembali` atau panah `←` | Kembali secara mulus ke tampilan sebelumnya |
 
 ---
 

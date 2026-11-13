@@ -53,34 +53,10 @@
         <header class="app-header">
           <div class="brand-section">
             <div class="logo-icon-box" title="Serena Brand">
-              <svg class="logo-graphic" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="homeLogoG1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#27BDFD"/>
-                    <stop offset="50%" stop-color="#169EF8"/>
-                    <stop offset="100%" stop-color="#0567C9"/>
-                  </linearGradient>
-                  <linearGradient id="homeLogoG2" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#7BA9FF"/>
-                    <stop offset="55%" stop-color="#6F77FA"/>
-                    <stop offset="100%" stop-color="#5B3DF5"/>
-                  </linearGradient>
-                  <linearGradient id="homeLogoG3" x1="100%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#77D9FE"/>
-                    <stop offset="50%" stop-color="#74A4FD"/>
-                    <stop offset="100%" stop-color="#5B35FA"/>
-                  </linearGradient>
-                </defs>
-                <path d="M16 4C18 8 20 12 24 14C20 16 16 20 16 28C16 20 12 16 8 14C12 12 14 8 16 4Z" fill="url(#homeLogoG1)"/>
-                <path d="M16 12C18 15 21 17 25 18C21 19 18 22 17 26C16 22 13 19 9 18C13 17 15 15 16 12Z" fill="url(#homeLogoG2)" opacity="0.9"/>
-                <circle cx="16" cy="16" r="3.5" fill="url(#homeLogoG3)"/>
-              </svg>
+              <img src="../../assets/icons/serena-logo.png" alt="Serena Logo" class="brand-logo-img">
             </div>
             <div class="brand-title-wrap">
-              <div class="brand-name">
-                <span class="brand-seren">SEREN</span><span class="brand-a">A</span>
-              </div>
-              <div class="brand-dot"></div>
+              <img src="../../assets/icons/serena-wordmark.png" alt="SERENA" class="brand-wordmark-img">
             </div>
           </div>
           <div class="header-actions">
@@ -91,7 +67,7 @@
               </svg>
               <span class="notification-badge-dot"></span>
             </button>
-            <div class="avatar-badge" title="Profil Sahal">SA</div>
+            <div class="avatar-badge clickable-card" id="headerUserAvatar" title="Profil Yusup Arief" style="cursor: pointer;">YA</div>
           </div>
         </header>
 
@@ -100,20 +76,33 @@
           <!-- Focus Banner Hero Component -->
           <section class="focus-section">
             <div class="user-greeting">
-              <h1 class="greeting-title">Selamat pagi, Sahal 👋</h1>
+              <h1 class="greeting-title" id="greetingUserTitle">Selamat pagi, Yusup 👋</h1>
               <p class="greeting-subtitle">Yuk, buat hari ini produktif dan tenang.</p>
             </div>
-            <div style="height: 18px;"></div>
             <div class="focus-hero-card" id="focusHeroCard">
               <div class="hero-deco-container">
                 <div class="hero-deco-radial"></div>
                 <div class="hero-deco-stripe-1"></div>
                 <div class="hero-deco-stripe-2"></div>
-                <svg class="hero-artwork" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="15" y="10" width="50" height="100" rx="20" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.2)"/>
-                  <path d="M22 25C22 25 35 45 40 45C45 45 58 25 58 25Z" fill="url(#homeHeroSand)"/>
-                  <path d="M20 95C20 95 32 80 40 80C48 80 60 95 60 95Z" fill="url(#homeHeroSand)"/>
-                  <line x1="40" y1="45" x2="40" y2="80" stroke="#B79BFF" stroke-width="2.5" stroke-dasharray="3 3"/>
+                <svg class="hero-artwork" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg" title="Klik untuk putar jam pasir">
+                  <!-- ROTATING HOURGLASS BODY (Flips 180° clockwise when sand finishes) -->
+                  <g class="hourglass-rotator">
+                    <!-- Outer Glass Capsule -->
+                    <rect class="glass-pill" x="15" y="10" width="50" height="100" rx="25" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.18)"/>
+                    
+                    <!-- Glass Shine/Reflection -->
+                    <path class="glass-shine" d="M22 24 Q18 60 22 96" stroke="rgba(255,255,255,0.45)" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+                    <!-- Bulb A Sand (upper at 0deg) -->
+                    <path class="sand-top" d="M20 28 C20 28 32 59 40 59 C48 59 60 28 60 28 Z" fill="url(#homeHeroSand)"/>
+
+                    <!-- Bulb B Sand (lower at 0deg) -->
+                    <path class="sand-bottom" d="M20 92 C20 92 32 61 40 61 C48 61 60 92 60 92 Z" fill="url(#homeHeroSand)"/>
+                  </g>
+
+                  <!-- DRIPPING SAND STREAM (Always falls downward towards gravity) -->
+                  <line class="sand-stream-line" x1="40" y1="58" x2="40" y2="92" stroke="#7BE3D0" stroke-width="2.5" stroke-dasharray="3 4"/>
+
                   <defs>
                     <linearGradient id="homeHeroSand" x1="0%" y1="0%" x2="0%" y2="100%">
                       <stop offset="0%" stop-color="#C4A8FF"/>
@@ -148,9 +137,12 @@
 
           <!-- Daily Stats Component -->
           <section class="daily-stats-section">
-            <h2 class="section-title">Statistik Harian</h2>
+            <div class="section-header-row" id="headerStatistikHarian" style="cursor: pointer;" title="Klik untuk lihat rincian statistik">
+              <h2 class="section-title">Statistik Harian</h2>
+              <span class="see-all-link">Lihat grafik &rarr;</span>
+            </div>
             <div class="stats-grid">
-              <div class="stat-card">
+              <div class="stat-card clickable-card" id="statCardTasks" title="Klik untuk rincian tugas tersisa">
                 <div class="stat-icon-wrapper">
                   <div class="icon-box-checklist">
                     <div class="checklist-row"><span class="checklist-box"></span><span class="checklist-line"></span></div>
@@ -161,7 +153,7 @@
                 <div class="stat-value" id="statRemainingTasks">3</div>
                 <div class="stat-label">Tugas tersisa</div>
               </div>
-              <div class="stat-card">
+              <div class="stat-card clickable-card" id="statCardFocus" title="Klik untuk rincian waktu fokus">
                 <div class="stat-icon-wrapper">
                   <svg class="icon-box-hourglass" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="12" y="5" width="20" height="34" rx="10" fill="#EAF1FE" stroke="#6FA8F5" stroke-width="2.8"/>
@@ -179,7 +171,7 @@
                 <div class="stat-value" id="statFocusTime">1j 40m</div>
                 <div class="stat-label">Waktu fokus</div>
               </div>
-              <div class="stat-card">
+              <div class="stat-card clickable-card" id="statCardDone" title="Klik untuk rincian tugas selesai">
                 <div class="stat-icon-wrapper">
                   <div class="icon-box-completed">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
@@ -197,9 +189,9 @@
           <section class="upcoming-deadline-section">
             <div class="section-header-row">
               <h2 class="section-title">Tenggat Terdekat</h2>
-              <a href="#planner" class="see-all-link">Lihat semua</a>
+              <a href="../jadwal/index.html" class="see-all-link" id="linkDeadlineSeeAll" title="Lihat semua jadwal & tugas">Lihat semua</a>
             </div>
-            <div class="deadline-card" id="deadlineCard">
+            <div class="deadline-card clickable-card" id="deadlineCard" title="Klik untuk lihat detail tugas">
               <div class="deadline-card-header">
                 <span class="deadline-tag-text">DEADLINE MENDEKAT</span>
                 <svg class="deadline-icon-bell" viewBox="0 0 24 24" fill="none" stroke="#E5646B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -237,7 +229,7 @@
                   <div class="timeline-dot dot-blue"></div>
                   <div class="timeline-line"></div>
                 </div>
-                <div class="timeline-card">
+                <div class="timeline-card clickable-card" id="agendaKuliahItem" title="Klik untuk lihat detail jadwal kuliah">
                   <span class="agenda-category category-blue">KULIAH</span>
                   <h3 class="agenda-title">Kuliah UI/UX Design</h3>
                   <p class="agenda-meta">09:00–11:00 AM · Room E12</p>
@@ -253,7 +245,7 @@
                   <div class="timeline-dot dot-danger"></div>
                   <div class="timeline-line" style="opacity: 0.5;"></div>
                 </div>
-                <div class="timeline-card">
+                <div class="timeline-card clickable-card" id="agendaTugasItem" title="Klik untuk lihat detail tugas">
                   <span class="agenda-category category-danger">TUGAS</span>
                   <h3 class="agenda-title">Kumpulkan Tugas Web Development</h3>
                   <div class="agenda-tags">
@@ -284,7 +276,7 @@
       <!-- Floating Bottom Navigation Dock -->
       <nav class="bottom-nav-dock-container" aria-label="Navigasi Utama">
         <div class="bottom-nav-dock">
-          <button class="nav-tab-item active" data-tab="home" id="tabBeranda">
+          <a href="./index.html" class="nav-tab-item active" data-tab="home" id="tabBeranda">
             <div class="nav-tab-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -292,8 +284,8 @@
               </svg>
             </div>
             <span class="nav-tab-label">Beranda</span>
-          </button>
-          <button class="nav-tab-item" data-tab="jadwal" id="tabJadwal">
+          </a>
+          <a href="../jadwal/index.html" class="nav-tab-item" data-tab="jadwal" id="tabJadwal">
             <div class="nav-tab-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -303,8 +295,8 @@
               </svg>
             </div>
             <span class="nav-tab-label">Jadwal</span>
-          </button>
-          <button class="nav-tab-item" data-tab="fokus" id="tabFokus">
+          </a>
+          <a href="../fokus/index.html" class="nav-tab-item" data-tab="fokus" id="tabFokus">
             <div class="nav-tab-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -313,8 +305,8 @@
               </svg>
             </div>
             <span class="nav-tab-label">Fokus</span>
-          </button>
-          <button class="nav-tab-item" data-tab="akun" id="tabAkun">
+          </a>
+          <a href="../profile/index.html" class="nav-tab-item" data-tab="akun" id="tabAkun">
             <div class="nav-tab-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -322,7 +314,7 @@
               </svg>
             </div>
             <span class="nav-tab-label">Akun</span>
-          </button>
+          </a>
         </div>
       </nav>
 

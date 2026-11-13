@@ -1,0 +1,458 @@
+<!-- ==========================================================================
+     SERENA COMPONENT: PROFILE & ACCOUNT VIEW (Figma Accurate)
+     ========================================================================== -->
+<div class="profile-page-container" id="profileViewContainer">
+
+  <!-- 1. MAIN PROFILE VIEW -->
+  <div id="subViewProfileMain" style="display: flex; flex-direction: column; width: 100%;">
+    <div class="profile-greet-row">
+      <div>
+        <h1 class="profile-greet-title">Profil</h1>
+        <p class="profile-greet-sub">Atur akun dan keamananmu di sini.</p>
+      </div>
+      <button class="profile-icon-btn-edit" type="button" id="btnOpenEditProfileTop" aria-label="Ubah profil" title="Ubah profil">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B2340" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 20h4L19 9l-4-4L4 16z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Profile Hero Card -->
+    <section class="profile-hero-card" aria-label="Akun Anda">
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar-circle" id="profileMainAvatar" aria-hidden="true">YA</div>
+        <button class="profile-cam-btn" type="button" id="btnMainAvatarCam" aria-label="Ganti foto profil" title="Ganti foto">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C6BF0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 8h3l2-3h6l2 3h3v11H4z"></path>
+            <circle cx="12" cy="13" r="3.5"></circle>
+          </svg>
+        </button>
+      </div>
+      <h2 class="profile-hero-name" id="profileMainShownName">Yusup Arief Fauzi</h2>
+      <p class="profile-hero-email" id="profileMainShownEmail">yusup.arief@gmail.com</p>
+
+      <div class="profile-mini-stats-grid">
+        <div class="profile-mini-stat-box">
+          <strong class="profile-mini-stat-val">12</strong>
+          <span class="profile-mini-stat-label">Tugas selesai</span>
+        </div>
+        <div class="profile-mini-stat-box">
+          <strong class="profile-mini-stat-val">14j</strong>
+          <span class="profile-mini-stat-label">Waktu fokus</span>
+        </div>
+        <div class="profile-mini-stat-box">
+          <strong class="profile-mini-stat-val">12</strong>
+          <span class="profile-mini-stat-label">Hari beruntun</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pengaturan Menu List -->
+    <section>
+      <h3 class="profile-group-title">Pengaturan</h3>
+      <div class="profile-menu-list">
+        <!-- Item 1: Pengaturan Profil -->
+        <button class="profile-menu-item" type="button" id="btnMenuPengaturanProfil">
+          <div class="profile-item-icon-wrap" style="background: linear-gradient(135deg, #6FA8F5, #A66BF0);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="7" r="4"></circle>
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            </svg>
+          </div>
+          <div class="profile-item-text">
+            <b class="profile-item-title">Pengaturan profil</b>
+            <small class="profile-item-desc">Ubah nama, email, dan foto</small>
+          </div>
+          <svg class="profile-item-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- Item 2: Keamanan & Privasi -->
+        <button class="profile-menu-item" type="button" id="btnMenuKeamananPrivasi">
+          <div class="profile-item-icon-wrap" style="background: linear-gradient(135deg, #6C8CF0, #34C3A8);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+          </div>
+          <div class="profile-item-text">
+            <b class="profile-item-title">Keamanan &amp; privasi</b>
+            <small class="profile-item-desc">Kata sandi dan siapa yang bisa melihat profilmu</small>
+          </div>
+          <svg class="profile-item-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Logout Button -->
+    <button class="btn-profile-logout" type="button" id="btnTriggerLogout">Keluar dari akun</button>
+  </div>
+
+
+  <!-- 2. SUBPAGE 1: INFO PRIBADI -->
+  <div class="profile-subpage" id="subViewInfoPribadi">
+    <div class="profile-sub-head">
+      <button class="profile-btn-back-round" type="button" id="btnBackFromInfoPribadi" aria-label="Kembali ke profil">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B2340" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h2 class="profile-sub-title-serif">Info Pribadi</h2>
+      <button class="profile-pill-action-btn" type="button" id="btnEditTopInfoPribadi">Edit</button>
+    </div>
+
+    <!-- Photo Hero -->
+    <div class="profile-ph-hero">
+      <div class="profile-ring-outer">
+        <div class="profile-ring-inner" id="infoPribadiRingIn">
+          <svg width="70" height="70" viewBox="0 0 70 70" fill="none">
+            <circle cx="35" cy="26" r="13" fill="#F3A27E"></circle>
+            <path d="M8 70c2-16 13-24 27-24s25 8 27 24z" fill="#5B8DEF"></path>
+          </svg>
+        </div>
+        <button class="profile-ring-cam-badge" type="button" id="btnInfoPribadiCam" aria-label="Ganti foto">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 8h3l2-3h6l2 3h3v11H4z"></path>
+            <circle cx="12" cy="13" r="3.5"></circle>
+          </svg>
+        </button>
+      </div>
+      <div class="profile-name-bold" id="infoPribadiName">Yusup Arief Fauzi</div>
+      <div class="profile-sub-role" id="infoPribadiSub">Mahasiswa · Ilmu Komputer</div>
+      <button class="profile-link-btn" type="button" id="btnChangePhotoLink">Ganti foto</button>
+      <input type="file" id="profileFileInput" accept="image/*" hidden>
+    </div>
+
+    <!-- 3 Stats Tiles -->
+    <div class="profile-stats-three-grid">
+      <div class="profile-stat-tile-card">
+        <i class="profile-stat-tile-icon">✅</i>
+        <strong class="profile-stat-tile-val">12</strong>
+        <span class="profile-stat-tile-sub">Tugas selesai</span>
+      </div>
+      <div class="profile-stat-tile-card">
+        <i class="profile-stat-tile-icon">⏳</i>
+        <strong class="profile-stat-tile-val">14j</strong>
+        <span class="profile-stat-tile-sub">Waktu fokus</span>
+      </div>
+      <div class="profile-stat-tile-card">
+        <i class="profile-stat-tile-icon">🔥</i>
+        <strong class="profile-stat-tile-val">12</strong>
+        <span class="profile-stat-tile-sub">Hari beruntun</span>
+      </div>
+    </div>
+
+    <!-- Info Form -->
+    <div id="profileDetailsForm">
+      <!-- Section: Info Dasar -->
+      <div class="profile-info-sec-header">
+        <span>INFO DASAR</span>
+        <button class="profile-link-btn btn-trigger-edit-fields" type="button" style="padding: 2px 6px;">Ubah</button>
+      </div>
+      <div class="profile-info-card-list">
+        <div class="profile-field-row">
+          <span class="profile-field-icon-box c-blue">👤</span>
+          <div class="profile-field-body">
+            <label class="profile-field-label" for="inputProfName">Nama lengkap</label>
+            <div class="profile-field-val" data-v="name">Yusup Arief Fauzi</div>
+            <input class="profile-field-input" id="inputProfName" type="text" autocomplete="name" value="Yusup Arief Fauzi">
+            <div class="profile-input-error" id="errProfName"></div>
+          </div>
+        </div>
+
+        <div class="profile-field-row">
+          <span class="profile-field-icon-box c-purple">✉️</span>
+          <div class="profile-field-body">
+            <label class="profile-field-label" for="inputProfEmail">Email</label>
+            <div class="profile-field-val" data-v="email">yusup.arief@gmail.com</div>
+            <input class="profile-field-input" id="inputProfEmail" type="email" autocomplete="email" value="yusup.arief@gmail.com">
+            <div class="profile-input-error" id="errProfEmail"></div>
+          </div>
+        </div>
+
+        <div class="profile-field-row">
+          <span class="profile-field-icon-box c-orange">📞</span>
+          <div class="profile-field-body">
+            <label class="profile-field-label" for="inputProfPhone">Telepon</label>
+            <div class="profile-field-val" data-v="phone">+62 812–3456–7890</div>
+            <input class="profile-field-input" id="inputProfPhone" type="tel" autocomplete="tel" value="+62 812-3456-7890">
+            <div class="profile-input-error" id="errProfPhone"></div>
+          </div>
+        </div>
+
+        <div class="profile-field-row">
+          <span class="profile-field-icon-box c-green">📅</span>
+          <div class="profile-field-body">
+            <label class="profile-field-label" for="inputProfDob">Tanggal lahir</label>
+            <div class="profile-field-val" data-v="dob">15 Maret 2002</div>
+            <input class="profile-field-input" id="inputProfDob" type="date" value="2002-03-15">
+            <div class="profile-input-error" id="errProfDob"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Info Akademik -->
+      <div class="profile-info-sec-header">
+        <span>INFO AKADEMIK</span>
+        <button class="profile-link-btn btn-trigger-edit-fields" type="button" style="padding: 2px 6px;">Ubah</button>
+      </div>
+      <div class="profile-info-card-list">
+        <div class="profile-field-row">
+          <span class="profile-field-icon-box c-blue">🏫</span>
+          <div class="profile-field-body">
+            <label class="profile-field-label" for="inputProfUni">Universitas</label>
+            <div class="profile-field-val" data-v="uni">Bandung Tech University</div>
+            <input class="profile-field-input" id="inputProfUni" type="text" value="Bandung Tech University">
+          </div>
+        </div>
+
+        <div class="profile-field-row">
+          <span class="profile-field-icon-box c-purple">📘</span>
+          <div class="profile-field-body">
+            <label class="profile-field-label" for="inputProfMajor">Jurusan</label>
+            <div class="profile-field-val" data-v="major">Ilmu Komputer</div>
+            <input class="profile-field-input" id="inputProfMajor" type="text" value="Ilmu Komputer">
+          </div>
+        </div>
+
+        <div class="profile-field-row">
+          <span class="profile-field-icon-box c-orange">🪪</span>
+          <div class="profile-field-body">
+            <label class="profile-field-label" for="inputProfNim">NIM</label>
+            <div class="profile-field-val" data-v="nim">2021-CS-0847</div>
+            <input class="profile-field-input" id="inputProfNim" type="text" value="2021-CS-0847">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Minat & Vibes -->
+      <div class="profile-info-sec-header">
+        <span>MINAT &amp; VIBES</span>
+        <button class="profile-link-btn" type="button" id="btnToggleAddChip">+ Tambah</button>
+      </div>
+      <div class="profile-chips-container" id="profileChipsContainer"></div>
+      <div class="profile-add-chip-row" id="profileAddChipRow">
+        <input class="profile-add-chip-input" id="inputNewChipText" type="text" maxlength="20" placeholder="Contoh: Fotografi" aria-label="Minat baru">
+        <button class="profile-pill-action-btn" type="button" id="btnAddChipSubmit" style="height: 44px;">Tambah</button>
+      </div>
+
+      <div class="profile-actions-bottom">
+        <button class="btn-sheet-submit" type="button" id="btnSaveAllProfileDetails">Simpan perubahan</button>
+        <button class="btn-sheet-ghost" type="button" id="btnCancelAllProfileDetails">Batal</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 3. SUBPAGE 2: KEAMANAN & PRIVASI -->
+  <div class="profile-subpage" id="subViewKeamananPrivasi">
+    <div class="profile-sub-head">
+      <button class="profile-btn-back-round" type="button" id="btnBackFromKeamanan" aria-label="Kembali ke profil">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B2340" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h2 class="profile-sub-title-serif">Keamanan &amp; Privasi</h2>
+    </div>
+
+    <!-- Shield Hero -->
+    <div class="profile-sec-hero">
+      <div class="profile-sec-shield-box" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2B3A67" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          <polyline points="9 12 11 14 15 10"></polyline>
+        </svg>
+      </div>
+      <h3 class="profile-sec-hero-title" id="secHeroTitle">Akunmu aman 🔒</h3>
+      <p class="profile-sec-hero-sub" id="secHeroSubtitle">Pemeriksaan utama lolos. Datamu tersimpan dengan aman.</p>
+      <span class="profile-score-pill" id="secHeroScorePill">Skor keamanan: 85/100</span>
+    </div>
+
+    <!-- Overview Card -->
+    <div class="profile-sec-overview-card">
+      <div class="profile-ov-header">
+        <b>Ringkasan keamanan</b>
+        <div>
+          <strong id="secScoreNumber">85</strong>
+          <span>/100</span>
+        </div>
+      </div>
+      <div class="profile-progress-bar-track">
+        <div class="profile-progress-bar-fill" id="secProgressBarFill" style="width: 85%;"></div>
+      </div>
+      <ul class="profile-check-list" id="secCheckList">
+        <li class="ok"><span class="profile-ck-point">✓</span>Kata sandi kuat</li>
+        <li class="ok"><span class="profile-ck-point">✓</span>Email terverifikasi</li>
+        <li class="ok"><span class="profile-ck-point">✓</span>Login biometrik aktif</li>
+        <li class="warn"><span class="profile-ck-point">!</span>Verifikasi dua langkah belum diatur</li>
+      </ul>
+    </div>
+
+    <!-- Section: Keamanan Akun -->
+    <div class="profile-info-sec-header">
+      <span>KEAMANAN AKUN</span>
+    </div>
+    <div class="profile-info-card-list">
+      <button class="profile-sec-row-item" type="button" id="btnOpenSheetPass">
+        <span class="profile-field-icon-box c-blue">🔑</span>
+        <div class="profile-field-body">
+          <b>Ubah kata sandi</b>
+          <small class="profile-field-label" id="secPassAgeText">Terakhir diubah 30 hari lalu</small>
+        </div>
+        <svg class="profile-item-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      <button class="profile-sec-row-item" type="button" id="btnOpenSheet2FA">
+        <span class="profile-field-icon-box c-orange">🛡️</span>
+        <div class="profile-field-body">
+          <b>Verifikasi dua langkah</b>
+          <small class="profile-field-label">Tambah lapisan keamanan saat masuk</small>
+        </div>
+        <span class="profile-sec-badge" id="secBadge2FA">Atur</span>
+      </button>
+
+      <div class="profile-sec-row-item" style="cursor: default;">
+        <span class="profile-field-icon-box c-green">👆</span>
+        <div class="profile-field-body">
+          <b>Login biometrik</b>
+          <small class="profile-field-label">Face ID / sidik jari</small>
+        </div>
+        <button class="profile-switch-toggle" type="button" role="switch" id="secBioToggle" aria-checked="true" aria-label="Login biometrik" style="margin-left: auto;"></button>
+      </div>
+
+      <button class="profile-sec-row-item" type="button" id="btnOpenSheetDev">
+        <span class="profile-field-icon-box c-purple">📱</span>
+        <div class="profile-field-body">
+          <b>Sesi aktif</b>
+          <small class="profile-field-label" id="secActiveDevCount">2 perangkat masuk</small>
+        </div>
+        <svg class="profile-item-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Section: Zona Bahaya -->
+    <div class="profile-info-sec-header sec-title-red">
+      <span>ZONA BAHAYA</span>
+    </div>
+    <div class="profile-info-card-list profile-list-danger">
+      <button class="profile-sec-row-item" type="button" id="btnOpenSheetDeact">
+        <span class="profile-field-icon-box c-danger-icon">⏸️</span>
+        <div class="profile-field-body">
+          <b>Nonaktifkan akun</b>
+          <small class="profile-field-label">Jeda akunmu untuk sementara</small>
+        </div>
+      </button>
+
+      <button class="profile-sec-row-item" type="button" id="btnOpenSheetDelete">
+        <span class="profile-field-icon-box c-danger-icon">🗑️</span>
+        <div class="profile-field-body">
+          <b>Hapus akun</b>
+          <small class="profile-field-label">Hapus semua datamu secara permanen</small>
+        </div>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- 4. BOTTOM SHEETS & SCRIM OVERLAY -->
+  <div class="profile-scrim-overlay" id="profileScrim"></div>
+
+  <!-- Sheet A: Ubah Kata Sandi -->
+  <div class="profile-bottom-sheet" id="sheetUbahSandi" role="dialog" aria-modal="true" aria-labelledby="spTitle1">
+    <div class="profile-sheet-grab-bar"></div>
+    <div class="profile-sheet-top">
+      <h3 class="profile-sheet-title" id="spTitle1">Ubah kata sandi</h3>
+      <button class="profile-btn-close-sheet btn-close-profile-sheet" type="button" aria-label="Tutup">✕</button>
+    </div>
+    <div class="profile-form-field">
+      <label for="inputSheetOldPass">Kata sandi saat ini</label>
+      <div class="profile-input-wrapper">
+        <input class="profile-sheet-input" id="inputSheetOldPass" type="password" autocomplete="current-password">
+        <button class="profile-sheet-eye-btn btn-toggle-eye" type="button" data-eye="inputSheetOldPass">Lihat</button>
+      </div>
+    </div>
+    <div class="profile-form-field">
+      <label for="inputSheetNewPass">Kata sandi baru</label>
+      <div class="profile-input-wrapper">
+        <input class="profile-sheet-input" id="inputSheetNewPass" type="password" autocomplete="new-password">
+        <button class="profile-sheet-eye-btn btn-toggle-eye" type="button" data-eye="inputSheetNewPass">Lihat</button>
+      </div>
+      <div class="profile-input-hint">Minimal 8 karakter.</div>
+    </div>
+    <div class="profile-form-field">
+      <label for="inputSheetRepeatPass">Ulangi kata sandi baru</label>
+      <div class="profile-input-wrapper">
+        <input class="profile-sheet-input" id="inputSheetRepeatPass" type="password" autocomplete="new-password">
+      </div>
+      <div class="profile-input-error" id="errSheetPass"></div>
+    </div>
+    <button class="btn-sheet-submit" type="button" id="btnSubmitNewPass">Perbarui kata sandi</button>
+    <button class="btn-sheet-ghost btn-close-profile-sheet" type="button">Batal</button>
+  </div>
+
+  <!-- Sheet B: Verifikasi Dua Langkah -->
+  <div class="profile-bottom-sheet" id="sheetDuaLangkah" role="dialog" aria-modal="true" aria-labelledby="spTitle2">
+    <div class="profile-sheet-grab-bar"></div>
+    <div class="profile-sheet-top">
+      <h3 class="profile-sheet-title" id="spTitle2">Verifikasi dua langkah</h3>
+      <button class="profile-btn-close-sheet btn-close-profile-sheet" type="button" aria-label="Tutup">✕</button>
+    </div>
+    <p class="profile-lead-text">Saat masuk di perangkat baru, kamu akan diminta kode tambahan. Akunmu tetap aman walau kata sandi bocor.</p>
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0;">
+      <span><b>Aktifkan verifikasi dua langkah</b></span>
+      <button class="profile-switch-toggle" type="button" role="switch" id="sheet2FAToggle" aria-checked="false" aria-label="Verifikasi dua langkah"></button>
+    </div>
+    <button class="btn-sheet-ghost btn-close-profile-sheet" type="button">Selesai</button>
+  </div>
+
+  <!-- Sheet C: Sesi Aktif -->
+  <div class="profile-bottom-sheet" id="sheetSesiAktif" role="dialog" aria-modal="true" aria-labelledby="spTitle3">
+    <div class="profile-sheet-grab-bar"></div>
+    <div class="profile-sheet-top">
+      <h3 class="profile-sheet-title" id="spTitle3">Sesi aktif</h3>
+      <button class="profile-btn-close-sheet btn-close-profile-sheet" type="button" aria-label="Tutup">✕</button>
+    </div>
+    <p class="profile-lead-text">Perangkat yang sedang masuk ke akunmu. Keluarkan perangkat yang tidak kamu kenali.</p>
+    <div id="sheetDevicesContainer"></div>
+    <button class="btn-sheet-ghost btn-close-profile-sheet" type="button">Tutup</button>
+  </div>
+
+  <!-- Sheet D: Nonaktifkan Akun -->
+  <div class="profile-bottom-sheet" id="sheetNonaktifkanAkun" role="dialog" aria-modal="true" style="text-align: center;">
+    <div class="profile-sheet-grab-bar"></div>
+    <h3 class="profile-sheet-title" style="margin-bottom: 6px;">Nonaktifkan akun?</h3>
+    <p class="profile-lead-text">Akunmu dijeda sementara. Kamu bisa mengaktifkannya lagi kapan saja dengan masuk kembali.</p>
+    <button class="btn-sheet-danger" type="button" id="btnConfirmDeactivate">Ya, nonaktifkan</button>
+    <button class="btn-sheet-ghost btn-close-profile-sheet" type="button">Batal</button>
+  </div>
+
+  <!-- Sheet E: Hapus Akun -->
+  <div class="profile-bottom-sheet" id="sheetHapusAkun" role="dialog" aria-modal="true" style="text-align: center;">
+    <div class="profile-sheet-grab-bar"></div>
+    <h3 class="profile-sheet-title" style="margin-bottom: 6px;">Hapus akun permanen?</h3>
+    <p class="profile-lead-text">Semua jadwal, tugas, dan catatan fokusmu akan dihapus dan tidak bisa dikembalikan.</p>
+    <div class="profile-form-field" style="text-align: left;">
+      <label for="inputConfirmDeleteText">Ketik HAPUS untuk melanjutkan</label>
+      <input class="profile-sheet-input" id="inputConfirmDeleteText" type="text" autocomplete="off" placeholder="HAPUS">
+    </div>
+    <button class="btn-sheet-danger" type="button" id="btnConfirmDeleteAccount" disabled>Hapus akun saya</button>
+    <button class="btn-sheet-ghost btn-close-profile-sheet" type="button">Batal</button>
+  </div>
+
+  <!-- Sheet F: Konfirmasi Keluar -->
+  <div class="profile-bottom-sheet" id="sheetLogoutConfirm" role="dialog" aria-modal="true" style="text-align: center;">
+    <div class="profile-sheet-grab-bar"></div>
+    <h3 class="profile-sheet-title" style="margin-bottom: 6px;">Keluar dari Serena?</h3>
+    <p class="profile-lead-text">Kamu perlu masuk lagi untuk melihat jadwal dan tugasmu.</p>
+    <button class="btn-sheet-danger" type="button" id="btnConfirmLogout">Ya, keluar</button>
+    <button class="btn-sheet-ghost btn-close-profile-sheet" type="button">Tetap di sini</button>
+  </div>
+
+</div>

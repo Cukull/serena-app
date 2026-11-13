@@ -1,0 +1,955 @@
+<!-- ========================================================================== -->
+<!-- SERENA PLANNER & JADWAL COMPONENT TEMPLATE                                 -->
+<!-- ========================================================================== -->
+
+<div class="planner-page-container" id="plannerContainer">
+
+  <!-- ======================================================================== -->
+  <!-- 1. MAIN PLANNER & SCHEDULE VIEW                                          -->
+  <!-- ======================================================================== -->
+  <div id="subViewPlannerMain" style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+
+    <!-- Top Header -->
+    <header class="planner-top-header">
+      <div class="planner-header-left">
+        <button class="planner-header-back-btn" id="btnPlannerBack" title="Kembali" style="display: none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div class="planner-header-titles">
+          <h1 class="planner-header-title" id="plannerHeaderTitle">Dasbor Perencana</h1>
+          <span class="planner-header-subtitle">Mei 2025 · 4 tugas minggu ini</span>
+        </div>
+      </div>
+
+      <button class="btn-add-task-round" id="btnOpenAddTask" title="Tambahkan Tugas Baru" aria-label="Tambahkan Tugas Baru">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- SECTION A: MONTH CALENDAR (Active in Dasbor Perencana mode) -->
+    <section class="month-calendar-card" id="plannerMonthCalendar">
+      <div class="calendar-weekdays-row">
+        <span>Min</span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
+      </div>
+      <div class="calendar-grid">
+        <!-- April overflow -->
+        <div class="calendar-day-cell inactive-month">27</div>
+        <div class="calendar-day-cell inactive-month">28</div>
+        <div class="calendar-day-cell inactive-month">29</div>
+        <div class="calendar-day-cell inactive-month">30</div>
+        <!-- May dates -->
+        <div class="calendar-day-cell">1</div>
+        <div class="calendar-day-cell">2</div>
+        <div class="calendar-day-cell">3</div>
+        <div class="calendar-day-cell">4</div>
+        <div class="calendar-day-cell">5</div>
+        <div class="calendar-day-cell" data-day="6">
+          6
+          <div class="day-dot-indicator"><span class="dot-indicator-point"></span></div>
+        </div>
+        <div class="calendar-day-cell" data-day="7">
+          7
+          <div class="day-dot-indicator"><span class="dot-indicator-point dot-green"></span></div>
+        </div>
+        <div class="calendar-day-cell selected" data-day="8">
+          8
+          <div class="day-dot-indicator"><span class="dot-indicator-point" style="background:#fff;"></span></div>
+        </div>
+        <div class="calendar-day-cell" data-day="9">
+          9
+          <div class="day-dot-indicator"><span class="dot-indicator-point"></span><span class="dot-indicator-point dot-orange"></span></div>
+        </div>
+        <div class="calendar-day-cell" data-day="10">
+          10
+          <div class="day-dot-indicator"><span class="dot-indicator-point"></span></div>
+        </div>
+        <div class="calendar-day-cell" data-day="11">
+          11
+          <div class="day-dot-indicator"><span class="dot-indicator-point"></span></div>
+        </div>
+        <div class="calendar-day-cell" data-day="12">
+          12
+          <div class="day-dot-indicator"><span class="dot-indicator-point"></span></div>
+        </div>
+        <div class="calendar-day-cell">13</div>
+        <div class="calendar-day-cell">14</div>
+        <div class="calendar-day-cell">15</div>
+        <div class="calendar-day-cell">16</div>
+        <div class="calendar-day-cell">17</div>
+        <div class="calendar-day-cell">18</div>
+        <div class="calendar-day-cell">19</div>
+        <div class="calendar-day-cell">20</div>
+        <div class="calendar-day-cell">21</div>
+        <div class="calendar-day-cell">22</div>
+        <div class="calendar-day-cell">23</div>
+        <div class="calendar-day-cell">24</div>
+        <div class="calendar-day-cell">25</div>
+        <div class="calendar-day-cell">26</div>
+        <div class="calendar-day-cell">27</div>
+        <div class="calendar-day-cell">28</div>
+        <div class="calendar-day-cell">29</div>
+        <div class="calendar-day-cell">30</div>
+        <div class="calendar-day-cell">31</div>
+        <!-- June overflow -->
+        <div class="calendar-day-cell inactive-month">1</div>
+        <div class="calendar-day-cell inactive-month">2</div>
+        <div class="calendar-day-cell inactive-month">3</div>
+        <div class="calendar-day-cell inactive-month">4</div>
+        <div class="calendar-day-cell inactive-month">5</div>
+        <div class="calendar-day-cell inactive-month">6</div>
+        <div class="calendar-day-cell inactive-month">7</div>
+      </div>
+    </section>
+
+    <!-- SECTION B: PEKAN AKADEMIK BANNER + WEEK STRIP (Active in Weekly Schedule mode) -->
+    <div id="plannerWeeklyHeroContainer" style="display: none; flex-direction: column; gap: 16px;">
+      <!-- Hero Banner -->
+      <section class="pekan-akademik-banner">
+        <div class="pekan-pill">
+          <span class="pekan-pill-dot"></span>
+          <span>Pekan Akademik</span>
+        </div>
+        <h2 class="pekan-title">Atur Alur Belajarmu</h2>
+        <div class="pekan-date">Sabtu, 9 Mei 2025</div>
+        <div class="pekan-stats-grid">
+          <div class="pekan-stat-box clickable-card" id="pekanStatKelas" title="Lihat kelas di Lini Masa">
+            <span class="pekan-stat-num">5</span>
+            <span class="pekan-stat-label">Kelas</span>
+          </div>
+          <div class="pekan-stat-box clickable-card" id="pekanStatTugas" title="Lihat daftar tugas">
+            <span class="pekan-stat-num">12</span>
+            <span class="pekan-stat-label">Tugas</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Week Selector -->
+      <section class="week-strip-section">
+        <div class="week-strip-header">
+          <span class="week-strip-title">Minggu ini</span>
+          <span class="week-strip-link" id="linkLihatSemuaKalender">
+            <span>Lihat Semua</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </span>
+        </div>
+        <div class="week-days-pills-row">
+          <div class="week-day-pill" data-date="4">
+            <span class="week-day-pill-name">Min</span>
+            <span class="week-day-pill-num">4</span>
+          </div>
+          <div class="week-day-pill" data-date="5">
+            <span class="week-day-pill-name">Sen</span>
+            <span class="week-day-pill-num">5</span>
+          </div>
+          <div class="week-day-pill" data-date="6">
+            <span class="week-day-pill-name">Sel</span>
+            <span class="week-day-pill-num">6</span>
+          </div>
+          <div class="week-day-pill" data-date="7">
+            <span class="week-day-pill-name">Rab</span>
+            <span class="week-day-pill-num">7</span>
+          </div>
+          <div class="week-day-pill active" data-date="8">
+            <span class="week-day-pill-name">Kam</span>
+            <span class="week-day-pill-num">8</span>
+          </div>
+          <div class="week-day-pill" data-date="9">
+            <span class="week-day-pill-name">Jum</span>
+            <span class="week-day-pill-num">9</span>
+          </div>
+          <div class="week-day-pill" data-date="10">
+            <span class="week-day-pill-name">Sab</span>
+            <span class="week-day-pill-num">10</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- FILTER TABS: [Lini Masa] [Batas Waktu] [Tugas] -->
+    <nav class="planner-tabs-container">
+      <button class="planner-tab-btn active" data-ptab="linimasa" id="tabPlannerLinimasa">Lini Masa</button>
+      <button class="planner-tab-btn" data-ptab="bataswaktu" id="tabPlannerBatasWaktu">Batas Waktu</button>
+      <button class="planner-tab-btn" data-ptab="tugas" id="tabPlannerTugas">Tugas</button>
+    </nav>
+
+    <!-- TAB CONTENT 1: LINI MASA -->
+    <div id="plannerTabContentLinimasa" style="display: flex; flex-direction: column; gap: 16px;">
+      <!-- Date Section: KAMIS, 8 MEI -->
+      <div class="planner-timeline-date-label">KAMIS, 8 MEI — HARI INI</div>
+      <div class="timeline-list">
+        <!-- Item 1: Kuliah Desain UI/UX -->
+        <div class="timeline-item">
+          <div class="timeline-time-col">09:00</div>
+          <div class="timeline-track-col"><div class="timeline-dot dot-blue"></div><div class="timeline-line"></div></div>
+          <div class="timeline-card clickable-card" id="timelineKuliahCard" title="Klik untuk lihat rincian jadwal">
+            <span class="agenda-category category-blue">KULIAH</span>
+            <h3 class="agenda-title">Kuliah Desain UI/UX</h3>
+            <p class="agenda-meta">09:00–11:00 · Ruangan E12</p>
+            <div class="agenda-tags">
+              <span class="tag-pill tag-pill-blue">Desain</span>
+              <span class="tag-pill tag-pill-purple">Sem. 6</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2: Tugas Database -->
+        <div class="timeline-item">
+          <div class="timeline-time-col">11:59</div>
+          <div class="timeline-track-col"><div class="timeline-dot dot-danger"></div><div class="timeline-line" style="opacity: 0.5;"></div></div>
+          <div class="timeline-card clickable-card" id="timelineTugasDbCard" title="Klik untuk konfirmasi atau kerjakan">
+            <span class="agenda-category category-danger">PENUGASAN</span>
+            <h3 class="agenda-title">Tugas Database</h3>
+            <p class="agenda-meta">Tenggat Waktu · Unggah ke LMS</p>
+            <div class="agenda-tags">
+              <span class="tag-pill tag-pill-danger">Tenggat Waktu</span>
+              <span class="tag-pill tag-pill-purple">LMS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Date Section: SENIN, 11 MEI -->
+      <div class="planner-timeline-date-label">SENIN, 11 MEI</div>
+      <div class="timeline-list">
+        <!-- Item 3: UTS Algoritma -->
+        <div class="timeline-item">
+          <div class="timeline-time-col">10:00</div>
+          <div class="timeline-track-col"><div class="timeline-dot dot-purple"></div><div class="timeline-line"></div></div>
+          <div class="timeline-card clickable-card">
+            <span class="agenda-category" style="background:#FEF3C7; color:#D97706;">UJIAN</span>
+            <h3 class="agenda-title">UTS Algoritma</h3>
+            <p class="agenda-meta">10:00–12:00 · Ruang Ujian B</p>
+            <div class="agenda-tags">
+              <span class="tag-pill" style="background:#F1F5F9; color:#475569;">Tutup Buku</span>
+              <span class="tag-pill tag-pill-blue">Teori Graf</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4: Selesai Kalkulus -->
+        <div class="timeline-item">
+          <div class="timeline-time-col">13:45</div>
+          <div class="timeline-track-col"><div class="timeline-dot dot-green" style="background:#10B981;"></div></div>
+          <div class="timeline-card">
+            <span class="agenda-category" style="background:#D1FAE5; color:#059669;">SELESAI</span>
+            <h3 class="agenda-title">Kumpulan Soal Kalkulus</h3>
+            <p class="agenda-meta">Berhasil · 3 soal telah dikumpulkan</p>
+            <div class="agenda-tags">
+              <span class="tag-pill" style="background:#D1FAE5; color:#065F46;">Berhasil ✓</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB CONTENT 2: BATAS WAKTU -->
+    <div id="plannerTabContentBatasWaktu" style="display: none; flex-direction: column; gap: 16px;">
+      <!-- Ringkasan Tugas: 1 Selesai / 5 Belum Selesai -->
+      <section class="ringkasan-tugas-section">
+        <div class="ringkasan-header-row">
+          <span class="ringkasan-title">Ringkasan Tugas</span>
+          <span class="ringkasan-scope">Dalam daftar ini</span>
+        </div>
+        <div class="ringkasan-stat-cards">
+          <div class="ringkasan-card ringkasan-card-green">
+            <span class="ringkasan-card-label">Selesai</span>
+            <span class="ringkasan-card-val">1</span>
+          </div>
+          <div class="ringkasan-card ringkasan-card-blue">
+            <span class="ringkasan-card-label">Belum Selesai</span>
+            <span class="ringkasan-card-val">5</span>
+          </div>
+        </div>
+        <div class="ringkasan-tip">
+          <span class="ringkasan-tip-icon">💡</span>
+          <span>Gunakan Pomodoro untuk menyelesaikan tugas mendesak dan fokus pada 1 tugas per sesi.</span>
+        </div>
+      </section>
+
+      <!-- Section: MENDESAK — TENGGAT MALAM INI -->
+      <div class="planner-section-title-row urgent">
+        <span>⚠️</span>
+        <span class="planner-section-label">Mendesak — Tenggat Malam Ini</span>
+      </div>
+
+      <!-- Card Mendesak Tugas Database -->
+      <div class="task-card-item urgent-border" id="cardBatasWaktuMendesak">
+        <div class="task-card-top">
+          <div class="task-course-info">
+            <div class="task-type-icon-box icon-blue">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+            </div>
+            <span class="task-course-code">SISTEM BASIS DATA</span>
+          </div>
+          <span class="task-status-badge badge-malam-ini">Malam ini</span>
+        </div>
+        <h3 class="task-card-main-title">Tugas Database</h3>
+        <div class="task-card-meta-row">
+          <span>Tenggat Waktu: 23:59 · LMS</span>
+        </div>
+        <button class="btn-card-confirm" id="btnKonfirmasiBatasWaktu">
+          Konfirmasi
+        </button>
+      </div>
+
+      <!-- Section: MINGGU INI -->
+      <div class="planner-section-title-row">
+        <span class="planner-section-label">Minggu Ini</span>
+      </div>
+
+      <div class="task-card-item" id="cardTaskAI">
+        <div class="task-card-top">
+          <h3 class="task-card-main-title" style="font-size: 14.5px;">Presentasi AI</h3>
+          <span class="task-status-badge badge-countdown">2 Hari</span>
+        </div>
+        <div class="task-card-meta-row">
+          <span>Jum, 9 Mei · 10:00</span>
+        </div>
+      </div>
+
+      <div class="task-card-item">
+        <div class="task-card-top">
+          <h3 class="task-card-main-title" style="font-size: 14.5px;">Proyek Database</h3>
+          <span class="task-status-badge badge-malam-ini">Hari ini</span>
+        </div>
+        <div class="task-card-meta-row">
+          <span>Kam, 11 Mei · 23:59</span>
+        </div>
+      </div>
+
+      <div class="task-card-item">
+        <div class="task-card-top">
+          <h3 class="task-card-main-title" style="font-size: 14.5px;">Tugas UI/UX</h3>
+          <span class="task-status-badge badge-countdown">2 Hari</span>
+        </div>
+        <div class="task-card-meta-row">
+          <span>Sab, 10 Mei · 23:59</span>
+        </div>
+      </div>
+
+      <div class="task-card-item">
+        <div class="task-card-top">
+          <h3 class="task-card-main-title" style="font-size: 14.5px;">UTS Algoritma</h3>
+          <span class="task-status-badge badge-countdown">4 Hari</span>
+        </div>
+        <div class="task-card-meta-row">
+          <span>Sen, 12 Mei · 09:00</span>
+        </div>
+      </div>
+
+      <!-- Section: SELESAI -->
+      <div class="planner-section-title-row">
+        <span class="planner-section-label">Selesai</span>
+      </div>
+
+      <div class="task-card-item done-border">
+        <div class="task-card-top">
+          <h3 class="task-card-main-title" style="font-size: 14px; color: var(--color-text-secondary); text-decoration: line-through;">Kumpulan Soal Kalkulus</h3>
+          <span class="task-status-badge badge-selesai">Selesai ✓</span>
+        </div>
+        <div class="task-card-meta-row">
+          <span>Selesai · 7 Mei</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB CONTENT 3: TUGAS -->
+    <div id="plannerTabContentTugas" style="display: none; flex-direction: column; gap: 16px;">
+      <!-- Ringkasan Tugas: 1 Selesai / 3 Belum Selesai -->
+      <section class="ringkasan-tugas-section">
+        <div class="ringkasan-header-row">
+          <span class="ringkasan-title">Ringkasan Tugas</span>
+          <span class="ringkasan-scope">Dalam daftar ini</span>
+        </div>
+        <div class="ringkasan-stat-cards">
+          <div class="ringkasan-card ringkasan-card-green">
+            <span class="ringkasan-card-label">Selesai</span>
+            <span class="ringkasan-card-val">1</span>
+          </div>
+          <div class="ringkasan-card ringkasan-card-blue">
+            <span class="ringkasan-card-label">Belum Selesai</span>
+            <span class="ringkasan-card-val">3</span>
+          </div>
+        </div>
+        <div class="ringkasan-tip">
+          <span class="ringkasan-tip-icon">⏱️</span>
+          <span>Mulai Fokus untuk sesi Pomodoro: 25 menit fokus, 5 menit istirahat.</span>
+        </div>
+      </section>
+
+      <!-- Section: MENDESAK — JATUH TEMPO HARI INI -->
+      <div class="planner-section-title-row urgent">
+        <span class="planner-section-label">Mendesak — Jatuh Tempo Hari Ini</span>
+      </div>
+
+      <!-- Card 1: Presentasi AI -->
+      <div class="task-card-item urgent-border" id="cardTugasAiItem">
+        <div class="task-card-top">
+          <div class="task-course-info">
+            <div class="task-type-icon-box icon-purple">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <span class="task-course-code">AI · PROF. DIAN</span>
+          </div>
+          <span class="task-status-badge badge-mendesak">Mendesak</span>
+        </div>
+        <h3 class="task-card-main-title">Presentasi AI</h3>
+        <div class="task-card-meta-row">
+          <span>Hari ini · 10:30 · Ruang G1</span>
+        </div>
+        <div class="task-card-actions">
+          <button class="btn-card-action btn-card-secondary btn-trigger-tunda" data-task="Presentasi AI">Nanti</button>
+          <button class="btn-card-action btn-card-primary btn-trigger-fokus" data-task="Presentasi AI">Mulai Fokus</button>
+        </div>
+      </div>
+
+      <!-- Card 2: Tugas Database -->
+      <div class="task-card-item urgent-border" id="cardTugasDbItem">
+        <div class="task-card-top">
+          <div class="task-course-info">
+            <div class="task-type-icon-box icon-blue">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+            </div>
+            <span class="task-course-code">SISTEM BASIS DATA · DR. LIA</span>
+          </div>
+          <span class="task-status-badge badge-mendesak">Mendesak</span>
+        </div>
+        <h3 class="task-card-main-title">Tugas Database</h3>
+        <div class="task-card-meta-row">
+          <span>Hari ini · 23:59 · LMS</span>
+        </div>
+        <div class="task-card-actions">
+          <button class="btn-card-action btn-card-secondary btn-trigger-tunda" data-task="Tugas Database">Nanti</button>
+          <button class="btn-card-action btn-card-primary btn-trigger-fokus" data-task="Tugas Database">Mulai Fokus</button>
+        </div>
+      </div>
+
+      <!-- Section: SEDANG BERLANGSUNG -->
+      <div class="planner-section-title-row">
+        <span class="planner-section-label">Sedang Berlangsung</span>
+      </div>
+
+      <div class="task-card-item ongoing-border" id="cardTugasProyekDb">
+        <div class="task-card-top">
+          <div class="task-course-info">
+            <div class="task-type-icon-box icon-teal">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="11" y2="17"></line></svg>
+            </div>
+            <span class="task-course-code">PROYEK DATABASE · MPK · REGEN</span>
+          </div>
+          <span class="task-status-badge badge-sedang">Sedang</span>
+        </div>
+        <h3 class="task-card-main-title">Proyek Database</h3>
+        <div class="task-card-meta-row">
+          <span>Besok · 23:59</span>
+        </div>
+        <div class="task-card-actions">
+          <button class="btn-card-action btn-card-primary btn-trigger-fokus" data-task="Proyek Database" style="width: 100%;">Lanjutkan Fokus</button>
+        </div>
+      </div>
+
+      <!-- Section: SELESAI -->
+      <div class="planner-section-title-row">
+        <span class="planner-section-label">Selesai</span>
+      </div>
+
+      <div class="task-card-item done-border">
+        <div class="task-card-top">
+          <div class="task-course-info">
+            <div class="task-type-icon-box icon-teal">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span class="task-course-code">KALKULUS · JUM, 7 MEI</span>
+          </div>
+          <span class="task-status-badge badge-selesai">Selesai ✓</span>
+        </div>
+        <h3 class="task-card-main-title" style="text-decoration: line-through; color: var(--color-text-secondary);">Kumpulan Soal Kalkulus</h3>
+        <div class="task-card-meta-row">
+          <span>Dosen: Tiaza</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================== -->
+  <!-- 2. VIEW: TAMBAHKAN TUGAS BARU                                            -->
+  <!-- ======================================================================== -->
+  <div id="subViewTambahTugas" style="display: none; flex-direction: column; gap: 16px; width: 100%;">
+    <!-- Top Bar -->
+    <header class="planner-top-header">
+      <div class="planner-header-left">
+        <button class="planner-header-back-btn" id="btnBackFromTambah" title="Kembali">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="planner-header-titles">
+          <h1 class="planner-header-title">Tambahkan Tugas Baru</h1>
+          <span class="planner-header-subtitle">Isi detail untuk menambahkan tugas ke perencanaamu</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="task-form-card">
+      <!-- 1. Nama Tugas -->
+      <div class="form-field-group">
+        <label class="form-field-label" for="inputNamaTugas">NAMA TUGAS</label>
+        <input type="text" id="inputNamaTugas" class="form-input-text" placeholder="Contoh: Tugas Akhir UI/UX" value="Tugas Akhir UI/UX">
+      </div>
+
+      <!-- 2. Jenis Tugas -->
+      <div class="form-field-group">
+        <label class="form-field-label">JENIS TUGAS</label>
+        <div class="form-pills-row" id="groupJenisTugas">
+          <button type="button" class="form-pill-btn" data-type="kuliah">Kuliah</button>
+          <button type="button" class="form-pill-btn active" data-type="tugas">Tugas</button>
+          <button type="button" class="form-pill-btn" data-type="ujian">Ujian</button>
+          <button type="button" class="form-pill-btn" data-type="proyek">Proyek</button>
+          <button type="button" class="form-pill-btn" data-type="lainnya">Lainnya</button>
+        </div>
+      </div>
+
+      <!-- 3. Prioritas -->
+      <div class="form-field-group">
+        <label class="form-field-label">PRIORITAS</label>
+        <div class="form-pills-row" id="groupPrioritas">
+          <button type="button" class="form-pill-btn pill-mendesak active" data-priority="mendesak">🔴 Mendesak</button>
+          <button type="button" class="form-pill-btn pill-sedang" data-priority="sedang">🟡 Sedang</button>
+          <button type="button" class="form-pill-btn pill-rendah" data-priority="rendah">🟢 Rendah</button>
+        </div>
+      </div>
+
+      <!-- 4. Mata Kuliah -->
+      <div class="form-field-group">
+        <div class="form-field-label-row">
+          <div>
+            <span class="form-field-label">Mata Kuliah</span>
+            <div class="form-field-subtitle">Opsional: tambahkan mata kuliah seperti pada jadwal</div>
+          </div>
+          <button type="button" class="form-field-action-link" id="btnTambahMatkul">+ Tambah</button>
+        </div>
+        <div class="form-two-col-grid">
+          <select class="form-select-dropdown" id="selectMatkul">
+            <option value="Desain UI/UX">Desain UI/UX</option>
+            <option value="Sistem Basis Data">Sistem Basis Data</option>
+            <option value="Kecerdasan Buatan">Kecerdasan Buatan</option>
+            <option value="Algoritma & Pemrograman">Algoritma & Pemrograman</option>
+          </select>
+          <input type="text" class="form-input-text" placeholder="Nama dosen" value="Dr. Hendra" id="inputDosen">
+        </div>
+      </div>
+
+      <!-- 5. Detail Tugas -->
+      <div class="form-field-group">
+        <div class="form-field-label-row">
+          <div>
+            <span class="form-field-label">Detail Tugas</span>
+            <div class="form-field-subtitle">Tambahkan tugas tanpa harus membuat mata kuliah terlebih dahulu</div>
+          </div>
+          <button type="button" class="form-field-action-link">+ Tambah</button>
+        </div>
+        <div class="form-two-col-grid">
+          <input type="text" class="form-input-text" placeholder="Contoh: 12 Mei 2025" value="12 Mei 2025" id="inputTglTugas">
+          <input type="text" class="form-input-text" placeholder="23:59" value="23:59" id="inputJamTugas">
+        </div>
+      </div>
+
+      <!-- 6. Lokasi / Pengiriman -->
+      <div class="form-field-group">
+        <label class="form-field-label">LOKASI / PENGIRIMAN</label>
+        <div class="form-pills-row" id="groupLokasi">
+          <button type="button" class="form-pill-btn" data-loc="ruang">Ruang</button>
+          <button type="button" class="form-pill-btn active" data-loc="lms">LMS</button>
+          <button type="button" class="form-pill-btn" data-loc="email">Email</button>
+          <button type="button" class="form-pill-btn" data-loc="lainnya">Lainnya</button>
+        </div>
+        <input type="text" class="form-input-text" style="margin-top: 6px;" placeholder="Contoh: Ruang E12 / lms.university.ac.id" value="lms.university.ac.id" id="inputLokasiDetail">
+      </div>
+
+      <!-- 7. Catatan (Opsional) -->
+      <div class="form-field-group">
+        <label class="form-field-label">CATATAN (OPSIONAL)</label>
+        <textarea class="form-textarea" placeholder="Tambahkan catatan, pengingat, atau tautan tambahan..." id="inputCatatanTugas">Kumpulkan prototipe interaktif dalam format link figma.</textarea>
+      </div>
+
+      <!-- Submit & Cancel -->
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+        <button type="button" class="form-btn-submit" id="btnSimpanTugasBaru">Simpan Tugas</button>
+        <button type="button" class="form-btn-cancel" id="btnBatalTugasBaru">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================== -->
+  <!-- 3. VIEW: KONFIRMASI PENGUMPULAN                                          -->
+  <!-- ======================================================================== -->
+  <div id="subViewKonfirmasi" style="display: none; flex-direction: column; gap: 16px; width: 100%;">
+    <header class="planner-top-header">
+      <div class="planner-header-left">
+        <button class="planner-header-back-btn" id="btnBackFromKonfirmasi" title="Kembali">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="planner-header-titles">
+          <h1 class="planner-header-title">Konfirmasi Pengumpulan</h1>
+          <span class="planner-header-subtitle">Jadwal Mingguan &gt; Tugas Database</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="konfirmasi-card">
+      <div>
+        <h2 class="konfirmasi-heading-title">Periksa sebelum konfirmasi</h2>
+        <p class="konfirmasi-heading-desc">Pastikan tugas dan tujuan pengumpulan sudah sesuai</p>
+      </div>
+
+      <!-- Task info card -->
+      <div class="task-summary-preview-box">
+        <div class="task-type-icon-box icon-blue" style="width: 36px; height: 36px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <span style="font-size: 10.5px; font-weight: 800; color: var(--color-text-secondary);">SISTEM BASIS DATA · DR. LIA</span>
+          <span style="font-size: 16px; font-weight: 800; color: var(--color-text-primary);">Tugas Database</span>
+          <span style="font-size: 12px; color: var(--color-text-muted);">Hari ini · 23:59 · LMS</span>
+        </div>
+      </div>
+
+      <!-- Tujuan Pengumpulan -->
+      <div class="tujuan-section-box">
+        <span class="form-field-label">TUJUAN PENGUMPULAN</span>
+        <div class="tujuan-item-tile">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <span>Kumpulkan melalui: <strong>LMS - Sistem Basis Data</strong></span>
+        </div>
+        <div class="tujuan-item-tile">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Dosen pengampu: <strong>Dr. Lia</strong></span>
+        </div>
+      </div>
+
+      <!-- Yang perlu diperiksa -->
+      <div class="tujuan-section-box">
+        <span class="form-field-label">YANG PERLU DIPERIKSA</span>
+        <div class="checklist-group">
+          <div class="checklist-item">
+            <div class="checklist-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+            <span>Berkas tugas yang benar dan versi terbaru</span>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+            <span>Nama serta identitas pada berkas</span>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+            <span>Tenggat hari ini, pukul 23:59</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notice -->
+      <div class="info-callout-box">
+        <span>ℹ️</span>
+        <span>Konfirmasi hanya untuk status di perencana. Berkas tetap perlu dikumpulkan melalui LMS.</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+        <button class="form-btn-submit" id="btnSubmitKonfirmasi">✓ Konfirmasi Pengumpulan</button>
+        <button class="form-btn-cancel" id="btnCancelKonfirmasi">Kembali</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================== -->
+  <!-- 4. VIEW: PENGUMPULAN TERKONFIRMASI                                       -->
+  <!-- ======================================================================== -->
+  <div id="subViewPengumpulanTerkonfirmasi" style="display: none; flex-direction: column; gap: 16px; width: 100%;">
+    <header class="planner-top-header">
+      <div class="planner-header-left">
+        <button class="planner-header-back-btn" id="btnBackFromTerkonfirmasi" title="Kembali">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="planner-header-titles">
+          <h1 class="planner-header-title">Pengumpulan Terkonfirmasi</h1>
+          <span class="planner-header-subtitle">Pratinjau hasil konfirmasi tugas</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="konfirmasi-card" style="align-items: center;">
+      <div class="success-graphic-wrap">
+        <div class="success-icon-large">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h2 class="success-title">Pengumpulan terkonfirmasi</h2>
+        <p class="success-desc">Contoh tampilan setelah konfirmasi tugas di perencanaamu</p>
+      </div>
+
+      <div class="task-summary-preview-box" style="width: 100%; flex-direction: column; align-items: flex-start; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+          <div class="task-type-icon-box icon-blue">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          </div>
+          <div>
+            <div style="font-size: 10.5px; font-weight: 800; color: var(--color-text-secondary);">SISTEM BASIS DATA · DR. LIA</div>
+            <div style="font-size: 15px; font-weight: 800; color: var(--color-text-primary);">Tugas Database</div>
+            <div style="font-size: 11.5px; color: var(--color-text-muted);">Hari ini · 23:59 · LMS</div>
+          </div>
+        </div>
+        <div style="width: 100%; height: 1px; background: rgba(220, 230, 245, 0.9);"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%; font-size: 12.5px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+            <span>Tujuan pengumpulan: <strong>LMS - Sistem Basis Data</strong></span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Status pada perencana: <span class="task-status-badge badge-selesai" style="display:inline-block; margin-left: 4px;">Terkonfirmasi</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-callout-box" style="width: 100%;">
+        <span>ℹ️</span>
+        <span>Ini pratinjau status, bukan bukti pengiriman. Periksa bukti pengumpulan langsung di LMS; tidak ada berkas yang dikirim dari halaman ini.</span>
+      </div>
+
+      <button class="form-btn-submit" id="btnBackToJadwalFromSuccess" style="width: 100%; margin-top: 8px;">Kembali ke Jadwal</button>
+    </div>
+  </div>
+
+  <!-- ======================================================================== -->
+  <!-- 5. VIEW: TUNDA TUGAS                                                     -->
+  <!-- ======================================================================== -->
+  <div id="subViewTundaTugas" style="display: none; flex-direction: column; gap: 16px; width: 100%;">
+    <header class="planner-top-header">
+      <div class="planner-header-left">
+        <button class="planner-header-back-btn" id="btnBackFromTunda" title="Kembali">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="planner-header-titles">
+          <h1 class="planner-header-title">Tunda Tugas</h1>
+          <span class="planner-header-subtitle">Atur pengingat untuk melanjutkan</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="konfirmasi-card">
+      <div>
+        <h2 class="konfirmasi-heading-title">Mau lanjut kapan?</h2>
+        <p class="konfirmasi-heading-desc">Pilih waktu untuk mengingatkanmu kembali.</p>
+      </div>
+
+      <!-- Task info card -->
+      <div class="task-summary-preview-box">
+        <div class="task-type-icon-box icon-blue" style="width: 36px; height: 36px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+        </div>
+        <div>
+          <span style="font-size: 10.5px; font-weight: 800; color: var(--color-text-secondary);" id="tundaCourseName">SISTEM BASIS DATA · DR. LIA</span>
+          <h3 style="font-size: 16px; font-weight: 800; color: var(--color-text-primary);" id="tundaTaskTitle">Tugas Database</h3>
+          <span style="font-size: 12px; color: var(--color-text-muted);">Hari ini · 23:59 · LMS</span>
+        </div>
+      </div>
+
+      <!-- INGATKAN SAYA -->
+      <div class="tujuan-section-box">
+        <span class="form-field-label">INGATKAN SAYA</span>
+        <div class="tunda-options-grid" id="tundaOptionsGrid">
+          <div class="tunda-option-card active" data-tunda-time="30 menit lagi" data-target-clock="10:11">
+            <span>30 menit lagi</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <div class="tunda-option-card" data-tunda-time="1 jam lagi" data-target-clock="10:41">
+            <span>1 jam lagi</span>
+          </div>
+          <div class="tunda-option-card" data-tunda-time="Sore ini 16:00" data-target-clock="16:00">
+            <span>Sore ini 16:00</span>
+          </div>
+          <div class="tunda-option-card" data-tunda-time="Atur sendiri" data-target-clock="20:00">
+            <span>Atur sendiri</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview card -->
+      <div class="tunda-preview-card">
+        <div style="font-size: 20px;">🔔</div>
+        <div>
+          <div class="tunda-preview-badge" id="tundaPreviewBadge">Pengingat baru · 30 menit lagi</div>
+          <div class="tunda-preview-time" id="tundaPreviewClock">Hari ini · 10:11</div>
+          <div class="tunda-preview-note">Hanya pengingat yang berubah, bukan tenggat tugas.</div>
+        </div>
+      </div>
+
+      <!-- Notice -->
+      <div class="info-callout-box">
+        <span>ℹ️</span>
+        <span>Tenggat tetap hari ini pukul 23:59 (LMS). Sisihkan waktu untuk menyelesaikan tugas.</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+        <button class="form-btn-submit" id="btnSimpanPengingatTunda">🔔 Simpan Pengingat</button>
+        <button class="form-btn-cancel" id="btnBatalTunda">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================== -->
+  <!-- 6. VIEW: PENUNDAAN TERSIMPAN                                             -->
+  <!-- ======================================================================== -->
+  <div id="subViewPenundaanTersimpan" style="display: none; flex-direction: column; gap: 16px; width: 100%;">
+    <header class="planner-top-header">
+      <div class="planner-header-left">
+        <button class="planner-header-back-btn" id="btnBackFromTersimpan" title="Kembali">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="planner-header-titles">
+          <h1 class="planner-header-title">Penundaan Tersimpan</h1>
+          <span class="planner-header-subtitle">Pratinjau hasil pengingat baru</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="konfirmasi-card" style="align-items: center;">
+      <div class="success-graphic-wrap">
+        <div class="success-icon-bell">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        </div>
+        <h2 class="success-title">Penundaan tersimpan</h2>
+        <p class="success-desc">Contoh tampilan pengingat baru agar tugas tidak terlewat.</p>
+      </div>
+
+      <!-- Hero card -->
+      <div class="penundaan-hero-card" style="width: 100%;">
+        <span class="penundaan-badge-pill" id="tersimpanBadgeText">30 menit lagi</span>
+        <div class="penundaan-hero-time" id="tersimpanClockText">Hari ini · 10:11</div>
+        <div class="penundaan-hero-sub">Tenggat tidak berubah: hari ini · 23:59</div>
+      </div>
+
+      <!-- Task preview -->
+      <div class="task-summary-preview-box" style="width: 100%;">
+        <div class="task-type-icon-box icon-blue">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+        </div>
+        <div>
+          <div style="font-size: 10.5px; font-weight: 800; color: var(--color-text-secondary);">SISTEM BASIS DATA · DR. LIA</div>
+          <div style="font-size: 15px; font-weight: 800; color: var(--color-text-primary);">Tugas Database</div>
+          <div style="font-size: 11.5px; color: var(--color-text-muted);">Hari ini · 23:59 · LMS</div>
+        </div>
+      </div>
+
+      <div class="info-callout-box" style="width: 100%;">
+        <span>ℹ️</span>
+        <span>Pratinjau pengingat di perencana. Halaman ini tidak menjadwalkan notifikasi nyata.</span>
+      </div>
+
+      <button class="form-btn-submit" id="btnBackToDaftarTugas" style="width: 100%; margin-top: 8px;">Kembali ke Daftar Tugas</button>
+    </div>
+  </div>
+
+  <!-- ======================================================================== -->
+  <!-- 7. VIEW: SESI TUGAS (Focus Pomodoro session)                             -->
+  <!-- ======================================================================== -->
+  <div id="subViewSesiTugas" style="display: none; flex-direction: column; gap: 16px; width: 100%;">
+    <header class="planner-top-header">
+      <div class="planner-header-left">
+        <button class="planner-header-back-btn" id="btnBackFromSesiTugas" title="Kembali">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="planner-header-titles">
+          <h1 class="planner-header-title">Sesi Tugas</h1>
+          <span class="planner-header-subtitle">Fokus pada satu tugas hingga selesai</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="sesi-tugas-container">
+      <!-- Task Header Card -->
+      <div class="task-summary-preview-box" style="width: 100%;">
+        <div class="task-type-icon-box icon-blue">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+        </div>
+        <div>
+          <div style="font-size: 10.5px; font-weight: 800; color: var(--color-text-secondary);" id="sesiCourseName">SISTEM BASIS DATA · DR. LIA</div>
+          <div style="font-size: 15.5px; font-weight: 800; color: var(--color-text-primary);" id="sesiTaskName">Tugas Database</div>
+          <div style="font-size: 11.5px; color: var(--color-text-muted);">Hari ini · 23:59 · LMS</div>
+        </div>
+      </div>
+
+      <!-- Big Timer Display -->
+      <div class="sesi-timer-wrapper">
+        <div class="sesi-status-pill" id="sesiStatusPill">
+          <span class="pulsing-dot" style="background:#6366F1;" id="sesiPulseDot"></span>
+          <span id="sesiStatusLabel">Sedang fokus</span>
+        </div>
+        <div class="sesi-big-timer" id="sesiTimerDisplay">18:32</div>
+        <div class="sesi-timer-sub" id="sesiTimerSub">Waktu tersisa: fokus 25 menit / istirahat 5 min</div>
+        <div class="sesi-motivational-quote">Ambil napas sejenak, lalu lanjutkan fokusmu.</div>
+      </div>
+
+      <!-- Atur Durasi Section -->
+      <div class="sesi-duration-card">
+        <div class="sesi-duration-header">
+          <div>
+            <div class="sesi-duration-title">Atur Durasi</div>
+            <div style="font-size: 11px; color: var(--color-text-muted);">Sesuaikan fokus dan istirahat</div>
+          </div>
+          <button class="btn-save-duration" id="btnSaveDuration">Simpan Durasi</button>
+        </div>
+
+        <!-- Fokus duration -->
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div class="duration-pills-row" id="sesiFocusPills">
+            <div class="duration-pill-btn active" data-fokus="25">25 mnt</div>
+            <div class="duration-pill-btn" data-fokus="30">30 mnt</div>
+            <div class="duration-pill-btn" data-fokus="45">45 mnt</div>
+            <div class="duration-pill-btn" data-fokus="60">60 mnt</div>
+          </div>
+          <div class="duration-stepper-row">
+            <div class="duration-stepper-val" id="stepperFokusVal">25</div>
+            <span class="duration-stepper-label">fokus · menit</span>
+          </div>
+        </div>
+
+        <!-- Istirahat duration -->
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div class="duration-pills-row" id="sesiBreakPills">
+            <div class="duration-pill-btn active" data-break="5">5 mnt</div>
+            <div class="duration-pill-btn" data-break="10">10 mnt</div>
+            <div class="duration-pill-btn" data-break="15">15 mnt</div>
+            <div class="duration-pill-btn" data-break="20">20 mnt</div>
+          </div>
+          <div class="duration-stepper-row">
+            <div class="duration-stepper-val" id="stepperBreakVal">5</div>
+            <span class="duration-stepper-label">istirahat · menit</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size: 11px; color: var(--color-text-muted); text-align: center;">
+        Selesai sesi tidak berarti tugas sudah dikumpulkan ke LMS.
+      </div>
+
+      <!-- Controls -->
+      <div class="sesi-controls-row">
+        <button class="btn-sesi-playpause btn-sesi-jeda" id="btnSesiJeda">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="10" y1="5" x2="10" y2="19"></line><line x1="14" y1="5" x2="14" y2="19"></line></svg>
+          <span id="btnSesiJedaLabel">Jeda</span>
+        </button>
+        <button class="btn-sesi-playpause btn-sesi-lanjut" id="btnSesiLanjut">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span>Lanjutkan</span>
+        </button>
+      </div>
+
+      <button class="btn-sesi-selesai" id="btnSesiSelesai">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>Selesai Sesi</span>
+      </button>
+    </div>
+  </div>
+
+</div>

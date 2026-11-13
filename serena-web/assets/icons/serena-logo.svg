@@ -1,0 +1,33 @@
+<svg width="48" height="60" viewBox="0 0 373 472" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="serenaSGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="35%" stop-color="#0284C7"/>
+      <stop offset="70%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <linearGradient id="serenaSGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="50%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#6366F1"/>
+    </linearGradient>
+    <linearGradient id="serenaSGrad3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="50%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="serenaSDotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#6366F1"/>
+    </linearGradient>
+  </defs>
+  <!-- Floating Top Dot -->
+  <circle cx="288" cy="88" r="54" fill="url(#serenaSDotGrad)"/>
+  <!-- Upper Curve / Wing -->
+  <path d="M195 135 C195 135, 235 168, 305 174 C342 177, 362 232, 345 304 C328 376, 298 322, 280 274 C262 226, 222 174, 195 135 Z" fill="url(#serenaSGrad2)"/>
+  <path d="M195 135 C195 135, 240 190, 240 230 C240 270, 195 240, 185 200 Z" fill="url(#serenaSGrad3)" opacity="0.9"/>
+  <!-- Main S Spine -->
+  <path d="M214 49 C150 49, 56 100, 56 200 C56 295, 160 310, 215 365 C265 415, 240 450, 180 445 C295 440, 335 365, 332 295 C328 200, 230 180, 175 135 C130 98, 155 49, 214 49 Z" fill="url(#serenaSGrad1)"/>
+  <!-- Lower Petal Accent -->
+  <path d="M24 235 C18 290, 48 375, 120 425 C145 442, 160 445, 155 440 C140 425, 60 380, 50 315 C42 265, 75 240, 24 235 Z" fill="url(#serenaSGrad2)"/>
+</svg>

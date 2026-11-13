@@ -2,11 +2,9 @@
 <section class="focus-section">
   <!-- Greeting -->
   <div class="user-greeting">
-    <h1 class="greeting-title">Selamat pagi, Sahal 👋</h1>
+    <h1 class="greeting-title" id="greetingUserTitle">Selamat pagi, Yusup 👋</h1>
     <p class="greeting-subtitle">Yuk, buat hari ini produktif dan tenang.</p>
   </div>
-
-  <div style="height: 18px;"></div>
 
   <!-- Focus Hero Card -->
   <div class="focus-hero-card" id="focusHeroCard">
@@ -16,14 +14,25 @@
       <div class="hero-deco-stripe-1"></div>
       <div class="hero-deco-stripe-2"></div>
       <!-- Hourglass illustration in SVG from Figma -->
-      <svg class="hero-artwork" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="15" y="10" width="50" height="100" rx="20" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.2)"/>
-        <!-- Upper sand -->
-        <path d="M22 25C22 25 35 45 40 45C45 45 58 25 58 25Z" fill="url(#heroSandGrad)"/>
-        <!-- Lower sand -->
-        <path d="M20 95C20 95 32 80 40 80C48 80 60 95 60 95Z" fill="url(#heroSandGrad)"/>
-        <!-- Flowing line -->
-        <line x1="40" y1="45" x2="40" y2="80" stroke="#B79BFF" stroke-width="2.5" stroke-dasharray="3 3"/>
+      <svg class="hero-artwork" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg" title="Klik untuk putar jam pasir">
+        <!-- ROTATING HOURGLASS BODY (Flips 180° clockwise when sand finishes) -->
+        <g class="hourglass-rotator">
+          <!-- Outer Glass Capsule -->
+          <rect class="glass-pill" x="15" y="10" width="50" height="100" rx="25" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.18)"/>
+          
+          <!-- Glass Shine/Reflection -->
+          <path class="glass-shine" d="M22 24 Q18 60 22 96" stroke="rgba(255,255,255,0.45)" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+          <!-- Bulb A Sand (upper at 0deg) -->
+          <path class="sand-top" d="M20 28 C20 28 32 59 40 59 C48 59 60 28 60 28 Z" fill="url(#heroSandGrad)"/>
+
+          <!-- Bulb B Sand (lower at 0deg) -->
+          <path class="sand-bottom" d="M20 92 C20 92 32 61 40 61 C48 61 60 92 60 92 Z" fill="url(#heroSandGrad)"/>
+        </g>
+
+        <!-- DRIPPING SAND STREAM (Always falls downward towards gravity) -->
+        <line class="sand-stream-line" x1="40" y1="58" x2="40" y2="92" stroke="#7BE3D0" stroke-width="2.5" stroke-dasharray="3 4"/>
+
         <defs>
           <linearGradient id="heroSandGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stop-color="#C4A8FF"/>
