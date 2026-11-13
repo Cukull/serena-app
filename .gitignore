@@ -5,6 +5,7 @@
 .packages
 build/
 .idea/
+.kotlin/
 .vscode/*
 !.vscode/extensions.json
 *.iml
