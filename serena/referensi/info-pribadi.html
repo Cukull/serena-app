@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Serena – Profil</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap">
+<style>
+:root{--ink:#1B2340;--muted:#6B7391;--violet:#7C6BF0;--blue:#4F9BE8;--red:#E5646B;--line:#E6E9F5;--ok:#2BAE8E}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#EAF0FB}
+body{margin:0;width:100%;max-width:390px;min-height:844px;margin:0 auto;position:relative;overflow:hidden;font-family:'Plus Jakarta Sans',Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#F5F3FF 0%,#EAF4FD 38%,#EFFAF4 100%)}
+body::before,body::after{content:"";position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none}
+body::before{width:240px;height:240px;background:#C9BDFB;top:-70px;right:-90px;opacity:.7}
+body::after{width:220px;height:220px;background:#B7E6F4;top:430px;left:-100px;opacity:.55}
+button,input{font:inherit;color:inherit}
+.phone{position:relative;z-index:1;width:100%;min-height:844px;display:flex;flex-direction:column}
+.status{display:flex;justify-content:space-between;padding:14px 28px 0;font-size:15px;font-weight:700}
+.content{padding:20px 20px 120px;display:flex;flex-direction:column;gap:20px;flex:1}
+.greet{display:flex;justify-content:space-between;align-items:center}
+.greet h1{font-size:26px;font-weight:800}
+.icon-btn{width:44px;height:44px;border-radius:50%;border:0;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(60,70,130,.1);cursor:pointer}
+.greet p{font-size:14px;color:var(--muted);margin-top:4px}
+
+/* kartu profil */
+.profile{position:relative;border-radius:44px 18px 44px 18px;overflow:hidden;background:linear-gradient(135deg,#8B5CF6,#5B8DEF 52%,#2DD4BF);box-shadow:0 16px 32px rgba(91,141,239,.35);padding:28px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff;gap:4px}
+.profile::before{content:"";position:absolute;right:-50px;top:-50px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.5),transparent 70%)}
+.avatar-wrap{position:relative;z-index:1;margin-bottom:8px}
+.avatar{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#FFB88C,#E58AB8);border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800}
+.cam{position:absolute;right:-4px;bottom:-2px;width:30px;height:30px;border-radius:50%;background:#fff;border:0;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.2);cursor:pointer}
+.profile h2,.profile p{position:relative;z-index:1}
+.mini{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-top:16px}
+.mini div{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.4);border-radius:16px;padding:10px 4px}
+.mini strong{display:block;font-size:18px;font-weight:800}
+.mini span{font-size:11.5px;opacity:.92}
+.profile h2{font-size:21px;font-weight:800}
+.profile p{font-size:14px;opacity:.92;overflow-wrap:anywhere}
+
+/* menu */
+.group-title{font-size:13px;font-weight:700;color:var(--muted);margin:0 4px 10px}
+.menu{display:flex;flex-direction:column;gap:12px}
+.item{display:flex;align-items:center;gap:14px;width:100%;min-height:72px;background:#fff;border:0;border-radius:20px;padding:14px 16px;text-align:left;cursor:pointer;box-shadow:0 4px 14px rgba(60,70,130,.08);transition:transform .12s}
+.item:active{transform:scale(.98)}
+.item b{display:block;font-size:16px;font-weight:700}
+.item small{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+.item .chev{margin-left:auto;flex:none}
+:is(.item,.logout,.nav a,.cam,.btn,.link,.eye,.close,.sw,input):focus-visible{outline:3px solid var(--violet);outline-offset:2px}
+.logout{width:100%;min-height:52px;border:1.5px solid #F2A2AA;background:#FFF1F2;color:#C2444C;font-weight:800;font-size:15px;border-radius:20px;cursor:pointer}
+
+/* nav */
+.nav{position:absolute;left:16px;right:16px;bottom:16px;z-index:5;background:#fff;border-radius:30px;padding:10px 12px;display:flex;justify-content:space-between;box-shadow:0 10px 28px rgba(60,70,130,.14)}
+.nav a{width:62px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted);padding:8px 0;border-radius:20px;text-decoration:none}
+.nav a[aria-current="page"]{background:linear-gradient(135deg,#6FB4F2,#7C6BF0);color:#fff;box-shadow:0 8px 16px rgba(124,107,240,.35)}
+
+/* sheet */
+.scrim{display:none;position:absolute;inset:0;background:rgba(27,35,64,.45);z-index:10}
+.scrim.on{display:block}
+.sheet{position:absolute;left:0;right:0;bottom:0;max-height:88%;overflow:auto;background:#fff;border-radius:30px 30px 0 0;padding:12px 20px 24px;z-index:11;display:none}
+.sheet.on{display:block;animation:up .25s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 14px}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.sheet-head h3{font-size:20px;font-weight:800}
+.close{width:40px;height:40px;border-radius:50%;border:0;background:#F1F3FA;cursor:pointer;font-size:18px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+.inp{position:relative}
+.inp input{width:100%;height:50px;border:1.5px solid var(--line);border-radius:14px;padding:0 14px;font-size:15px;background:#FAFBFF}
+.inp input:focus{border-color:var(--violet);outline:0;box-shadow:0 0 0 4px rgba(124,107,240,.15)}
+.inp input[aria-invalid="true"]{border-color:var(--red)}
+.eye{position:absolute;right:6px;top:5px;width:40px;height:40px;border:0;background:none;border-radius:10px;cursor:pointer;font-size:12px;font-weight:700;color:var(--violet)}
+.err{font-size:12.5px;color:#C2444C;margin-top:5px;min-height:0}
+.hint{font-size:12.5px;color:var(--muted);margin-top:5px}
+.btn{width:100%;height:52px;border:0;border-radius:18px;background:linear-gradient(135deg,#6FB4F2,#7C6BF0);color:#fff;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 8px 16px rgba(124,107,240,.3);margin-top:6px}
+.btn.ghost{background:#F1F3FA;color:var(--ink);box-shadow:none}
+.btn.danger{background:var(--red);box-shadow:0 8px 16px rgba(229,100,107,.3)}
+.divider{height:1px;background:var(--line);margin:18px 0}
+.sub{font-size:14px;font-weight:800;margin-bottom:10px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
+.row b{font-size:15px;font-weight:700;display:block}
+.row small{font-size:12.5px;color:var(--muted)}
+.sw{flex:none;width:52px;height:32px;border-radius:16px;border:0;background:#CDD2E4;position:relative;cursor:pointer;transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform .2s}
+.sw[aria-checked="true"]{background:var(--violet)}
+.sw[aria-checked="true"]::after{transform:translateX(20px)}
+.confirm{text-align:center}
+.confirm p{color:var(--muted);font-size:14px;margin:6px 0 18px}
+.toast{position:absolute;left:50%;top:70px;transform:translate(-50%,-20px);background:var(--ink);color:#fff;font-size:14px;font-weight:600;padding:12px 18px;border-radius:16px;opacity:0;pointer-events:none;transition:.25s;z-index:20;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* halaman Info Pribadi */
+.page{display:none;position:relative;z-index:1;padding:14px 20px 40px}
+.phone.sub .content,.phone.sub .nav{display:none}
+.phone.sub .page{display:block}
+.p-head{display:flex;align-items:center;gap:12px}
+.back{width:44px;height:44px;border-radius:50%;border:0;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(60,70,130,.1);cursor:pointer}
+.p-title{flex:1;font-family:'DM Serif Display',Georgia,serif;font-size:27px;font-weight:400}
+.pill-btn{height:38px;min-width:64px;padding:0 16px;border-radius:19px;border:1px solid #CFE3F8;background:#E3F0FD;color:#2F6DB5;font-weight:700;font-size:13px;cursor:pointer}
+.ph{display:flex;flex-direction:column;align-items:center;margin:22px 0 18px}
+.ring{position:relative;width:104px;height:104px;border-radius:50%;padding:4px;background:linear-gradient(135deg,#FFB88C,#8FB8F5)}
+.ring .in{width:100%;height:100%;border-radius:50%;background:#DDEBFB center/cover no-repeat;overflow:hidden;display:flex;align-items:flex-end;justify-content:center}
+.bdg{position:absolute;right:-2px;bottom:2px;width:32px;height:32px;border-radius:50%;background:var(--violet);border:3px solid #fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.p-name{font-size:19px;font-weight:800;margin-top:12px}
+.p-sub{font-size:13px;color:var(--muted);margin-top:2px}
+.link{background:none;border:0;color:var(--violet);font-size:13px;font-weight:700;cursor:pointer;padding:8px 10px;border-radius:10px}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.st{background:#fff;border-radius:18px;padding:14px 4px;text-align:center;box-shadow:0 4px 14px rgba(60,70,130,.07)}
+.st i{display:block;font-style:normal;font-size:18px;margin-bottom:4px}
+.st strong{display:block;font-size:20px;font-weight:800}
+.st span{font-size:12px;color:var(--muted)}
+.sec-h{display:flex;justify-content:space-between;align-items:center;margin:22px 4px 8px;font-size:12px;font-weight:700;letter-spacing:.08em;color:#8C93AE}
+.sec-h .link{padding:4px 6px;font-size:12px}
+.list{background:#fff;border-radius:20px;box-shadow:0 4px 14px rgba(60,70,130,.07);padding:2px 14px}
+.fr{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.fr:last-child{border-bottom:0}
+.fi{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none;font-size:18px}
+.c1{background:#E7EEFD}.c2{background:#EDE9FE}.c3{background:#FFEBDD}.c4{background:#DFF3EA}
+.fb{flex:1;min-width:0}
+.fb label{display:block;font-size:12px;color:var(--muted)}
+.fb .v{font-size:15px;font-weight:700;margin-top:2px;overflow-wrap:anywhere}
+.fb input{display:none;width:100%;height:44px;margin-top:4px;border:1.5px solid var(--line);border-radius:12px;padding:0 12px;font-size:15px;background:#FAFBFF}
+.fb input:focus{border-color:var(--violet);outline:0;box-shadow:0 0 0 4px rgba(124,107,240,.15)}
+.fb input[aria-invalid="true"]{border-color:var(--red)}
+.editing .fb .v{display:none}
+.editing .fb input{display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:14px;background:#fff;border-radius:20px;box-shadow:0 4px 14px rgba(60,70,130,.07)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:12px;font-size:13px;font-weight:600;border:1px solid}
+.k0{background:#E3F0FD;border-color:#BBD8F7;color:#2F6DB5}.k1{background:#EDE9FE;border-color:#D2C8FA;color:#5A49C9}.k2{background:#DFF3EA;border-color:#B5E3CE;color:#1F7A58}.k3{background:#FFEBDD;border-color:#F8CDB0;color:#B5581F}
+.chip button{display:none;border:0;background:none;cursor:pointer;font-size:14px;line-height:1;color:inherit}
+.editing .chip button{display:inline}
+.addrow{display:none;gap:8px;margin-top:10px}
+.addrow.on{display:flex}
+.addrow input{flex:1;height:44px;border:1.5px solid var(--line);border-radius:12px;padding:0 12px;font-size:15px;background:#fff}
+.addrow .btn{width:auto;margin:0;height:44px;padding:0 18px;border-radius:14px}
+.actions{display:none;flex-direction:column;gap:10px;margin-top:22px}
+.editing .actions{display:flex}
+.actions .btn{margin:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+</style>
+</head>
+<body>
+<div class="phone sub">
+  <div class="status"><span>9:41</span><span aria-hidden="true">100%</span></div>
+
+  <main class="content">
+    <div class="greet">
+      <div><h1>Profil</h1><p>Atur akun dan keamananmu di sini.</p></div>
+      <button class="icon-btn" type="button" aria-label="Ubah profil" data-open="sheet-profile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B2340" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button>
+    </div>
+
+    <section class="profile" aria-label="Akun kamu">
+      <div class="avatar-wrap">
+        <div class="avatar" id="avatar" aria-hidden="true">YA</div>
+        <button class="cam" type="button" aria-label="Ganti foto profil" data-open="sheet-profile">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C6BF0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+        </button>
+      </div>
+      <h2 id="shownName">Yusup Arief Fauzi</h2>
+      <p id="shownEmail">yusup.arief@gmail.com</p>
+      <div class="mini"><div><strong>12</strong><span>Tugas selesai</span></div><div><strong>14j</strong><span>Waktu fokus</span></div><div><strong>12</strong><span>Hari beruntun</span></div></div>
+    </section>
+
+    <section>
+      <h3 class="group-title">Pengaturan</h3>
+      <div class="menu">
+        <button class="item" type="button" data-open="sheet-profile">
+          <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><defs><linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6FA8F5"/><stop offset="1" stop-color="#A66BF0"/></linearGradient></defs><rect x="2" y="2" width="40" height="40" rx="11" fill="url(#gA)"/><g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><circle cx="22" cy="17" r="5"/><path d="M12 32c1-5 5-7 10-7s9 2 10 7"/></g></svg>
+          <span><b>Pengaturan profil</b><small>Ubah nama, email, dan foto</small></span>
+          <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B7391" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <button class="item" type="button" data-open="sheet-security">
+          <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><defs><linearGradient id="gC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6C8CF0"/><stop offset="1" stop-color="#34C3A8"/></linearGradient></defs><rect x="2" y="2" width="40" height="40" rx="11" fill="url(#gC)"/><path d="M22 10l10 4v8c0 6-4 10-10 12-6-2-10-6-10-12v-8z" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><path d="M17.5 22.5l3.5 3.5 6-7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>Keamanan &amp; privasi</b><small>Kata sandi dan siapa yang bisa melihat profilmu</small></span>
+          <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B7391" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <button class="logout" type="button" data-open="sheet-logout">Keluar dari akun</button>
+  </main>
+
+
+  <!-- Halaman Info Pribadi -->
+  <section class="page" id="page" aria-labelledby="pt">
+    <div class="p-head">
+      <button class="back" type="button" id="back" aria-label="Kembali"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B2340" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <h2 class="p-title" id="pt">Info Pribadi</h2>
+      <button class="pill-btn" type="button" id="editTop">Edit</button>
+    </div>
+
+    <div class="ph">
+      <div class="ring">
+        <div class="in" id="ringIn"><svg width="70" height="70" viewBox="0 0 70 70" aria-hidden="true"><circle cx="35" cy="26" r="13" fill="#F3A27E"/><path d="M8 70c2-16 13-24 27-24s25 8 27 24z" fill="#5B8DEF"/></svg></div>
+        <button class="bdg" type="button" id="camBtn" aria-label="Ganti foto"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button>
+      </div>
+      <div class="p-name" id="pName"></div>
+      <div class="p-sub" id="pSub"></div>
+      <button class="link" type="button" id="changePhoto">Ganti foto</button>
+      <input type="file" id="file" accept="image/*" hidden>
+    </div>
+
+    <div class="stats3">
+      <div class="st"><i>✅</i><strong>12</strong><span>Tugas selesai</span></div>
+      <div class="st"><i>⏳</i><strong>14j</strong><span>Waktu fokus</span></div>
+      <div class="st"><i>🔥</i><strong>12</strong><span>Hari beruntun</span></div>
+    </div>
+
+    <div id="form" novalidate>
+      <div class="sec-h"><span>INFO DASAR</span><button class="link" type="button" data-edit>Ubah</button></div>
+      <div class="list">
+        <div class="fr"><span class="fi c1" aria-hidden="true">👤</span><div class="fb"><label for="f-name">Nama lengkap</label><div class="v" data-v="name"></div><input id="f-name" type="text" autocomplete="name"><div class="err" role="alert"></div></div></div>
+        <div class="fr"><span class="fi c2" aria-hidden="true">✉️</span><div class="fb"><label for="f-email">Email</label><div class="v" data-v="email"></div><input id="f-email" type="email" autocomplete="email"><div class="err" role="alert"></div></div></div>
+        <div class="fr"><span class="fi c3" aria-hidden="true">📞</span><div class="fb"><label for="f-phone">Telepon</label><div class="v" data-v="phone"></div><input id="f-phone" type="tel" autocomplete="tel"><div class="err" role="alert"></div></div></div>
+        <div class="fr"><span class="fi c4" aria-hidden="true">📅</span><div class="fb"><label for="f-dob">Tanggal lahir</label><div class="v" data-v="dob"></div><input id="f-dob" type="date"><div class="err" role="alert"></div></div></div>
+      </div>
+
+      <div class="sec-h"><span>INFO AKADEMIK</span><button class="link" type="button" data-edit>Ubah</button></div>
+      <div class="list">
+        <div class="fr"><span class="fi c1" aria-hidden="true">🏫</span><div class="fb"><label for="f-uni">Universitas</label><div class="v" data-v="uni"></div><input id="f-uni" type="text"></div></div>
+        <div class="fr"><span class="fi c2" aria-hidden="true">📘</span><div class="fb"><label for="f-major">Jurusan</label><div class="v" data-v="major"></div><input id="f-major" type="text"></div></div>
+        <div class="fr"><span class="fi c3" aria-hidden="true">🪪</span><div class="fb"><label for="f-nim">NIM</label><div class="v" data-v="nim"></div><input id="f-nim" type="text"></div></div>
+      </div>
+
+      <div class="sec-h"><span>MINAT &amp; VIBES</span><button class="link" type="button" id="addToggle">+ Tambah</button></div>
+      <div class="chips" id="chips"></div>
+      <div class="addrow" id="addrow"><input id="newChip" type="text" maxlength="20" placeholder="Contoh: Fotografi" aria-label="Minat baru"><button class="btn" type="button" id="addChip">Tambah</button></div>
+
+      <div class="actions">
+        <button class="btn" type="button" id="saveAll">Simpan perubahan</button>
+        <button class="btn ghost" type="button" id="cancelAll">Batal</button>
+      </div>
+    </div>
+  </section>
+
+  <nav class="nav" aria-label="Navigasi utama">
+    <a href="#beranda"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B7391" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8v10H3z"/></svg>Beranda</a>
+    <a href="#jadwal"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B7391" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Jadwal</a>
+    <a href="#fokus"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B7391" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Fokus</a>
+    <a href="#kesehatan"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B7391" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-8-5-8-11a4.5 4.5 0 018-2.5A4.5 4.5 0 0120 9c0 6-8 11-8 11z"/></svg>Kesehatan</a>
+    <a href="#profil" aria-current="page"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profil</a>
+  </nav>
+
+  <div class="scrim" id="scrim"></div>
+
+  <!-- Keamanan & privasi -->
+  <div class="sheet" id="sheet-security" role="dialog" aria-modal="true" aria-labelledby="t2">
+    <div class="grab"></div>
+    <div class="sheet-head"><h3 id="t2">Keamanan &amp; privasi</h3><button class="close" type="button" aria-label="Tutup" data-close>✕</button></div>
+    <h4 class="sub">Ganti kata sandi</h4>
+    <div class="field"><label for="pOld">Kata sandi saat ini</label><div class="inp"><input id="pOld" type="password" autocomplete="current-password"><button class="eye" type="button" data-eye="pOld" aria-label="Tampilkan kata sandi">Lihat</button></div></div>
+    <div class="field"><label for="pNew">Kata sandi baru</label><div class="inp"><input id="pNew" type="password" autocomplete="new-password"><button class="eye" type="button" data-eye="pNew" aria-label="Tampilkan kata sandi">Lihat</button></div><div class="hint">Minimal 8 karakter.</div><div class="err" id="pErr" role="alert"></div></div>
+    <button class="btn" type="button" id="savePass">Perbarui kata sandi</button>
+    <div class="divider"></div>
+    <h4 class="sub">Privasi</h4>
+    <div class="row"><span><b>Verifikasi dua langkah</b><small>Minta kode saat masuk di perangkat baru</small></span><button class="sw" type="button" role="switch" aria-checked="false" aria-label="Verifikasi dua langkah"></button></div>
+    <div class="row"><span><b>Profil terlihat teman</b><small>Teman bisa melihat nama dan fotomu</small></span><button class="sw" type="button" role="switch" aria-checked="true" aria-label="Profil terlihat teman"></button></div>
+  </div>
+
+  <!-- Konfirmasi keluar -->
+  <div class="sheet confirm" id="sheet-logout" role="dialog" aria-modal="true" aria-labelledby="t3">
+    <div class="grab"></div>
+    <h3 id="t3" style="font-size:20px;font-weight:800">Keluar dari Serena?</h3>
+    <p>Kamu perlu masuk lagi untuk melihat jadwal dan tugasmu.</p>
+    <button class="btn danger" type="button" id="doLogout">Ya, keluar</button>
+    <button class="btn ghost" type="button" data-close>Tetap di sini</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s), scrim=$('#scrim'), toast=$('#toast');
+let current=null, opener=null, tt;
+function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('on'),2200)}
+function openSheet(id,from){current=$('#'+id);opener=from;current.classList.add('on');scrim.classList.add('on');
+  setTimeout(()=>{(current.querySelector('input')||current.querySelector('button.btn')).focus()},260)}
+function closeSheet(){if(!current)return;current.classList.remove('on');scrim.classList.remove('on');current=null;opener&&opener.focus()}
+document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>b.dataset.open==='sheet-profile'?openPage(b):openSheet(b.dataset.open,b)));
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',closeSheet));
+scrim.addEventListener('click',closeSheet);
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(phone.classList.contains('sub'))closePage();else closeSheet()});
+
+
+document.querySelectorAll('[data-eye]').forEach(b=>b.addEventListener('click',()=>{
+  const i=$('#'+b.dataset.eye),show=i.type==='password';i.type=show?'text':'password';b.textContent=show?'Sembunyi':'Lihat'}));
+$('#savePass').addEventListener('click',()=>{
+  const o=$('#pOld'),n=$('#pNew'),e=$('#pErr');e.textContent='';n.removeAttribute('aria-invalid');
+  if(!o.value){e.textContent='Isi kata sandi saat ini dulu.';return}
+  if(n.value.length<8){e.textContent='Kata sandi baru minimal 8 karakter.';n.setAttribute('aria-invalid','true');return}
+  o.value=n.value='';closeSheet();say('Kata sandi diperbarui ✓')});
+document.querySelectorAll('.sw').forEach(s=>s.addEventListener('click',()=>{
+  const on=s.getAttribute('aria-checked')!=='true';s.setAttribute('aria-checked',on);say(s.getAttribute('aria-label')+(on?' aktif':' nonaktif'))}));
+$('#doLogout').addEventListener('click',()=>{closeSheet();say('Kamu sudah keluar')});
+
+/* ---- Info Pribadi ---- */
+const P={name:'Yusup Arief Fauzi',email:'yusup.arief@gmail.com',phone:'+62 812-3456-7890',dob:'2002-03-15',uni:'Bandung Tech University',major:'Ilmu Komputer',nim:'2021-CS-0847',chips:['Desain ✨','Coding 💻','Kesehatan 🌿','Musik 🎵','Membaca 📚','Jurnal ✍️','Yoga 🧘']};
+const phone=$('.phone'),form=$('#form'),F={name:'#f-name',email:'#f-email',phone:'#f-phone',dob:'#f-dob',uni:'#f-uni',major:'#f-major',nim:'#f-nim'};
+const fmtDob=d=>d?new Date(d+'T00:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}):'-';
+const initials=n=>n.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+function render(){
+  for(const k in F){$(F[k]).value=P[k];document.querySelector('[data-v="'+k+'"]').textContent=k==='dob'?fmtDob(P.dob):(P[k]||'-')}
+  $('#pName').textContent=P.name;$('#pSub').textContent='Mahasiswa · '+P.major;
+  $('#shownName').textContent=P.name;$('#shownEmail').textContent=P.email;
+  if(!$('#avatar').style.backgroundImage)$('#avatar').textContent=initials(P.name);
+  $('#chips').innerHTML='';
+  P.chips.forEach((c,i)=>{const e=document.createElement('span');e.className='chip k'+(i%4);e.append(c);
+    const x=document.createElement('button');x.type='button';x.textContent='✕';x.setAttribute('aria-label','Hapus '+c);x.onclick=()=>{P.chips.splice(i,1);render()};e.append(x);$('#chips').append(e)});
+}
+function clearErr(){form.querySelectorAll('.err').forEach(e=>e.textContent='');form.querySelectorAll('input').forEach(i=>i.removeAttribute('aria-invalid'))}
+function setEdit(on){form.classList.toggle('editing',on);$('#editTop').textContent=on?'Simpan':'Edit';clearErr();if(on)$('#f-name').focus()}
+function bad(sel,msg){const i=$(sel);i.setAttribute('aria-invalid','true');i.parentElement.querySelector('.err').textContent=msg}
+function saveAll(){
+  clearErr();let ok=true;
+  if(!$(F.name).value.trim()){bad(F.name,'Nama tidak boleh kosong.');ok=false}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($(F.email).value)){bad(F.email,'Format email belum benar, contoh: nama@email.com');ok=false}
+  if(!/^\+?[0-9\s-]{8,16}$/.test($(F.phone).value.trim())){bad(F.phone,'Nomor telepon belum benar, contoh: +62 812-3456-7890');ok=false}
+  if(!ok){form.querySelector('[aria-invalid="true"]').focus();return}
+  for(const k in F)P[k]=$(F[k]).value.trim();
+  render();setEdit(false);say('Perubahan tersimpan ✓')}
+function cancelAll(){render();setEdit(false)}
+function openPage(from){opener=from;phone.classList.add('sub');window.scrollTo(0,0);render();$('#back').focus()}
+function closePage(){if(form.classList.contains('editing'))cancelAll();phone.classList.remove('sub');$('#addrow').classList.remove('on');opener&&opener.focus()}
+$('#back').onclick=closePage;
+$('#editTop').onclick=()=>form.classList.contains('editing')?saveAll():setEdit(true);
+document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>setEdit(true));
+$('#saveAll').onclick=saveAll;$('#cancelAll').onclick=cancelAll;
+$('#addToggle').onclick=()=>{const r=$('#addrow');r.classList.toggle('on');if(r.classList.contains('on'))$('#newChip').focus()};
+function addChip(){const v=$('#newChip').value.trim();if(!v)return;if(P.chips.length>=12){say('Maksimal 12 minat');return}
+  if(P.chips.includes(v)){say('Minat itu sudah ada');return}P.chips.push(v);$('#newChip').value='';render();$('#newChip').focus()}
+$('#addChip').onclick=addChip;$('#newChip').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addChip()}});
+$('#camBtn').onclick=$('#changePhoto').onclick=()=>$('#file').click();
+$('#file').onchange=e=>{const f=e.target.files[0];if(!f)return;
+  if(f.size>5*1024*1024){say('Ukuran foto maksimal 5 MB');return}
+  const r=new FileReader();r.onload=()=>{const u='url('+r.result+')';
+    $('#ringIn').style.backgroundImage=u;$('#ringIn').innerHTML='';
+    const a=$('#avatar');a.style.backgroundImage=u;a.style.backgroundSize='cover';a.style.backgroundPosition='center';a.textContent='';
+    say('Foto diperbarui ✓')};r.readAsDataURL(f)};
+render();
+</script>
+</body>
+</html>

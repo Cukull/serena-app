@@ -108,7 +108,7 @@ class AppShadows {
         BoxShadow(
             color: accent.withAlpha(38),
             blurRadius: 16,
-            offset: const Offset(0, 4)),
+            offset: const Offset(0, 4),),
       ];
 
   /// Shadow untuk wadah logo.
@@ -151,8 +151,8 @@ class AppDecorations {
     color: AppColors.glassInput,
     borderRadius: AppRadius.input,
     border: Border.all(color: AppColors.inputSuccessBorder),
-    boxShadow: [
-      const BoxShadow(color: AppColors.inputSuccessGlow, spreadRadius: 3),
+    boxShadow: const [
+      BoxShadow(color: AppColors.inputSuccessGlow, spreadRadius: 3),
       ...AppShadows.input,
     ],
   );

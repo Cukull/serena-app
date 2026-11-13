@@ -9,9 +9,7 @@ import 'package:serena/models/focus_session.dart';
 /// lalu countdown + kontrol saat berjalan.
 class FocusTimerView extends StatefulWidget {
   const FocusTimerView({
-    super.key,
-    required this.mode,
-    required this.initialMinutes,
+    required this.mode, required this.initialMinutes, super.key,
     this.allowAdjust = false,
     this.title,
   });

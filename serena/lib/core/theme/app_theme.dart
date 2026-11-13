@@ -12,7 +12,6 @@ class AppTheme {
   static ThemeData get light {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: AppColors.primary,
-      brightness: Brightness.light,
     ).copyWith(
       primary: AppColors.primary,
       onPrimary: Colors.white,
