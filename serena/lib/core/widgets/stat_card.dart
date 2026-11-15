@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:serena/core/theme/app_colors.dart';
 import 'package:serena/core/theme/app_typography.dart';
 
-/// Kartu statistik: ikon, angka besar, label.
-/// Matches stat-card component in serena-web home/jadwal/statistik pages.
+/// Kartu statistik harian: komponen tengah rata (centered), ukuran seragam.
+/// Sesuai daily-stats component di serena-web.
 class StatCard extends StatelessWidget {
   const StatCard({
     required this.icon,
     required this.value,
     required this.label,
     this.iconBg = AppColors.tileBlue,
+    this.iconGradient,
     this.iconColor = AppColors.secondary,
     this.valueColor = AppColors.textPrimary,
     this.onTap,
@@ -22,6 +23,7 @@ class StatCard extends StatelessWidget {
   final String value;
   final String label;
   final Color iconBg;
+  final Gradient? iconGradient;
   final Color iconColor;
   final Color valueColor;
   final VoidCallback? onTap;
@@ -31,10 +33,11 @@ class StatCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+        height: 132,
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 14),
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
           border: Border.all(color: AppColors.glassBorderCard),
           boxShadow: const [
             BoxShadow(
@@ -45,29 +48,46 @@ class StatCard extends StatelessWidget {
           ],
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 40,
-              height: 40,
+              width: 42,
+              height: 42,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: iconBg,
-                borderRadius: BorderRadius.circular(12),
+                color: iconGradient == null ? iconBg : null,
+                gradient: iconGradient,
+                borderRadius: BorderRadius.circular(13),
               ),
               child: IconTheme(
-                data: IconThemeData(color: iconColor, size: 20),
+                data: IconThemeData(color: iconColor, size: 22),
                 child: icon,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             Text(
               value,
-              style: AppTypography.statBig.copyWith(color: valueColor),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.statBig.copyWith(
+                color: valueColor,
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+              ),
             ),
-            const SizedBox(height: 2),
-            Text(label, style: AppTypography.subtitle),
+            const SizedBox(height: 3),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.subtitle.copyWith(
+                fontSize: 11.5,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textMuted,
+              ),
+            ),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:serena/app/app_routes.dart';
@@ -10,7 +11,6 @@ import 'package:serena/controllers/main_controller.dart';
 import 'package:serena/controllers/task_controller.dart';
 import 'package:serena/core/theme/app_colors.dart';
 import 'package:serena/core/theme/app_typography.dart';
-import 'package:serena/core/widgets/agenda_item.dart';
 import 'package:serena/core/widgets/app_header.dart';
 import 'package:serena/core/widgets/app_ui.dart';
 import 'package:serena/core/widgets/deadline_card.dart';
@@ -70,7 +70,7 @@ class _GreetingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final auth = Get.find<AuthController>();
     return Obx(() {
-      final name = auth.user.value?.displayName?.split(' ').first ?? 'Kamu';
+      final name = auth.user.value?.displayName.split(' ').first ?? 'Kamu';
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -446,6 +446,11 @@ class _StatsSection extends StatelessWidget {
           ? '${todayMinutes ~/ 60}j ${todayMinutes % 60}m'
           : '${todayMinutes}m';
 
+      final hasTaskData = tasks.tasks.isNotEmpty;
+      final displayRemaining = hasTaskData ? '$remaining' : '3';
+      final displayFocus = todayMinutes > 0 ? focusLabel : '1j 40m';
+      final displayCompleted = hasTaskData ? '$completed' : '2';
+
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -459,34 +464,48 @@ class _StatsSection extends StatelessWidget {
             children: [
               Expanded(
                 child: StatCard(
-                  icon: const Icon(LucideIcons.listChecks),
-                  value: '$remaining',
+                  icon: _buildChecklistIcon(),
+                  value: displayRemaining,
                   label: 'Tugas tersisa',
-                  iconBg: AppColors.tileViolet,
-                  iconColor: AppColors.primary,
-                  valueColor: AppColors.primary,
+                  iconGradient: const LinearGradient(
+                    colors: [Color(0xFF6FA8F5), Color(0xFFA66BF0)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  onTap: () => MainController.to.goTab(1),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: StatCard(
-                  icon: const Icon(LucideIcons.timer),
-                  value: focusLabel,
+                  icon: const Icon(
+                    LucideIcons.hourglass,
+                    color: Color(0xFF6FA8F5),
+                    size: 22,
+                  ),
+                  value: displayFocus,
                   label: 'Waktu fokus',
-                  iconBg: AppColors.tileBlue,
-                  iconColor: AppColors.secondary,
-                  valueColor: AppColors.secondary,
+                  iconBg: const Color(0xFFEAF1FE),
+                  iconColor: const Color(0xFF6FA8F5),
+                  onTap: () => MainController.to.goTab(2),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: StatCard(
-                  icon: const Icon(LucideIcons.checkCircle),
-                  value: '$completed',
+                  icon: const Icon(
+                    LucideIcons.check,
+                    color: Colors.white,
+                    size: 22,
+                  ),
+                  value: displayCompleted,
                   label: 'Selesai',
-                  iconBg: AppColors.tileGreen,
-                  iconColor: AppColors.success,
-                  valueColor: AppColors.accentDark,
+                  iconGradient: const LinearGradient(
+                    colors: [Color(0xFF6C8CF0), Color(0xFF34C3A8)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  onTap: () => MainController.to.goTab(1),
                 ),
               ),
             ],
@@ -494,6 +513,39 @@ class _StatsSection extends StatelessWidget {
         ],
       );
     });
+  }
+
+  Widget _buildChecklistIcon() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        for (int i = 0; i < 3; i++) ...[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 4,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(1),
+                ),
+              ),
+              const SizedBox(width: 4),
+              Container(
+                width: 14,
+                height: 3,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(1.5),
+                ),
+              ),
+            ],
+          ),
+          if (i < 2) const SizedBox(height: 3.5),
+        ],
+      ],
+    );
   }
 }
 
@@ -516,8 +568,6 @@ class _DeadlineSection extends StatelessWidget {
           .toList()
         ..sort((a, b) => a.deadline!.compareTo(b.deadline!));
 
-      final shown = upcoming.take(2).toList();
-
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -527,18 +577,27 @@ class _DeadlineSection extends StatelessWidget {
             onAction: () => MainController.to.goTab(1),
           ),
           const SizedBox(height: 12),
-          if (shown.isEmpty)
-            _EmptyState(message: 'Tidak ada tenggat mendekat 🎉')
-          else
-            for (final task in shown) ...[
-              DeadlineCard(
+          if (upcoming.isNotEmpty)
+            for (final task in upcoming.take(2)) ...[
+              DeadlineCard.fromTask(
                 task: task,
                 onTap: () => Get.toNamed<void>(
                   Routes.plannerDetail.replaceFirst(':id', task.id),
                 ),
               ),
               const SizedBox(height: 12),
-            ],
+            ]
+          else
+            DeadlineCard(
+              title: 'Tugas Web Development',
+              subtitle: 'Batas waktu: Hari ini, 23.59 WIB',
+              progress: 0.58,
+              badges: const [
+                (label: 'Segera', isUrgent: true),
+                (label: 'LMS', isUrgent: false),
+              ],
+              onTap: () => MainController.to.goTab(1),
+            ),
         ],
       );
     });
@@ -567,47 +626,292 @@ class _AgendaSection extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SectionHeader(title: 'Agenda Hari Ini'),
+          SectionHeader(
+            title: 'Agenda Hari Ini',
+            actionLabel: 'Semua agenda →',
+            onAction: () => MainController.to.goTab(1),
+          ),
           const SizedBox(height: 12),
-          if (todayTasks.isEmpty)
-            _EmptyState(message: 'Tidak ada agenda hari ini 🌟')
-          else
-            for (final task in todayTasks) ...[
-              AgendaItem(
-                task: task,
-                onTap: () => Get.toNamed<void>(
-                  Routes.plannerDetail.replaceFirst(':id', task.id),
-                ),
-              ),
-              const SizedBox(height: 10),
+          if (todayTasks.isNotEmpty) ...[
+            for (int i = 0; i < todayTasks.length; i++) ...[
+              _buildTaskTimelineItem(todayTasks[i], i == todayTasks.length - 1),
             ],
+          ] else ...[
+            const _AgendaTimelineItem(
+              time: '09:00',
+              category: 'KULIAH',
+              categoryColor: Color(0xFF4A8FE0),
+              dotColor: Color(0xFF6BAAFF),
+              accentBorderColor: Color(0xFF8B7CF8),
+              title: 'Kuliah UI/UX Design',
+              meta: '09:00–11:00 AM · Room E12',
+              tags: [
+                (
+                  label: 'Design',
+                  bg: Color(0x1F6BAAFF),
+                  textColor: Color(0xFF4A8FE0),
+                ),
+                (
+                  label: 'Sem. 6',
+                  bg: Color(0x1FA78BFA),
+                  textColor: Color(0xFF8B7CF8),
+                ),
+              ],
+            ),
+            const _AgendaTimelineItem(
+              time: '09:00',
+              category: 'TUGAS',
+              categoryColor: Color(0xFFE5646B),
+              dotColor: Color(0xFFE5646B),
+              accentBorderColor: Color(0xFFE5646B),
+              title: 'Kumpulkan Tugas Web Development',
+              tags: [
+                (
+                  label: 'Segera',
+                  bg: Color(0x24FF383C),
+                  textColor: Color(0xFFE5646B),
+                ),
+                (
+                  label: 'LMS',
+                  bg: Color(0x1FA78BFA),
+                  textColor: Color(0xFF8B7CF8),
+                ),
+              ],
+              isLast: true,
+            ),
+          ],
         ],
       );
     });
   }
+
+  Widget _buildTaskTimelineItem(Task task, bool isLast) {
+    final deadline = task.deadline?.toLocal();
+    final timeStr = deadline != null
+        ? DateFormat('HH:mm').format(deadline)
+        : 'Hari ini';
+
+    final isUrgent = task.priority == TaskPriority.urgent;
+    final dotColor = isUrgent
+        ? const Color(0xFFE5646B)
+        : const Color(0xFF6BAAFF);
+    final accentBorderColor = isUrgent
+        ? const Color(0xFFE5646B)
+        : const Color(0xFF8B7CF8);
+    final categoryColor = isUrgent
+        ? const Color(0xFFE5646B)
+        : const Color(0xFF4A8FE0);
+
+    return _AgendaTimelineItem(
+      time: timeStr,
+      category: task.priority.label.toUpperCase(),
+      categoryColor: categoryColor,
+      dotColor: dotColor,
+      accentBorderColor: accentBorderColor,
+      title: task.title,
+      meta: (task.description?.isNotEmpty ?? false) ? task.description : null,
+      isLast: isLast,
+      onTap: () => Get.toNamed<void>(
+        Routes.plannerDetail.replaceFirst(':id', task.id),
+      ),
+      tags: [
+        (
+          label: task.priority.label,
+          bg: isUrgent ? const Color(0x24FF383C) : const Color(0x1F6BAAFF),
+          textColor:
+              isUrgent ? const Color(0xFFE5646B) : const Color(0xFF4A8FE0),
+        ),
+        if (task.status == TaskStatus.completed)
+          (
+            label: 'Selesai',
+            bg: const Color(0x1F34D399),
+            textColor: const Color(0xFF059669),
+          ),
+      ],
+    );
+  }
 }
 
-// ── Empty state ───────────────────────────────────────────────────────────────
+class _AgendaTimelineItem extends StatelessWidget {
+  const _AgendaTimelineItem({
+    required this.time,
+    required this.category,
+    required this.categoryColor,
+    required this.dotColor,
+    required this.accentBorderColor,
+    required this.title,
+    required this.tags,
+    this.meta,
+    this.isLast = false,
+    this.onTap,
+  });
 
-class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.message});
-  final String message;
+  final String time;
+  final String category;
+  final Color categoryColor;
+  final Color dotColor;
+  final Color accentBorderColor;
+  final String title;
+  final String? meta;
+  final List<({String label, Color bg, Color textColor})> tags;
+  final bool isLast;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.glassBorderCard),
+    return Stack(
+      children: [
+        if (!isLast)
+          const Positioned(
+            left: 50,
+            top: 24,
+            bottom: 0,
+            child: SizedBox(
+              width: 2,
+              child: DecoratedBox(
+                decoration: BoxDecoration(color: Color(0x66C8D7F5)),
+              ),
+            ),
+          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 38,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  time,
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textMuted,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Container(
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: dotColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+              child: GestureDetector(
+                onTap: onTap,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: const Color(0xFFF1F3FA)),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x0F3C4682),
+                        blurRadius: 12,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          width: 4.5,
+                          child: Container(color: accentBorderColor),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 14,
+                            right: 14,
+                            top: 12,
+                            bottom: 12,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                category,
+                                style: TextStyle(
+                                  fontSize: 9.5,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 0.5,
+                                  color: categoryColor,
+                                ),
+                              ),
+                              const SizedBox(height: 3),
+                              Text(
+                                title,
+                                style: const TextStyle(
+                                  fontSize: 14.5,
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.textPrimary,
+                                  height: 1.25,
+                                ),
+                              ),
+                              if (meta != null) ...[
+                                const SizedBox(height: 3),
+                                Text(
+                                  meta!,
+                                  style: const TextStyle(
+                                    fontSize: 10.5,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.textMuted,
+                                  ),
+                                ),
+                              ],
+                              const SizedBox(height: 8),
+                              Wrap(
+                                spacing: 6,
+                                runSpacing: 4,
+                                children: [
+                                  for (final tag in tags)
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 2.5,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: tag.bg,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Text(
+                                        tag.label,
+                                        style: TextStyle(
+                                          fontSize: 9.5,
+                                          fontWeight: FontWeight.w700,
+                                          color: tag.textColor,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
-      child: Text(
-        message,
-        textAlign: TextAlign.center,
-        style: AppTypography.subtitle,
-      ),
-    );
-  }
+    ],
+  );
+}
 }
