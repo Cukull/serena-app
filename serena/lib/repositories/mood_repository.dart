@@ -25,8 +25,7 @@ class MoodRepository {
           'user_id': userId,
           'mood_score': score,
           'note': note,
-          'logged_at':
-              (loggedAt ?? DateTime.now()).toUtc().toIso8601String(),
+          'logged_at': (loggedAt ?? DateTime.now()).toUtc().toIso8601String(),
         })
         .select()
         .single();

@@ -176,8 +176,15 @@ class AuthController extends GetxController {
       await moodRepo.insertMood(userId: id, score: moodScore);
       await profileRepo.setOnboardingCompleted(id);
       onboardingDone.value = true;
-      Get.offAllNamed(Routes.main);
-    } on Object {
+    } on PostgrestException catch (e) {
+      if (e.code == '23503') {
+        // User di sesi lokal sudah tidak ada di auth.users (mis. DB di-reset).
+        await logout();
+        errorMessage.value = 'Sesi akun tidak valid. Silakan masuk kembali.';
+      } else {
+        errorMessage.value = 'Gagal menyimpan data onboarding.';
+      }
+    } catch (e) {
       errorMessage.value = 'Gagal menyimpan data onboarding.';
     } finally {
       isLoading.value = false;

@@ -12,8 +12,17 @@ import 'package:serena/core/widgets/app_gradient_background.dart';
 import 'package:serena/core/widgets/app_pill_field.dart';
 import 'package:serena/features/auth/controller/login_controller.dart';
 
-class LoginPage extends GetView<LoginController> {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  LoginController get controller => Get.find<LoginController>();
 
   static const _divider = Expanded(
     child: Divider(color: AppColors.divider),
@@ -37,7 +46,7 @@ class LoginPage extends GetView<LoginController> {
             padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
             child: Obx(
               () => Form(
-                key: controller.formKey,
+                key: _formKey,
                 autovalidateMode: controller.autoValidate.value
                     ? AutovalidateMode.onUserInteraction
                     : AutovalidateMode.disabled,
@@ -98,8 +107,9 @@ class LoginPage extends GetView<LoginController> {
                       validator: (v) => controller.validatePassword(v ?? ''),
                       textInputAction: TextInputAction.done,
                       autofillHints: const [AutofillHints.password],
-                      onSubmitted: (_) => controller.submit(),
+                      onSubmitted: (_) => controller.submit(_formKey),
                     ),
+                    const SizedBox(height: 13),
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
@@ -114,9 +124,10 @@ class LoginPage extends GetView<LoginController> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 13),
                     AppFillButton(
                       label: 'Masuk',
-                      onPressed: controller.submit,
+                      onPressed: () => controller.submit(_formKey),
                       isLoading: controller.isLoading.value,
                       leading: const Icon(
                         LucideIcons.arrowRight,
