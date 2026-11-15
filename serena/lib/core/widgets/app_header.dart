@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import 'package:serena/app/app_assets.dart';
 import 'package:serena/controllers/auth_controller.dart';
+import 'package:serena/controllers/main_controller.dart';
 import 'package:serena/core/theme/app_colors.dart';
 import 'package:serena/core/theme/app_typography.dart';
 
@@ -35,7 +37,10 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
           Obx(() {
             final name = auth.user.value?.displayName ?? 'U';
             final initials = _initials(name);
-            return _AvatarBadge(initials: initials);
+            return GestureDetector(
+              onTap: () => MainController.to.goTab(3),
+              child: _AvatarBadge(initials: initials),
+            );
           }),
         ],
       ),
@@ -55,20 +60,29 @@ class _LogoIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 36,
-      height: 36,
+      width: 42,
+      height: 42,
+      padding: const EdgeInsets.all(7),
       decoration: BoxDecoration(
-        gradient: AppColors.webPrimary,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0x3863C7F7), Color(0x388B7CF8)],
+        ),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0x6163C7F7)),
+        boxShadow: const [
           BoxShadow(
-            color: AppColors.primary.withAlpha(60),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
+            color: Color(0x2463C7F7),
+            blurRadius: 14,
+            offset: Offset(0, 4),
           ),
         ],
       ),
-      child: const Icon(LucideIcons.leaf, size: 18, color: Colors.white),
+      child: Image.asset(
+        AppAssets.logo,
+        fit: BoxFit.contain,
+      ),
     );
   }
 }
@@ -76,26 +90,10 @@ class _LogoIcon extends StatelessWidget {
 class _Wordmark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: 'Ser',
-            style: AppTypography.logo.copyWith(
-              color: AppColors.textPrimary,
-              fontSize: 20,
-            ),
-          ),
-          TextSpan(
-            text: 'ena',
-            style: AppTypography.logo.copyWith(
-              color: AppColors.primary,
-              fontStyle: FontStyle.italic,
-              fontSize: 20,
-            ),
-          ),
-        ],
-      ),
+    return Image.asset(
+      AppAssets.wordmark,
+      height: 22,
+      fit: BoxFit.contain,
     );
   }
 }
