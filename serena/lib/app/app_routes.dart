@@ -7,7 +7,7 @@ abstract class Routes {
   static const verify = '/verify';
   static const onboarding = '/onboarding';
 
-  /// Shell bottom-tab (IndexedStack): home | planner | focus | wellness | profile
+  /// Shell bottom-tab (IndexedStack): home | planner | focus | profile
   static const main = '/main';
 
   static const plannerCreate = '/planner/create';
@@ -19,11 +19,8 @@ abstract class Routes {
   static const examMode = '/focus/exam';
   static const focusHistory = '/focus/history';
 
-  static const mood = '/wellness/mood';
-  static const habits = '/wellness/habits';
-  static const sleep = '/wellness/sleep';
-
   static const editProfile = '/profile/edit';
   static const settings = '/profile/settings';
   static const achievements = '/profile/achievements';
+  static const stats = '/profile/stats';
 }

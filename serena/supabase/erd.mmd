@@ -1,0 +1,138 @@
+erDiagram
+    auth_users ||--|| profiles : "1:1 akun"
+    auth_users ||--o{ user_goals : "punya"
+    auth_users ||--o{ task_categories : "punya"
+    auth_users ||--o{ tasks : "punya"
+    auth_users ||--o{ habits : "punya"
+    auth_users ||--o{ habit_logs : "punya"
+    auth_users ||--o{ mood_logs : "punya"
+    auth_users ||--o{ sleep_logs : "punya"
+    auth_users ||--o{ focus_sessions : "punya"
+    auth_users ||--o{ notifications : "punya"
+    auth_users ||--o{ user_achievements : "punya"
+    task_categories ||--o{ tasks : "mengelompokkan"
+    habits ||--o{ habit_logs : "dicatat"
+    achievements ||--o{ user_achievements : "diberikan"
+
+    auth_users {
+        uuid id PK
+    }
+    profiles {
+        uuid id PK
+        text email
+        text full_name
+        text avatar_url
+        boolean onboarding_completed
+        timestamptz created_at
+        timestamptz updated_at
+    }
+    user_goals {
+        uuid id PK
+        uuid user_id FK
+        text title
+        text description
+        date target_date
+        boolean is_completed
+        timestamptz created_at
+        timestamptz updated_at
+    }
+    task_categories {
+        uuid id PK
+        uuid user_id FK
+        text name
+        text color
+        text icon
+        timestamptz created_at
+    }
+    tasks {
+        uuid id PK
+        uuid user_id FK
+        uuid category_id FK
+        text title
+        text description
+        timestamptz deadline
+        task_priority priority
+        task_status status
+        int progress
+        timestamptz reminder_at
+        timestamptz completed_at
+        timestamptz created_at
+        timestamptz updated_at
+    }
+    habits {
+        uuid id PK
+        uuid user_id FK
+        text title
+        text description
+        habit_frequency frequency
+        int target_per_week
+        text color
+        text icon
+        time reminder_time
+        boolean is_active
+        timestamptz created_at
+        timestamptz updated_at
+    }
+    habit_logs {
+        uuid id PK
+        uuid habit_id FK
+        uuid user_id FK
+        date logged_date
+        boolean is_completed
+        text note
+        timestamptz created_at
+    }
+    mood_logs {
+        uuid id PK
+        uuid user_id FK
+        int mood_score
+        text mood_label
+        text note
+        timestamptz logged_at
+    }
+    sleep_logs {
+        uuid id PK
+        uuid user_id FK
+        date sleep_date
+        timestamptz bedtime
+        timestamptz wake_time
+        int quality
+        text note
+        timestamptz created_at
+    }
+    focus_sessions {
+        uuid id PK
+        uuid user_id FK
+        focus_mode mode
+        int planned_minutes
+        int actual_minutes
+        timestamptz started_at
+        timestamptz ended_at
+        focus_status status
+        text note
+    }
+    notifications {
+        uuid id PK
+        uuid user_id FK
+        notification_type type
+        text title
+        text body
+        timestamptz scheduled_for
+        boolean is_read
+        uuid related_id
+        timestamptz created_at
+    }
+    achievements {
+        uuid id PK
+        text code UK
+        text title
+        text description
+        text icon
+        jsonb criteria
+    }
+    user_achievements {
+        uuid user_id PK,FK
+        uuid achievement_id PK,FK
+        int progress
+        timestamptz unlocked_at
+    }

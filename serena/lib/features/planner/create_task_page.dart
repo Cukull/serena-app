@@ -51,7 +51,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       priority: _priority,
     );
     if (ok) {
-      Get.back();
+      Get.back<void>();
       Get.snackbar('Berhasil', 'Task ditambahkan.');
     } else {
       Get.snackbar('Gagal', 'Task tidak tersimpan.');

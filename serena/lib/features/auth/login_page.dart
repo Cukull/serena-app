@@ -33,155 +33,189 @@ class LoginPage extends GetView<LoginController> {
       body: AppGradientBackground(
         gradient: AppColors.webPageBg,
         child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
-            child: Obx(
-              () => Form(
-                key: controller.formKey,
-                autovalidateMode: controller.autoValidate.value
-                    ? AutovalidateMode.onUserInteraction
-                    : AutovalidateMode.disabled,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    AuthBrandHeader(onTap: () => Get.back<void>()),
-                    const SizedBox(height: 6),
-                    Center(
-                      child: SvgPicture.asset(
-                        AppAssets.loginHammock,
-                        height: 132,
-                      )
-                          .animate(onPlay: (c) => c.repeat(reverse: true))
-                          .rotate(
-                            begin: -0.012,
-                            end: 0.012,
-                            duration: 2200.ms,
-                            curve: Curves.easeInOut,
-                          )
-                          .moveY(
-                            begin: 0,
-                            end: -3,
-                            duration: 2200.ms,
-                            curve: Curves.easeInOut,
-                          ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Selamat Datang Kembali',
-                      style: AppTypography.serif(26),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Atur jadwal kuliah, kelola tugas, '
-                      'dan raih fokus terbaikmu.',
-                      style: AppTypography.body.copyWith(
-                        fontSize: 13.5,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.webSlate,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 20,
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    AppPillField(
-                      controller: controller.emailC,
-                      hint: 'nama@student.edu',
-                      validator: (v) => controller.validateEmail(v ?? ''),
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      autofillHints: const [AutofillHints.email],
-                    ),
-                    const SizedBox(height: 13),
-                    AppPillField(
-                      controller: controller.passC,
-                      hint: 'Kata sandi',
-                      icon: LucideIcons.lock,
-                      obscure: true,
-                      validator: (v) => controller.validatePassword(v ?? ''),
-                      textInputAction: TextInputAction.done,
-                      autofillHints: const [AutofillHints.password],
-                      onSubmitted: (_) => controller.submit(),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: controller.goToForgotPassword,
-                        child: Text(
-                          'Lupa Kata Sandi?',
-                          style: AppTypography.body.copyWith(
-                            fontSize: 12.5,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.primary,
+                      child: Obx(
+                        () => Form(
+                          key: controller.formKey,
+                          autovalidateMode: controller.autoValidate.value
+                              ? AutovalidateMode.onUserInteraction
+                              : AutovalidateMode.disabled,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              AuthBrandHeader(onTap: () => Get.back<void>()),
+                              const SizedBox(height: 14),
+                              Center(
+                                child: SvgPicture.asset(
+                                  AppAssets.loginHammock,
+                                  height: 142,
+                                )
+                                    .animate(
+                                      onPlay: (c) => c.repeat(reverse: true),
+                                    )
+                                    .rotate(
+                                      begin: -0.012,
+                                      end: 0.012,
+                                      duration: 2200.ms,
+                                      curve: Curves.easeInOut,
+                                    )
+                                    .moveY(
+                                      begin: 0,
+                                      end: -3,
+                                      duration: 2200.ms,
+                                      curve: Curves.easeInOut,
+                                    ),
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                'Selamat Datang Kembali',
+                                style: AppTypography.serif(26),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                'Atur jadwal kuliah, kelola tugas, '
+                                'dan raih fokus terbaikmu.',
+                                style: AppTypography.body.copyWith(
+                                  fontSize: 13.5,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.webSlate,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              AppPillField(
+                                controller: controller.emailC,
+                                hint: 'nama@student.edu',
+                                validator: (v) =>
+                                    controller.validateEmail(v ?? ''),
+                                keyboardType: TextInputType.emailAddress,
+                                textInputAction: TextInputAction.next,
+                                autofillHints: const [AutofillHints.email],
+                              ),
+                              const SizedBox(height: 14),
+                              AppPillField(
+                                controller: controller.passC,
+                                hint: 'Kata sandi',
+                                icon: LucideIcons.lock,
+                                obscure: true,
+                                validator: (v) =>
+                                    controller.validatePassword(v ?? ''),
+                                textInputAction: TextInputAction.done,
+                                autofillHints: const [AutofillHints.password],
+                                onSubmitted: (_) => controller.submit(),
+                              ),
+                              const SizedBox(height: 10),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: GestureDetector(
+                                  onTap: controller.goToForgotPassword,
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 6,
+                                      horizontal: 4,
+                                    ),
+                                    child: Text(
+                                      'Lupa Kata Sandi?',
+                                      style: AppTypography.body.copyWith(
+                                        fontSize: 12.5,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.primary,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 14),
+                              AppFillButton(
+                                label: 'Masuk',
+                                onPressed: controller.submit,
+                                isLoading: controller.isLoading.value,
+                                leading: const Icon(
+                                  LucideIcons.arrowRight,
+                                  size: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  _divider,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 14,
+                                    ),
+                                    child: Text(
+                                      'atau lanjutkan dengan',
+                                      style: AppTypography.caption.copyWith(
+                                        color: AppColors.textFaint,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  _divider,
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              AppFillButton(
+                                label: 'Lanjutkan dengan Google',
+                                variant: AppFillVariant.outline,
+                                onPressed: controller.signInWithGoogle,
+                                leading: SvgPicture.string(
+                                  _googleLogoSvg,
+                                  width: 20,
+                                  height: 20,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Wrap(
+                                alignment: WrapAlignment.center,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  Text(
+                                    'Belum punya akun? ',
+                                    style: AppTypography.body.copyWith(
+                                      fontSize: 13,
+                                      color: AppColors.webSlate,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: controller.goToSignUp,
+                                    child: Text(
+                                      'Buat Akun Baru',
+                                      style: AppTypography.body.copyWith(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.primary,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 22),
+                              const _SocialProof(),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                    AppFillButton(
-                      label: 'Masuk',
-                      onPressed: controller.submit,
-                      isLoading: controller.isLoading.value,
-                      leading: const Icon(
-                        LucideIcons.arrowRight,
-                        size: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    Row(
-                      children: [
-                        _divider,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Text(
-                            'atau lanjutkan dengan',
-                            style: AppTypography.caption.copyWith(
-                              color: AppColors.textFaint,
-                            ),
-                          ),
-                        ),
-                        _divider,
-                      ],
-                    ),
-                    const SizedBox(height: 14),
-                    AppFillButton(
-                      label: 'Lanjutkan dengan Google',
-                      variant: AppFillVariant.outline,
-                      onPressed: controller.signInWithGoogle,
-                      leading: SvgPicture.string(
-                        _googleLogoSvg,
-                        width: 20,
-                        height: 20,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text(
-                          'Belum punya akun? ',
-                          style: AppTypography.body.copyWith(
-                            fontSize: 13,
-                            color: AppColors.webSlate,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: controller.goToSignUp,
-                          child: Text(
-                            'Buat Akun Baru',
-                            style: AppTypography.body.copyWith(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    const _SocialProof(),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ),
       ),

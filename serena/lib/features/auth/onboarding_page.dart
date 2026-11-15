@@ -13,9 +13,6 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   final _goal = TextEditingController();
-  int _mood = 3;
-
-  static const _moodEmojis = ['😞', '😕', '😐', '🙂', '😄'];
 
   @override
   void dispose() {
@@ -26,7 +23,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Future<void> _submit() async {
     await Get.find<AuthController>().completeOnboarding(
       goal: _goal.text.trim(),
-      moodScore: _mood,
     );
   }
 
@@ -47,12 +43,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Jawab dua hal singkat ini supaya pengalamanmu lebih personal.',
+                'Ceritakan tujuanmu supaya pengalamanmu lebih personal.',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 24),
-              Text('Apa tujuan utamamu?',
-                  style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                'Apa tujuan utamamu?',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               const SizedBox(height: 8),
               TextFormField(
                 controller: _goal,
@@ -61,47 +59,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   border: OutlineInputBorder(),
                 ),
                 validator: AppValidators.required,
-              ),
-              const SizedBox(height: 24),
-              Text('Bagaimana perasaanmu sekarang?',
-                  style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: 8),
-              Row(
-                children: List.generate(5, (i) {
-                  final value = i + 1;
-                  final selected = _mood == value;
-                  return Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(12),
-                        onTap: () => setState(() => _mood = value),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          decoration: BoxDecoration(
-                            color: selected
-                                ? Theme.of(context).colorScheme.primaryContainer
-                                : null,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: selected
-                                  ? Theme.of(context).colorScheme.primary
-                                  : Colors.grey.shade300,
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Text(_moodEmojis[i],
-                                  style: const TextStyle(fontSize: 22)),
-                              const SizedBox(height: 4),
-                              Text('$value'),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }),
               ),
               const SizedBox(height: 32),
               Obx(() {

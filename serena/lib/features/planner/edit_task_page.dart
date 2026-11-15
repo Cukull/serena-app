@@ -80,7 +80,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
     );
     final ok = await Get.find<TaskController>().updateTask(updated);
     if (ok) {
-      Get.back();
+      Get.back<void>();
       Get.snackbar('Berhasil', 'Task diperbarui.');
     } else {
       Get.snackbar('Gagal', 'Task tidak tersimpan.');

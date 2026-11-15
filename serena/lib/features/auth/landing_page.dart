@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:serena/app/app_assets.dart';
 import 'package:serena/app/app_routes.dart';
+import 'package:serena/app/splash_gate.dart' show SplashGate;
 import 'package:serena/core/theme/app_colors.dart';
 import 'package:serena/core/theme/app_typography.dart';
 import 'package:serena/core/widgets/app_fill_button.dart';

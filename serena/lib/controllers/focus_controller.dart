@@ -25,6 +25,7 @@ class FocusController extends GetxController {
 
   Timer? _timer;
   DateTime? _startedAt;
+  DateTime? _targetEndTime;
 
   String? get _uid => Get.find<AuthController>().user.value?.id;
 
@@ -66,16 +67,32 @@ class FocusController extends GetxController {
     totalSeconds.value = minutes * 60;
     remainingSeconds.value = minutes * 60;
     _startedAt = DateTime.now();
+    _targetEndTime = _startedAt!.add(Duration(seconds: totalSeconds.value));
     phase.value = FocusPhase.running;
+    _startTicker();
+  }
+
+  void _startTicker() {
+    _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
   }
 
   void _tick() {
-    if (remainingSeconds.value <= 1) {
-      remainingSeconds.value = 0;
-      finish();
+    if (_targetEndTime != null && phase.value == FocusPhase.running) {
+      final diff = _targetEndTime!.difference(DateTime.now()).inSeconds;
+      if (diff <= 0) {
+        remainingSeconds.value = 0;
+        finish();
+      } else {
+        remainingSeconds.value = diff;
+      }
     } else {
-      remainingSeconds.value--;
+      if (remainingSeconds.value <= 1) {
+        remainingSeconds.value = 0;
+        finish();
+      } else {
+        remainingSeconds.value--;
+      }
     }
   }
 
@@ -87,14 +104,17 @@ class FocusController extends GetxController {
 
   void resume() {
     if (phase.value != FocusPhase.paused) return;
+    _targetEndTime =
+        DateTime.now().add(Duration(seconds: remainingSeconds.value));
     phase.value = FocusPhase.running;
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
+    _startTicker();
   }
 
   Future<void> finish() async {
     _timer?.cancel();
     final elapsed = totalSeconds.value - remainingSeconds.value;
     phase.value = FocusPhase.idle;
+    _targetEndTime = null;
     await _record(elapsed, FocusStatus.completed);
   }
 
@@ -102,6 +122,7 @@ class FocusController extends GetxController {
     _timer?.cancel();
     final elapsed = totalSeconds.value - remainingSeconds.value;
     phase.value = FocusPhase.idle;
+    _targetEndTime = null;
     // Sesi dibatalkan hanya disimpan bila sudah berjalan > 1 menit.
     if (elapsed >= 60) {
       await _record(elapsed, FocusStatus.cancelled);
