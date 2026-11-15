@@ -22,4 +22,5 @@ abstract class Routes {
   static const editProfile = '/profile/edit';
   static const settings = '/profile/settings';
   static const achievements = '/profile/achievements';
+  static const stats = '/profile/stats';
 }

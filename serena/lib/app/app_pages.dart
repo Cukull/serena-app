@@ -20,6 +20,7 @@ import 'package:serena/features/planner/task_detail_page.dart';
 import 'package:serena/features/profile/achievements_page.dart';
 import 'package:serena/features/profile/edit_profile_page.dart';
 import 'package:serena/features/profile/settings_page.dart';
+import 'package:serena/features/profile/stats_page.dart';
 
 /// Daftar GetPage. AuthMiddleware menjaga route protected.
 /// Jangan pecah list ini per fitur untuk MVP.
@@ -105,6 +106,11 @@ abstract class AppPages {
     GetPage(
       name: Routes.achievements,
       page: () => const AchievementsPage(),
+      middlewares: [AuthMiddleware()],
+    ),
+    GetPage(
+      name: Routes.stats,
+      page: () => const StatsPage(),
       middlewares: [AuthMiddleware()],
     ),
   ];
