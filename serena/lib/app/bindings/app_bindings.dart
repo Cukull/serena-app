@@ -31,7 +31,10 @@ class AppBindings extends Bindings {
     );
     Get.lazyPut<UserController>(() => UserController(repo: Get.find()));
     Get.lazyPut<TaskController>(() => TaskController(repo: Get.find()));
-    Get.lazyPut<FocusController>(() => FocusController(repo: Get.find()));
+    Get.put<FocusController>(
+      FocusController(repo: Get.find()),
+      permanent: true,
+    );
     Get.lazyPut<MainController>(MainController.new);
   }
 }

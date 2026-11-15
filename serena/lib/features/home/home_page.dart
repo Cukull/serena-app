@@ -273,7 +273,7 @@ class _FocusHeroCard extends StatelessWidget {
     } else if (focus.phase.value == FocusPhase.paused) {
       focus.resume();
     } else {
-      MainController.to.goTab(2);
+      focus.start(FocusMode.pomodoro, 25);
     }
   }
 }

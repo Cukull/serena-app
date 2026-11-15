@@ -30,9 +30,8 @@ class _FocusTimerViewState extends State<FocusTimerView> {
 
   @override
   void dispose() {
-    if (c.phase.value != FocusPhase.idle) {
-      c.cancel();
-    }
+    // Sesi fokus bersifat global dan tetap berjalan di latar belakang
+    // saat user menekan tombol kembali ke menu utama.
     super.dispose();
   }
 
@@ -44,9 +43,14 @@ class _FocusTimerViewState extends State<FocusTimerView> {
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Obx(
-            () => c.phase.value == FocusPhase.idle
-                ? _buildIdle(context)
-                : _buildRunning(context),
+            () {
+              final isThisModeActive =
+                  c.phase.value != FocusPhase.idle &&
+                  c.mode.value == widget.mode;
+              return isThisModeActive
+                  ? _buildRunning(context)
+                  : _buildIdle(context);
+            },
           ),
         ),
       ),

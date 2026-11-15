@@ -237,6 +237,31 @@ class _ActiveFocusCard extends StatelessWidget {
                   ),
                 ],
               ),
+            ] else ...[
+              const SizedBox(height: 14),
+              GestureDetector(
+                onTap: () => focus.start(FocusMode.pomodoro, 25),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withAlpha(30),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: Colors.white.withAlpha(60)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        LucideIcons.play,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(width: 8),
+                      Text('Mulai Sesi', style: AppTypography.button),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ],
         ),
