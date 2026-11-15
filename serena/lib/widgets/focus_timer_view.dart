@@ -131,7 +131,7 @@ class _FocusTimerViewState extends State<FocusTimerView> {
               onPressed: () async {
                 await c.finish();
                 if (!context.mounted) return;
-                Get.back();
+                Get.back<void>();
                 Get.snackbar('Selesai', 'Sesi fokus tersimpan 🎉');
               },
               child: const Text('Selesai'),
@@ -142,7 +142,7 @@ class _FocusTimerViewState extends State<FocusTimerView> {
         TextButton(
           onPressed: () async {
             await c.cancel();
-            Get.back();
+            Get.back<void>();
           },
           child: const Text('Batalkan'),
         ),
