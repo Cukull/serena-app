@@ -12,6 +12,18 @@ import 'package:serena/core/widgets/agenda_item.dart';
 import 'package:serena/core/widgets/app_ui.dart';
 import 'package:serena/models/task.dart';
 
+String _safeFormatMonth(DateTime date) {
+  try {
+    return DateFormat('MMMM yyyy', 'id').format(date);
+  } catch (_) {
+    try {
+      return DateFormat('MMMM yyyy', 'id_ID').format(date);
+    } catch (_) {
+      return DateFormat('MMMM yyyy').format(date);
+    }
+  }
+}
+
 class PlannerPage extends StatefulWidget {
   const PlannerPage({super.key});
 
@@ -66,7 +78,7 @@ class _PlannerPageState extends State<PlannerPage> {
                 children: [
                   Text('Dasbor Perencana', style: AppTypography.h2.copyWith(fontSize: 20)),
                   Text(
-                    '${DateFormat('MMMM yyyy', 'id').format(_focusedMonth)} · $total tugas',
+                    '${_safeFormatMonth(_focusedMonth)} · $total tugas',
                     style: AppTypography.subtitle,
                   ),
                 ],
@@ -86,13 +98,14 @@ class _PlannerPageState extends State<PlannerPage> {
   }
 
   Widget _buildBody(TaskController c) {
+    final taskList = c.tasks.toList();
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 120),
       children: [
         _CalendarCard(
           focusedMonth: _focusedMonth,
           selectedDay: _selectedDay,
-          tasks: c.tasks,
+          tasks: taskList,
           weekdays: _weekdays,
           onMonthChanged: (m) => setState(() => _focusedMonth = m),
           onDaySelected: (d) => setState(() => _selectedDay = d),
@@ -104,7 +117,7 @@ class _PlannerPageState extends State<PlannerPage> {
         ),
         const SizedBox(height: 12),
         _AgendaList(
-          tasks: c.tasks,
+          tasks: taskList,
           selectedDay: _selectedDay,
           filter: _filter,
         ),
@@ -152,7 +165,7 @@ class _CalendarCard extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  DateFormat('MMMM yyyy', 'id').format(focusedMonth),
+                  _safeFormatMonth(focusedMonth),
                   textAlign: TextAlign.center,
                   style: AppTypography.label.copyWith(fontSize: 15),
                 ),

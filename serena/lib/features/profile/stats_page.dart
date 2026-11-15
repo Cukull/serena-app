@@ -116,26 +116,28 @@ class _StatsPageState extends State<StatsPage>
               child: Obx(() {
                 final taskCtrl = Get.find<TaskController>();
                 final focusCtrl = Get.find<FocusController>();
+                final tasks = taskCtrl.tasks.toList();
+                final sessions = focusCtrl.sessions.toList();
                 return TabBarView(
                   controller: _tab,
                   children: [
                     _ChartView(
                       period: _Period.daily,
                       filter: _filter,
-                      tasks: taskCtrl.tasks,
-                      sessions: focusCtrl.sessions,
+                      tasks: tasks,
+                      sessions: sessions,
                     ),
                     _ChartView(
                       period: _Period.weekly,
                       filter: _filter,
-                      tasks: taskCtrl.tasks,
-                      sessions: focusCtrl.sessions,
+                      tasks: tasks,
+                      sessions: sessions,
                     ),
                     _ChartView(
                       period: _Period.monthly,
                       filter: _filter,
-                      tasks: taskCtrl.tasks,
-                      sessions: focusCtrl.sessions,
+                      tasks: tasks,
+                      sessions: sessions,
                     ),
                   ],
                 );
@@ -319,6 +321,30 @@ class _ChartView extends StatelessWidget {
               ),
             ),
           ],
+        ),
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.glassBorderCard),
+          ),
+          child: Row(
+            children: [
+              const Text('💡', style: TextStyle(fontSize: 20)),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Tugas tersisamu sama seperti hari sebelumnya. Pertahankan ritme ini!',
+                  style: AppTypography.subtitle.copyWith(
+                    fontSize: 12.5,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:serena/app/app.dart';
 import 'package:serena/app/app_routes.dart';
@@ -9,6 +10,8 @@ import 'package:serena/services/supabase_client.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('id_ID');
+  await initializeDateFormatting('id');
   await GetStorage.init();
   await dotenv.load();
 
