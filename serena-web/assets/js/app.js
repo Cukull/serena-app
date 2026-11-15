@@ -157,7 +157,12 @@ function navigateTo(target, params = {}) {
     jadwal: { viewId: 'viewJadwal', pageDir: 'jadwal' },
     fokus: { viewId: null, pageDir: 'fokus' },
     profile: { viewId: 'viewProfile', pageDir: 'profile' },
-    akun: { viewId: 'viewProfile', pageDir: 'profile' }
+    akun: { viewId: 'viewProfile', pageDir: 'profile' },
+    login: { viewId: null, pageDir: 'login' },
+    onboarding: { viewId: null, pageDir: 'onboarding' },
+    register: { viewId: null, pageDir: 'register' },
+    forgotPassword: { viewId: null, pageDir: 'forgot-password' },
+    googleAuth: { viewId: null, pageDir: 'google-auth' }
   };
 
   const route = routeMap[target] || { viewId: null, pageDir: target };
@@ -286,6 +291,16 @@ function handleSmartBack(fallbackTarget = 'home') {
 /* 4. HOME CARDS NAVIGATION INTERACTION                                       */
 /* -------------------------------------------------------------------------- */
 function initHomeCardNavigation() {
+  // Brand Logo -> Onboarding / Splash (memudahkan eksplorasi halaman awal)
+  const brandSection = document.querySelector('.brand-section');
+  if (brandSection) {
+    brandSection.style.cursor = 'pointer';
+    brandSection.setAttribute('title', 'Buka Halaman Awal & Onboarding');
+    brandSection.addEventListener('click', () => {
+      navigateTo('onboarding');
+    });
+  }
+
   // User Header Avatar -> Profil
   const headerAvatar = document.getElementById('headerUserAvatar');
   if (headerAvatar) {
@@ -1820,7 +1835,10 @@ function initProfileControls() {
   if (btnConfirmLogout) {
     btnConfirmLogout.addEventListener('click', () => {
       closeAllSheets();
-      showNotification('Berhasil keluar dari akun. Sampai jumpa!');
+      showNotification('Berhasil keluar dari akun. Sampai jumpa! 👋');
+      setTimeout(() => {
+        navigateTo('login');
+      }, 700);
     });
   }
 

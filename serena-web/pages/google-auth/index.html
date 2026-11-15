@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <!-- App Icon & iOS PWA Meta Tags -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Serena">
+  <meta name="theme-color" content="#FFFFFF">
+  <title>Serena — Masuk dengan Google</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+  <!-- Core Styles -->
+  <link rel="stylesheet" href="../../assets/css/variables.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../components/status-bar/status-bar.css">
+  <link rel="stylesheet" href="./google-auth.css">
+</head>
+<body>
+
+  <div class="device-wrapper">
+    <div class="serena-app-frame" role="region" aria-label="Masuk dengan Google">
+      <!-- Ambient Glow Orbs -->
+      <div class="ambient-glow-container" aria-hidden="true">
+        <div class="glow-orb orb-blue-top"></div>
+        <div class="glow-orb orb-green-top"></div>
+        <div class="glow-orb orb-purple-left"></div>
+        <div class="glow-orb orb-green-mid"></div>
+        <div class="glow-orb orb-purple-bottom"></div>
+      </div>
+
+      <div class="google-auth-container">
+        <!-- Top Navigation Bar -->
+        <div class="google-top-bar">
+          <button type="button" class="google-btn-back" id="btnBackGoogleAuth" aria-label="Kembali ke Login">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <!-- Serena Brand Header -->
+          <div class="google-brand-header">
+            <div class="logo-icon-box" title="Serena Brand">
+              <img src="../../assets/icons/serena-logo.png" alt="Serena Logo" class="brand-logo-img">
+            </div>
+            <div class="brand-title-wrap">
+              <img src="../../assets/icons/serena-wordmark.png" alt="SERENA" class="brand-wordmark-img">
+            </div>
+          </div>
+          <div style="width: 36px;"></div> <!-- balance spacer -->
+        </div>
+
+        <!-- Heading Section -->
+        <section class="google-title-section">
+          <h1 class="google-main-title">Lanjutkan dengan Google</h1>
+          <p class="google-main-sub">
+            Masuk lebih cepat dan aman menggunakan akun Google Anda.
+          </p>
+        </section>
+
+        <!-- Google Accounts Stack -->
+        <div class="google-accounts-stack">
+          <!-- Primary Account Card (Selected) -->
+          <div class="google-account-card selected" id="cardPrimaryGoogleAccount">
+            <div class="account-left-info">
+              <div class="google-user-avatar">YA</div>
+              <div class="account-text-meta">
+                <span class="account-user-name">Yusuf Arief</span>
+                <span class="account-user-email">yusufarief@gmail.com</span>
+              </div>
+            </div>
+            <div class="google-check-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Use Another Google Account -->
+          <div class="google-add-account-card" id="btnAddOtherGoogleAccount">
+            <div class="add-icon-circle">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </div>
+            <span class="add-account-label">Gunakan akun Google lain</span>
+          </div>
+        </div>
+
+        <!-- Continue Button -->
+        <button type="button" class="btn-continue-google" id="btnConfirmGoogleAuth">
+          <span>Lanjutkan</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+
+        <!-- Privacy & Security Notice -->
+        <div class="google-security-notice">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>Data Anda tetap privat dan terlindungi</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div id="notificationToast" class="notification-toast" style="display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1E293B; color: #FFFFFF; padding: 12px 20px; border-radius: 20px; font-size: 13.5px; font-weight: 600; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 9999; text-align: center; max-width: 90%;"></div>
+
+  <!-- Interactive Google Auth Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Clock
+      const clockEl = document.getElementById('statusClock');
+      if (clockEl) {
+        function updateClock() {
+          const now = new Date();
+          let h = now.getHours().toString().padStart(2, '0');
+          let m = now.getMinutes().toString().padStart(2, '0');
+          clockEl.textContent = `${h}:${m}`;
+        }
+        updateClock();
+        setInterval(updateClock, 30000);
+      }
+
+      // 2. Notification Toast
+      const toast = document.getElementById('notificationToast');
+      function showToast(msg) {
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        toast.style.opacity = '1';
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 2600);
+      }
+
+      // 3. Back Button
+      const btnBack = document.getElementById('btnBackGoogleAuth');
+      if (btnBack) {
+        btnBack.addEventListener('click', () => {
+          window.location.href = '../login/index.html';
+        });
+      }
+
+      // 4. Select Account
+      const primaryCard = document.getElementById('cardPrimaryGoogleAccount');
+      if (primaryCard) {
+        primaryCard.addEventListener('click', () => {
+          primaryCard.classList.add('selected');
+        });
+      }
+
+      const btnAddOther = document.getElementById('btnAddOtherGoogleAccount');
+      if (btnAddOther) {
+        btnAddOther.addEventListener('click', () => {
+          const newEmail = prompt('Masukkan akun Google lain: (misal: user@student.edu)', 'student@university.ac.id');
+          if (newEmail) {
+            document.querySelector('.account-user-email').textContent = newEmail;
+            showToast('Akun Google terpilih: ' + newEmail);
+          }
+        });
+      }
+
+      // 5. Confirm Google Sign In
+      const btnConfirm = document.getElementById('btnConfirmGoogleAuth');
+      if (btnConfirm) {
+        btnConfirm.addEventListener('click', () => {
+          showToast('Berhasil masuk dengan Google! Menyiapkan Serena... ✨');
+          setTimeout(() => {
+            window.location.href = '../home/index.html';
+          }, 700);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
