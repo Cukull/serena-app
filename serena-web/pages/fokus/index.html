@@ -2,7 +2,16 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <!-- App Icon & iOS PWA Meta Tags -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Serena">
+  <meta name="theme-color" content="#FFFFFF">
   <title>Serena — Fokus</title>
   <link rel="stylesheet" href="../home/home.css">
 </head>
@@ -13,15 +22,6 @@
         <div class="glow-orb orb-purple-left"></div>
         <div class="glow-orb orb-green-mid"></div>
       </div>
-
-      <div class="status-bar">
-        <div class="status-bar-time">9:41</div>
-        <div class="status-bar-icons">
-          <div class="cellular-signal"><div class="bar bar-1"></div><div class="bar bar-2"></div><div class="bar bar-3"></div><div class="bar bar-4"></div></div>
-          <div class="battery-icon"><div class="battery-body"><div class="battery-level"></div></div><div class="battery-cap"></div></div>
-        </div>
-      </div>
-
       <main class="app-content-scroll" style="display: flex; flex-direction: column; gap: 20px;">
         <div class="user-greeting">
           <h1 class="greeting-title">Sesi Fokus 🎯</h1>
@@ -57,7 +57,7 @@
             <span class="nav-tab-label">Jadwal</span>
           </a>
           <a href="./index.html" class="nav-tab-item active">
-            <div class="nav-tab-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
+            <div class="nav-tab-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="9.5" y1="2.5" x2="14.5" y2="2.5"></line><circle cx="12" cy="14" r="8"></circle><polyline points="12 9.5 12 14 15 16.5"></polyline></svg></div>
             <span class="nav-tab-label">Fokus</span>
           </a>
           <a href="../akun/index.html" class="nav-tab-item">

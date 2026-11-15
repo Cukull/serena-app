@@ -1,0 +1,568 @@
+/* ==========================================================================
+   SERENA - LOGIN & AUTHENTICATION SCREEN (HD & Figma Accurate)
+   ========================================================================== */
+
+@import "../../assets/css/variables.css";
+@import "../../assets/css/base.css";
+@import "../../assets/css/layout.css";
+@import "../../components/status-bar/status-bar.css";
+
+/* Page Container */
+.login-page-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: max(52px, calc(env(safe-area-inset-top, 0px) + 20px)) 24px 32px;
+  -webkit-overflow-scrolling: touch;
+  z-index: 1;
+}
+
+.login-page-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==========================================================================
+   BRAND HEADER: 100% IDENTICAL TO HOME (HD GLASSMORPHISM & CRISP PNGs)
+   ========================================================================== */
+.login-brand-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.login-brand-header:hover {
+  transform: translateY(-1px);
+}
+
+.login-brand-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Glassmorphic Logo Container - Identical to Home (.logo-icon-box) */
+.login-brand-header .logo-icon-box {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, rgba(99, 199, 247, 0.22) 0%, rgba(139, 124, 248, 0.22) 100%);
+  border: 1px solid rgba(99, 199, 247, 0.38);
+  box-shadow: inset 0px 1px 0px 1px rgba(255, 255, 255, 0.75),
+              0px 6px 20px rgba(99, 199, 247, 0.20);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: logoFloatingBreath 3.5s ease-in-out infinite;
+}
+
+@keyframes logoFloatingBreath {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: inset 0px 1px 0px 1px rgba(255, 255, 255, 0.75),
+                0px 6px 20px rgba(99, 199, 247, 0.20);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: inset 0px 1px 0px 1px rgba(255, 255, 255, 0.9),
+                0px 10px 24px rgba(99, 199, 247, 0.28);
+  }
+}
+
+.login-brand-header .brand-logo-img {
+  width: 28px;
+  height: auto;
+  max-height: 34px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 3px 8px rgba(2, 132, 199, 0.32));
+}
+
+.login-brand-header .brand-title-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.login-brand-header .brand-wordmark-img {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(15, 45, 107, 0.16));
+}
+
+.login-brand-tagline {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: #64748B;
+  background: rgba(99, 199, 247, 0.12);
+  padding: 4px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(99, 199, 247, 0.25);
+  margin-top: 1px;
+}
+
+/* ==========================================================================
+   HD COZY HAMMOCK ILLUSTRATION & ANIMATIONS
+   ========================================================================== */
+.login-illustration-wrap {
+  width: 100%;
+  height: 145px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 6px 0 2px;
+  position: relative;
+  overflow: visible;
+}
+
+.login-illustration-wrap svg {
+  width: 310px;
+  height: 145px;
+  filter: drop-shadow(0 12px 24px rgba(91, 141, 239, 0.14));
+}
+
+/* 1. Gentle Hammock Swaying */
+.hammock-sway-assembly {
+  transform-origin: 155px 56px;
+  animation: hammockGentleSway 4.4s ease-in-out infinite;
+}
+
+@keyframes hammockGentleSway {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(1.6deg) translateY(-0.8px);
+  }
+  75% {
+    transform: rotate(-1.6deg) translateY(-0.8px);
+  }
+}
+
+/* 2. Peaceful Sleeper Breathing */
+.hammock-sleeper-breathe {
+  animation: sleeperBreathe 2.8s ease-in-out infinite;
+  transform-origin: 195px 78px;
+}
+
+@keyframes sleeperBreathe {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.03) translateY(-1.4px);
+  }
+}
+
+/* 3. Foliage Swaying in Gentle Breeze */
+.hammock-foliage-left {
+  transform-origin: 48px 50px;
+  animation: leafBreezeLeft 5.2s ease-in-out infinite;
+}
+
+.hammock-foliage-right {
+  transform-origin: 262px 50px;
+  animation: leafBreezeRight 5.4s ease-in-out infinite 0.4s;
+}
+
+@keyframes leafBreezeLeft {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(2.4deg) skewX(1deg); }
+}
+
+@keyframes leafBreezeRight {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-2.4deg) skewX(-1deg); }
+}
+
+/* 4. Soft Drifting Clouds */
+.hammock-cloud-1 {
+  animation: cloudDriftSlow 16s ease-in-out infinite alternate;
+}
+
+.hammock-cloud-2 {
+  animation: cloudDriftFast 13s ease-in-out infinite alternate 1.5s;
+}
+
+@keyframes cloudDriftSlow {
+  0% { transform: translateX(-8px); }
+  100% { transform: translateX(12px); }
+}
+
+@keyframes cloudDriftFast {
+  0% { transform: translateX(6px); }
+  100% { transform: translateX(-10px); }
+}
+
+/* 5. Steaming Tea Mug Animation */
+.hammock-steam-1 {
+  animation: steamRise 2.4s ease-out infinite;
+}
+
+.hammock-steam-2 {
+  animation: steamRise 2.4s ease-out infinite 1.2s;
+}
+
+@keyframes steamRise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+  40% {
+    opacity: 0.75;
+    transform: translateY(-4px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(1.2);
+  }
+}
+
+/* 6. Sleeping "z Z z" Drift Animation */
+.hammock-zzz-1 {
+  animation: zzzDrift 3.4s ease-in-out infinite;
+}
+
+.hammock-zzz-2 {
+  animation: zzzDrift 3.4s ease-in-out infinite 1.7s;
+}
+
+@keyframes zzzDrift {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6);
+  }
+  30% {
+    opacity: 0.85;
+    transform: translate(4px, -6px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(10px, -18px) scale(1.25);
+  }
+}
+
+/* 7. Ambient Twinkling Light Motes */
+.hammock-sparkle-1 {
+  animation: sparkleTwinkle 2.8s ease-in-out infinite alternate;
+}
+
+.hammock-sparkle-2 {
+  animation: sparkleTwinkle 3.2s ease-in-out infinite alternate 0.8s;
+}
+
+.hammock-sparkle-3 {
+  animation: sparkleTwinkle 3s ease-in-out infinite alternate 1.6s;
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.8); }
+  50% { opacity: 0.95; transform: scale(1.25); }
+}
+
+/* ==========================================================================
+   TYPOGRAPHY HEADINGS & FORM CONTROLS
+   ========================================================================== */
+.login-title-section {
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.login-heading {
+  font-family: var(--font-family-serif, 'Playfair Display', serif);
+  font-size: 26px;
+  font-weight: 800;
+  color: #142042;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+}
+
+.login-subheading {
+  font-size: 13.5px;
+  color: #6B7391;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Form Styles */
+.login-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 100%;
+}
+
+.form-group-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.form-field-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+  letter-spacing: 0.3px;
+}
+
+.input-container-pill {
+  position: relative;
+  width: 100%;
+  height: 52px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid rgba(226, 232, 240, 0.9);
+  border-radius: 26px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  box-shadow: 0 3px 10px rgba(30, 41, 59, 0.03);
+  transition: all var(--transition-fast);
+}
+
+.input-container-pill:focus-within {
+  border-color: #5BA8F5;
+  box-shadow: 0 0 0 4px rgba(91, 168, 245, 0.16);
+  background: #ffffff;
+}
+
+.input-container-pill input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: #1E293B;
+  font-family: inherit;
+}
+
+.input-container-pill input::placeholder {
+  color: #94A3B8;
+  font-weight: 400;
+}
+
+.input-icon-left {
+  margin-right: 12px;
+  color: #94A3B8;
+  display: flex;
+  align-items: center;
+}
+
+.input-action-right {
+  background: none;
+  border: none;
+  padding: 6px;
+  margin-right: -4px;
+  color: #94A3B8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  transition: color var(--transition-fast);
+}
+
+.input-action-right:hover {
+  color: #334155;
+}
+
+/* Forgot Password Row */
+.form-extra-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: -4px;
+  margin-bottom: 2px;
+}
+
+.forgot-pass-link {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #5B8DEF;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.forgot-pass-link:hover {
+  color: #3B82F6;
+  text-decoration: underline;
+}
+
+/* Primary Action Button (Sign In) */
+.btn-primary-gradient {
+  width: 100%;
+  height: 52px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, #5BA8F5 0%, #8B6CF0 100%);
+  color: #ffffff;
+  font-size: 15.5px;
+  font-weight: 700;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 10px 24px rgba(124, 107, 240, 0.35);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: 4px;
+}
+
+.btn-primary-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(124, 107, 240, 0.45);
+}
+
+.btn-primary-gradient:active {
+  transform: translateY(0);
+}
+
+/* Divider "or continue with" */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 12px 0;
+  width: 100%;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.auth-divider span {
+  padding: 0 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #94A3B8;
+}
+
+/* Google Auth Button */
+.btn-google-auth {
+  width: 100%;
+  height: 50px;
+  border-radius: 25px;
+  background: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  color: #1E293B;
+  font-size: 14.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(30, 41, 59, 0.04);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-google-auth:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 41, 59, 0.08);
+}
+
+.btn-google-auth svg {
+  width: 19px;
+  height: 19px;
+}
+
+/* Switch Login/Register Link */
+.auth-switch-link-row {
+  text-align: center;
+  font-size: 13px;
+  color: #64748B;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+.auth-toggle-btn {
+  background: none;
+  border: none;
+  color: #5B8DEF;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0 4px;
+}
+
+.auth-toggle-btn:hover {
+  color: #3B82F6;
+}
+
+/* Social Proof Banner */
+.social-proof-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.avatar-stack-group {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  margin-left: -6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-circle:first-child {
+  margin-left: 0;
+}
+
+.avatar-s { background: #F59E0B; }
+.avatar-a { background: #8B5CF6; }
+.avatar-r { background: #10B981; }
+.avatar-m { background: #EC4899; }
+
+.social-proof-text {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748B;
+}
+
+/* Register Mode toggle transitions */
+.form-register-only {
+  display: none;
+}
+
+.login-auth-form.mode-register .form-register-only {
+  display: flex;
+}
+
+.login-auth-form.mode-register .form-login-only {
+  display: none;
+}

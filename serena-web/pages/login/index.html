@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <!-- App Icon & iOS PWA Meta Tags -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Serena">
+  <meta name="theme-color" content="#FFFFFF">
+  <title>Serena — Masuk</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+  <!-- Core Styles -->
+  <link rel="stylesheet" href="../../assets/css/variables.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../components/status-bar/status-bar.css">
+  <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+
+  <div class="device-wrapper">
+    <div class="serena-app-frame" role="region" aria-label="Serena Masuk">
+      <!-- Ambient Glow Orbs -->
+      <div class="ambient-glow-container" aria-hidden="true">
+        <div class="glow-orb orb-blue-top"></div>
+        <div class="glow-orb orb-green-top"></div>
+        <div class="glow-orb orb-purple-left"></div>
+        <div class="glow-orb orb-green-mid"></div>
+        <div class="glow-orb orb-purple-bottom"></div>
+      </div>
+
+      <div class="login-page-container">
+        <!-- Brand Header: 100% Identik dengan Home (HD Glassmorphism & Retina Assets) -->
+        <header class="login-brand-header" id="headerBrandLogo" title="Kembali ke Halaman Awal (Onboarding)">
+          <div class="login-brand-logo-row">
+            <div class="logo-icon-box" title="Serena Brand">
+              <img src="../../assets/icons/serena-logo.png" alt="Serena Logo" class="brand-logo-img">
+            </div>
+            <div class="brand-title-wrap">
+              <img src="../../assets/icons/serena-wordmark.png" alt="SERENA" class="brand-wordmark-img">
+            </div>
+          </div>
+          <div class="login-brand-tagline">
+            Balance Your Mind, Study &amp; Life
+          </div>
+        </header>
+
+        <!-- HD Animated Cozy Hammock Illustration -->
+        <div class="login-illustration-wrap" aria-hidden="true">
+          <svg viewBox="0 0 320 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Gradients for Hammock, Foliage, and Trees -->
+              <linearGradient id="hammockBodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#38BDF8"/>
+                <stop offset="30%" stop-color="#2563EB"/>
+                <stop offset="70%" stop-color="#4F46E5"/>
+                <stop offset="100%" stop-color="#7C3AED"/>
+              </linearGradient>
+
+              <linearGradient id="hammockInnerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#1E40AF"/>
+                <stop offset="100%" stop-color="#1E1B4B"/>
+              </linearGradient>
+
+              <linearGradient id="treeBarkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#84CC16"/>
+                <stop offset="40%" stop-color="#65A30D"/>
+                <stop offset="100%" stop-color="#4D7C0F"/>
+              </linearGradient>
+
+              <linearGradient id="leafGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#86EFAC"/>
+                <stop offset="50%" stop-color="#22C55E"/>
+                <stop offset="100%" stop-color="#15803D"/>
+              </linearGradient>
+
+              <linearGradient id="leafGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6EE7B7"/>
+                <stop offset="60%" stop-color="#10B981"/>
+                <stop offset="100%" stop-color="#047857"/>
+              </linearGradient>
+
+              <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#DCFCE7"/>
+                <stop offset="100%" stop-color="#BBF7D0"/>
+              </linearGradient>
+
+              <linearGradient id="blanketGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#60A5FA"/>
+                <stop offset="100%" stop-color="#2563EB"/>
+              </linearGradient>
+
+              <filter id="softGlowMote" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="2"/>
+              </filter>
+            </defs>
+
+            <!-- 1. Ambient Background Drifting Clouds -->
+            <g class="hammock-cloud-1" opacity="0.65">
+              <path d="M130 22 C130 17, 137 15, 142 17 C146 14, 156 14, 160 17 C164 15, 172 17, 172 22 C172 26, 130 26, 130 22 Z" fill="#FFFFFF"/>
+            </g>
+            <g class="hammock-cloud-2" opacity="0.5">
+              <path d="M75 14 C75 11, 80 9, 84 11 C87 8, 94 8, 97 11 C100 9, 105 11, 105 14 C105 17, 75 17, 75 14 Z" fill="#FFFFFF"/>
+              <path d="M225 18 C225 15, 230 13, 234 15 C237 12, 245 12, 248 15 C251 13, 257 15, 257 18 C257 21, 225 21, 225 18 Z" fill="#FFFFFF"/>
+            </g>
+
+            <!-- 2. Ambient Floating Sunlight Motes -->
+            <circle class="hammock-sparkle-1" cx="100" cy="38" r="2.5" fill="#38BDF8" opacity="0.7"/>
+            <circle class="hammock-sparkle-2" cx="218" cy="32" r="2" fill="#818CF8" opacity="0.7"/>
+            <circle class="hammock-sparkle-3" cx="160" cy="45" r="1.8" fill="#FBBF24" opacity="0.7"/>
+
+            <!-- 3. Soft Grassy Hill at Bottom -->
+            <path d="M0 142 C80 132, 240 132, 320 142 L320 150 L0 150 Z" fill="url(#groundGrad)" opacity="0.55"/>
+            <!-- Tiny Grass Tufts -->
+            <path d="M70 136 C72 131, 74 131, 75 136" stroke="#4ADE80" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M245 137 C247 132, 249 132, 250 137" stroke="#4ADE80" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Wildflower Blossom -->
+            <circle cx="92" cy="138" r="2" fill="#F472B6"/>
+            <circle cx="228" cy="139" r="2" fill="#FBBF24"/>
+
+            <!-- Left Stool with Steaming Tea Cup -->
+            <g transform="translate(68, 120)">
+              <!-- Small wooden stool table -->
+              <rect x="0" y="8" width="16" height="3" rx="1.5" fill="#A16207"/>
+              <line x1="3" y1="11" x2="2" y2="18" stroke="#78350F" stroke-width="2" stroke-linecap="round"/>
+              <line x1="13" y1="11" x2="14" y2="18" stroke="#78350F" stroke-width="2" stroke-linecap="round"/>
+              <!-- Ceramic Tea Cup -->
+              <rect x="4" y="2" width="8" height="6" rx="2" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8"/>
+              <path d="M12 4 C14 4, 14 6, 12 6" stroke="#CBD5E1" stroke-width="1" fill="none"/>
+              <!-- Animated Steam Spirals -->
+              <path class="hammock-steam-1" d="M6 1 C6.5 -2, 7.5 -2, 8 -4" stroke="#94A3B8" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+              <path class="hammock-steam-2" d="M9 1 C9.5 -2, 10.5 -2, 11 -4" stroke="#94A3B8" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <!-- 4. Left Tree / Bamboo Trunk -->
+            <rect x="42" y="28" width="10" height="110" rx="5" fill="url(#treeBarkGrad)"/>
+            <!-- Bamboo Nodes / Texture Rings -->
+            <line x1="42" y1="58" x2="52" y2="58" stroke="#365314" stroke-width="1.5"/>
+            <line x1="42" y1="88" x2="52" y2="88" stroke="#365314" stroke-width="1.5"/>
+            <line x1="42" y1="115" x2="52" y2="115" stroke="#365314" stroke-width="1.5"/>
+
+            <!-- Left Foliage Canopy (Animated Rustle) -->
+            <g class="hammock-foliage-left">
+              <circle cx="47" cy="22" r="15" fill="url(#leafGrad1)"/>
+              <circle cx="34" cy="36" r="11" fill="url(#leafGrad2)"/>
+              <circle cx="60" cy="38" r="10" fill="url(#leafGrad1)"/>
+              <circle cx="48" cy="38" r="9" fill="url(#leafGrad2)"/>
+            </g>
+
+            <!-- 5. Right Tree / Bamboo Trunk -->
+            <rect x="258" y="28" width="10" height="110" rx="5" fill="url(#treeBarkGrad)"/>
+            <!-- Bamboo Nodes / Texture Rings -->
+            <line x1="258" y1="58" x2="268" y2="58" stroke="#365314" stroke-width="1.5"/>
+            <line x1="258" y1="88" x2="268" y2="88" stroke="#365314" stroke-width="1.5"/>
+            <line x1="258" y1="115" x2="268" y2="115" stroke="#365314" stroke-width="1.5"/>
+
+            <!-- Right Foliage Canopy (Animated Rustle) -->
+            <g class="hammock-foliage-right">
+              <circle cx="263" cy="22" r="15" fill="url(#leafGrad1)"/>
+              <circle cx="276" cy="36" r="11" fill="url(#leafGrad2)"/>
+              <circle cx="250" cy="38" r="10" fill="url(#leafGrad1)"/>
+              <circle cx="262" cy="38" r="9" fill="url(#leafGrad2)"/>
+            </g>
+
+            <!-- 6. THE SWAYING HAMMOCK ASSEMBLY -->
+            <g class="hammock-sway-assembly">
+              <!-- Left Anchor Ropes (Braided & Realistic Tension) -->
+              <path d="M48 64 C78 92, 108 100, 155 100" stroke="#64748B" stroke-width="2.2" stroke-dasharray="3 2" fill="none"/>
+              <path d="M48 64 L74 94" stroke="#94A3B8" stroke-width="1.8" fill="none"/>
+              <circle cx="48" cy="64" r="3" fill="#334155"/>
+
+              <!-- Right Anchor Ropes (Braided & Realistic Tension) -->
+              <path d="M262 64 C232 92, 202 100, 155 100" stroke="#64748B" stroke-width="2.2" stroke-dasharray="3 2" fill="none"/>
+              <path d="M262 64 L236 94" stroke="#94A3B8" stroke-width="1.8" fill="none"/>
+              <circle cx="262" cy="64" r="3" fill="#334155"/>
+
+              <!-- Main Hammock Curved Shell / Fabric -->
+              <path d="M72 78 C102 116, 208 116, 238 78 C202 111, 108 111, 72 78 Z" fill="url(#hammockBodyGrad)"/>
+              <path d="M72 78 C102 116, 208 116, 238 78" stroke="#1D4ED8" stroke-width="2" fill="none"/>
+              <path d="M74 81 C104 114, 206 114, 236 81" stroke="#93C5FD" stroke-width="1" stroke-dasharray="4 3" fill="none" opacity="0.8"/>
+
+              <!-- Inner Shading Depth -->
+              <path d="M84 86 C112 112, 198 112, 226 86 C194 107, 116 107, 84 86 Z" fill="url(#hammockInnerGrad)" opacity="0.4"/>
+
+              <!-- Fluffy White Cloud Pillow -->
+              <g transform="rotate(-14 206 84)">
+                <rect x="194" y="74" width="26" height="18" rx="8" fill="#FFFFFF"/>
+                <rect x="194" y="74" width="26" height="18" rx="8" stroke="#E2E8F0" stroke-width="1"/>
+                <path d="M200 82 C204 84, 210 84, 214 82" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round"/>
+              </g>
+
+              <!-- SLEEPING PERSON WITH BREATHING ANIMATION -->
+              <g class="hammock-sleeper-breathe">
+                <!-- Warm Cozy Knitted Blanket -->
+                <rect x="110" y="82" width="94" height="20" rx="10" fill="url(#blanketGrad)"/>
+                <path d="M110 88 C135 93, 175 93, 204 88" stroke="#93C5FD" stroke-width="1.5" fill="none"/>
+                <!-- Cute Gold Patch on Blanket -->
+                <rect x="142" y="86" width="13" height="10" rx="3" fill="#FDE047" stroke="#CA8A04" stroke-width="0.8"/>
+                <line x1="145" y1="91" x2="152" y2="91" stroke="#CA8A04" stroke-width="1" stroke-linecap="round"/>
+
+                <!-- Cute Peaceful Sleeping Face -->
+                <circle cx="210" cy="80" r="10.5" fill="#FED7AA"/>
+                <!-- Soft Rosy Cheek Blush -->
+                <circle cx="206" cy="83" r="2.8" fill="#F472B6" opacity="0.8"/>
+                <!-- Calm Smiling Curved Eye (Sleeping Expression) -->
+                <path d="M207 78 C209 76.5, 212 76.5, 214 78" stroke="#7C2D12" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+                <!-- Sweet Peaceful Smile -->
+                <path d="M204 83 C206 85, 208 85, 210 83" stroke="#9A3412" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+
+                <!-- Floating "z Z z" Drift Bubbles -->
+                <text class="hammock-zzz-1" x="216" y="70" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#6366F1">z</text>
+                <text class="hammock-zzz-2" x="223" y="62" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="900" fill="#8B5CF6">Z</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Title & Subtitle Section -->
+        <section class="login-title-section">
+          <h2 class="login-heading" id="loginHeadingText">Selamat Datang Kembali</h2>
+          <p class="login-subheading" id="loginSubheadingText">Atur jadwal kuliah, kelola tugas, dan raih fokus terbaikmu.</p>
+        </section>
+
+        <!-- Authentication Form -->
+        <form class="login-auth-form" id="loginAuthForm" onsubmit="return false;">
+
+          <!-- Register Only: Full Name -->
+          <div class="form-group-field form-register-only">
+            <label class="form-field-label" for="inputFullName">Nama Lengkap</label>
+            <div class="input-container-pill">
+              <span class="input-icon-left">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </span>
+              <input type="text" id="inputFullName" placeholder="Yusup Arief Fauzi" autocomplete="name">
+            </div>
+          </div>
+
+          <!-- Email Field (Pre-filled as in Figma mockup) -->
+          <div class="form-group-field">
+            <div class="input-container-pill">
+              <span class="input-icon-left">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </span>
+              <input type="email" id="inputEmail" value="yusufarief@student.edu" placeholder="nama@student.edu" required autocomplete="email">
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group-field">
+            <div class="input-container-pill">
+              <span class="input-icon-left">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </span>
+              <input type="password" id="inputPassword" value="serena123" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" class="input-action-right" id="btnTogglePassword" aria-label="Tampilkan atau sembunyikan kata sandi">
+                <svg id="eyeIcon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Forgot Password Link -->
+          <div class="form-extra-row form-login-only">
+            <a href="#" class="forgot-pass-link" id="linkForgotPassword">Lupa Kata Sandi?</a>
+          </div>
+
+          <!-- Submit CTA Button -->
+          <button type="submit" class="btn-primary-gradient" id="btnSubmitAuth">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+            <span id="btnSubmitAuthText">Masuk</span>
+          </button>
+
+          <!-- Divider -->
+          <div class="auth-divider">
+            <span>atau lanjutkan dengan</span>
+          </div>
+
+          <!-- Google OAuth Button -->
+          <button type="button" class="btn-google-auth" id="btnGoogleAuth">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+            </svg>
+            <span>Lanjutkan dengan Google</span>
+          </button>
+
+          <!-- Switch between Sign In and Register -->
+          <div class="auth-switch-link-row">
+            <span id="authSwitchPrompt">Belum punya akun?</span>
+            <button type="button" class="auth-toggle-btn" id="btnToggleAuthMode">Buat Akun Baru</button>
+          </div>
+        </form>
+
+        <!-- Social Proof Footer Banner -->
+        <div class="social-proof-banner">
+          <div class="avatar-stack-group" aria-label="12,000+ Mahasiswa">
+            <span class="avatar-circle avatar-s">S</span>
+            <span class="avatar-circle avatar-a">A</span>
+            <span class="avatar-circle avatar-r">R</span>
+            <span class="avatar-circle avatar-m">M</span>
+          </div>
+          <span class="social-proof-text">12rb+ mahasiswa telah berkembang</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div id="notificationToast" class="notification-toast" style="display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1E293B; color: #FFFFFF; padding: 12px 20px; border-radius: 20px; font-size: 13.5px; font-weight: 600; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 9999; text-align: center; max-width: 90%;"></div>
+
+  <!-- Interactive Login & Auth Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Clock
+      const clockEl = document.getElementById('statusClock');
+      if (clockEl) {
+        function updateClock() {
+          const now = new Date();
+          let h = now.getHours().toString().padStart(2, '0');
+          let m = now.getMinutes().toString().padStart(2, '0');
+          clockEl.textContent = `${h}:${m}`;
+        }
+        updateClock();
+        setInterval(updateClock, 30000);
+      }
+
+      // 2. Notification Toast helper
+      const toast = document.getElementById('notificationToast');
+      function showToast(msg) {
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        toast.style.opacity = '1';
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 2600);
+      }
+
+      // Back to Onboarding from Brand Header
+      const brandHeader = document.getElementById('headerBrandLogo');
+      if (brandHeader) {
+        brandHeader.addEventListener('click', () => {
+          window.location.href = '../onboarding/index.html';
+        });
+      }
+
+      // 3. Password Visibility Toggle
+      const inputPass = document.getElementById('inputPassword');
+      const btnTogglePass = document.getElementById('btnTogglePassword');
+      let passVisible = false;
+
+      if (btnTogglePass && inputPass) {
+        btnTogglePass.addEventListener('click', () => {
+          passVisible = !passVisible;
+          inputPass.type = passVisible ? 'text' : 'password';
+          btnTogglePass.innerHTML = passVisible
+            ? `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>`
+            : `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>`;
+        });
+      }
+
+      // 4. Navigate to Create Account (Register Flow)
+      const btnToggleMode = document.getElementById('btnToggleAuthMode');
+      if (btnToggleMode) {
+        btnToggleMode.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = '../register/index.html';
+        });
+      }
+
+      // 5. Navigate to Forgot Password Flow
+      const linkForgot = document.getElementById('linkForgotPassword');
+      if (linkForgot) {
+        linkForgot.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = '../forgot-password/index.html';
+        });
+      }
+
+      // 6. Sign In Submit
+      const btnSubmitAuth = document.getElementById('btnSubmitAuth');
+      if (btnSubmitAuth) {
+        btnSubmitAuth.addEventListener('click', () => {
+          const email = document.getElementById('inputEmail').value.trim();
+          if (!email) {
+            showToast('Silakan masukkan email Anda.');
+            return;
+          }
+
+          showToast('Selamat datang kembali, Yusuf! 🌿');
+          setTimeout(() => {
+            window.location.href = '../home/index.html';
+          }, 700);
+        });
+      }
+
+      // 7. Continue with Google Flow
+      const btnGoogle = document.getElementById('btnGoogleAuth');
+      if (btnGoogle) {
+        btnGoogle.addEventListener('click', () => {
+          window.location.href = '../google-auth/index.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <!-- App Icon & iOS PWA Meta Tags -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Serena">
+  <meta name="theme-color" content="#FFFFFF">
   <title>Serena — Beranda</title>
   <link rel="stylesheet" href="./home.css">
 </head>
+
 <body>
 
   <!-- Outer Desktop Device Mockup Frame -->
@@ -26,26 +37,6 @@
         <div class="sparkle-dot dot-4"></div>
         <div class="sparkle-dot dot-5"></div>
       </div>
-
-      <!-- Status Bar Component -->
-      <div class="status-bar" id="statusBar">
-        <div class="status-bar-time" id="statusClock">9:41</div>
-        <div class="status-bar-icons">
-          <div class="cellular-signal" title="Signal: Full">
-            <div class="bar bar-1"></div>
-            <div class="bar bar-2"></div>
-            <div class="bar bar-3"></div>
-            <div class="bar bar-4"></div>
-          </div>
-          <div class="battery-icon" title="Battery: 85%">
-            <div class="battery-body">
-              <div class="battery-level"></div>
-            </div>
-            <div class="battery-cap"></div>
-          </div>
-        </div>
-      </div>
-
       <!-- Main Scrollable Content -->
       <main class="app-content-scroll">
 
@@ -61,13 +52,15 @@
           </div>
           <div class="header-actions">
             <button class="btn-icon-round" id="notificationBtn" aria-label="Notifikasi" title="Notifikasi baru">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B2340" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B2340" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                 <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
               </svg>
               <span class="notification-badge-dot"></span>
             </button>
-            <div class="avatar-badge clickable-card" id="headerUserAvatar" title="Profil Yusup Arief" style="cursor: pointer;">YA</div>
+            <div class="avatar-badge clickable-card" id="headerUserAvatar" title="Profil Yusup Arief"
+              style="cursor: pointer;">YA</div>
           </div>
         </header>
 
@@ -84,29 +77,35 @@
                 <div class="hero-deco-radial"></div>
                 <div class="hero-deco-stripe-1"></div>
                 <div class="hero-deco-stripe-2"></div>
-                <svg class="hero-artwork" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg" title="Klik untuk putar jam pasir">
+                <svg class="hero-artwork" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+                  title="Klik untuk putar jam pasir">
                   <!-- ROTATING HOURGLASS BODY (Flips 180° clockwise when sand finishes) -->
                   <g class="hourglass-rotator">
                     <!-- Outer Glass Capsule -->
-                    <rect class="glass-pill" x="15" y="10" width="50" height="100" rx="25" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.18)"/>
-                    
+                    <rect class="glass-pill" x="15" y="10" width="50" height="100" rx="25" stroke="white"
+                      stroke-width="3" fill="rgba(255,255,255,0.18)" />
+
                     <!-- Glass Shine/Reflection -->
-                    <path class="glass-shine" d="M22 24 Q18 60 22 96" stroke="rgba(255,255,255,0.45)" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    <path class="glass-shine" d="M22 24 Q18 60 22 96" stroke="rgba(255,255,255,0.45)" stroke-width="2"
+                      stroke-linecap="round" fill="none" />
 
                     <!-- Bulb A Sand (upper at 0deg) -->
-                    <path class="sand-top" d="M20 28 C20 28 32 59 40 59 C48 59 60 28 60 28 Z" fill="url(#homeHeroSand)"/>
+                    <path class="sand-top" d="M20 28 C20 28 32 59 40 59 C48 59 60 28 60 28 Z"
+                      fill="url(#homeHeroSand)" />
 
                     <!-- Bulb B Sand (lower at 0deg) -->
-                    <path class="sand-bottom" d="M20 92 C20 92 32 61 40 61 C48 61 60 92 60 92 Z" fill="url(#homeHeroSand)"/>
+                    <path class="sand-bottom" d="M20 92 C20 92 32 61 40 61 C48 61 60 92 60 92 Z"
+                      fill="url(#homeHeroSand)" />
                   </g>
 
                   <!-- DRIPPING SAND STREAM (Always falls downward towards gravity) -->
-                  <line class="sand-stream-line" x1="40" y1="58" x2="40" y2="92" stroke="#7BE3D0" stroke-width="2.5" stroke-dasharray="3 4"/>
+                  <line class="sand-stream-line" x1="40" y1="58" x2="40" y2="92" stroke="#7BE3D0" stroke-width="2.5"
+                    stroke-dasharray="3 4" />
 
                   <defs>
                     <linearGradient id="homeHeroSand" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stop-color="#C4A8FF"/>
-                      <stop offset="100%" stop-color="#7BE3D0"/>
+                      <stop offset="0%" stop-color="#C4A8FF" />
+                      <stop offset="100%" stop-color="#7BE3D0" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -120,14 +119,16 @@
               </div>
               <button class="btn-pause-focus" id="btnPauseFocus" aria-label="Jeda atau lanjutkan sesi fokus">
                 <div class="btn-pause-icon" id="pauseBtnIcon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3"
+                    stroke-linecap="round">
                     <line x1="10" y1="5" x2="10" y2="19"></line>
                     <line x1="14" y1="5" x2="14" y2="19"></line>
                   </svg>
                 </div>
                 <span class="btn-pause-label" id="pauseBtnLabel">Jeda Fokus</span>
                 <div class="btn-pause-arrow">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2B6F78" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2B6F78" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="9 18 15 12 9 6"></polyline>
                   </svg>
                 </div>
@@ -137,7 +138,8 @@
 
           <!-- Daily Stats Component -->
           <section class="daily-stats-section">
-            <div class="section-header-row" id="headerStatistikHarian" style="cursor: pointer;" title="Klik untuk lihat rincian statistik">
+            <div class="section-header-row" id="headerStatistikHarian" style="cursor: pointer;"
+              title="Klik untuk lihat rincian statistik">
               <h2 class="section-title">Statistik Harian</h2>
               <span class="see-all-link">Lihat grafik &rarr;</span>
             </div>
@@ -145,9 +147,12 @@
               <div class="stat-card clickable-card" id="statCardTasks" title="Klik untuk rincian tugas tersisa">
                 <div class="stat-icon-wrapper">
                   <div class="icon-box-checklist">
-                    <div class="checklist-row"><span class="checklist-box"></span><span class="checklist-line"></span></div>
-                    <div class="checklist-row"><span class="checklist-box"></span><span class="checklist-line"></span></div>
-                    <div class="checklist-row"><span class="checklist-box"></span><span class="checklist-line"></span></div>
+                    <div class="checklist-row"><span class="checklist-box"></span><span class="checklist-line"></span>
+                    </div>
+                    <div class="checklist-row"><span class="checklist-box"></span><span class="checklist-line"></span>
+                    </div>
+                    <div class="checklist-row"><span class="checklist-box"></span><span class="checklist-line"></span>
+                    </div>
                   </div>
                 </div>
                 <div class="stat-value" id="statRemainingTasks">3</div>
@@ -156,14 +161,15 @@
               <div class="stat-card clickable-card" id="statCardFocus" title="Klik untuk rincian waktu fokus">
                 <div class="stat-icon-wrapper">
                   <svg class="icon-box-hourglass" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="12" y="5" width="20" height="34" rx="10" fill="#EAF1FE" stroke="#6FA8F5" stroke-width="2.8"/>
-                    <path d="M15 29C15 29 18 36 22 36C26 36 29 29 29 29Z" fill="url(#homeStatGrad2)"/>
-                    <rect x="9" y="3" width="26" height="4" rx="2" fill="url(#homeStatGrad2)"/>
-                    <rect x="9" y="37" width="26" height="4" rx="2" fill="url(#homeStatGrad2)"/>
+                    <rect x="12" y="5" width="20" height="34" rx="10" fill="#EAF1FE" stroke="#6FA8F5"
+                      stroke-width="2.8" />
+                    <path d="M15 29C15 29 18 36 22 36C26 36 29 29 29 29Z" fill="url(#homeStatGrad2)" />
+                    <rect x="9" y="3" width="26" height="4" rx="2" fill="url(#homeStatGrad2)" />
+                    <rect x="9" y="37" width="26" height="4" rx="2" fill="url(#homeStatGrad2)" />
                     <defs>
                       <linearGradient id="homeStatGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#6FA8F5"/>
-                        <stop offset="100%" stop-color="#A66BF0"/>
+                        <stop offset="0%" stop-color="#6FA8F5" />
+                        <stop offset="100%" stop-color="#A66BF0" />
                       </linearGradient>
                     </defs>
                   </svg>
@@ -174,7 +180,8 @@
               <div class="stat-card clickable-card" id="statCardDone" title="Klik untuk rincian tugas selesai">
                 <div class="stat-icon-wrapper">
                   <div class="icon-box-completed">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.5"
+                      stroke-linecap="round" stroke-linejoin="round">
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                   </div>
@@ -189,12 +196,14 @@
           <section class="upcoming-deadline-section">
             <div class="section-header-row">
               <h2 class="section-title">Tenggat Terdekat</h2>
-              <a href="../jadwal/index.html" class="see-all-link" id="linkDeadlineSeeAll" title="Lihat semua jadwal & tugas">Lihat semua</a>
+              <a href="../jadwal/index.html" class="see-all-link" id="linkDeadlineSeeAll"
+                title="Lihat semua jadwal & tugas">Lihat semua</a>
             </div>
             <div class="deadline-card clickable-card" id="deadlineCard" title="Klik untuk lihat detail tugas">
               <div class="deadline-card-header">
                 <span class="deadline-tag-text">DEADLINE MENDEKAT</span>
-                <svg class="deadline-icon-bell" viewBox="0 0 24 24" fill="none" stroke="#E5646B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="deadline-icon-bell" viewBox="0 0 24 24" fill="none" stroke="#E5646B" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="13" r="8"></circle>
                   <path d="M12 9v4l2 2"></path>
                   <path d="M5 3L2 6"></path>
@@ -229,7 +238,8 @@
                   <div class="timeline-dot dot-blue"></div>
                   <div class="timeline-line"></div>
                 </div>
-                <div class="timeline-card clickable-card" id="agendaKuliahItem" title="Klik untuk lihat detail jadwal kuliah">
+                <div class="timeline-card clickable-card" id="agendaKuliahItem"
+                  title="Klik untuk lihat detail jadwal kuliah">
                   <span class="agenda-category category-blue">KULIAH</span>
                   <h3 class="agenda-title">Kuliah UI/UX Design</h3>
                   <p class="agenda-meta">09:00–11:00 AM · Room E12</p>
@@ -278,7 +288,8 @@
         <div class="bottom-nav-dock">
           <a href="./index.html" class="nav-tab-item active" data-tab="home" id="tabBeranda">
             <div class="nav-tab-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
               </svg>
@@ -287,7 +298,8 @@
           </a>
           <a href="../jadwal/index.html" class="nav-tab-item" data-tab="jadwal" id="tabJadwal">
             <div class="nav-tab-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"
+                stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                 <line x1="16" y1="2" x2="16" y2="6"></line>
                 <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -299,16 +311,17 @@
           <a href="../fokus/index.html" class="nav-tab-item" data-tab="fokus" id="tabFokus">
             <div class="nav-tab-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="6"></circle>
-                <circle cx="12" cy="12" r="2"></circle>
+                <line x1="9.5" y1="2.5" x2="14.5" y2="2.5"></line>
+                <circle cx="12" cy="14" r="8"></circle>
+                <polyline points="12 9.5 12 14 15 16.5"></polyline>
               </svg>
             </div>
             <span class="nav-tab-label">Fokus</span>
           </a>
           <a href="../profile/index.html" class="nav-tab-item" data-tab="akun" id="tabAkun">
             <div class="nav-tab-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
@@ -326,4 +339,5 @@
 
   <script src="../../assets/js/app.js"></script>
 </body>
+
 </html>

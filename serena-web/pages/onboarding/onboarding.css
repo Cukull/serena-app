@@ -1,0 +1,521 @@
+/* ==========================================================================
+   SERENA - ONBOARDING & SPLASH SCREEN STYLES (HD & Figma Accurate)
+   ========================================================================== */
+
+@import "../../assets/css/variables.css";
+@import "../../assets/css/base.css";
+@import "../../assets/css/layout.css";
+@import "../../components/status-bar/status-bar.css";
+
+/* Overall Page Layout */
+.onboarding-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Header with Skip Link */
+.onboarding-top-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: max(48px, calc(env(safe-area-inset-top, 0px) + 16px)) 24px 0;
+  min-height: 52px;
+  z-index: 10;
+}
+
+.skip-btn {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text-secondary, #6B7391);
+  padding: 6px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.skip-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.skip-btn:hover {
+  color: var(--color-primary-deep, #14307A);
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+}
+
+/* Slides Track / Carousel */
+.slides-wrapper {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slide-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 24px 54px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(40px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+/* Splash Screen (Slide 0) is pure & centered vertically */
+#slide0 {
+  justify-content: center;
+  padding: 24px;
+}
+
+#slide0 .splash-content {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 14px;
+  padding: 0;
+  margin: auto 0;
+}
+
+/* Splash animated loading dots (per Figma Screen 01) */
+.splash-dots-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.splash-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #A5B4FC;
+  opacity: 0.6;
+  animation: splashDotPulse 1.4s ease-in-out infinite;
+}
+
+.splash-dot.dot-1 {
+  animation-delay: 0s;
+}
+
+.splash-dot.dot-2 {
+  animation-delay: 0.22s;
+}
+
+.splash-dot.dot-3 {
+  animation-delay: 0.44s;
+}
+
+@keyframes splashDotPulse {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 0.4;
+    background: #A5B4FC;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+    background: #6366F1;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  }
+}
+
+.slide-panel.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+  z-index: 2;
+}
+
+.slide-panel.prev {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+
+/* ==========================================================================
+   SLIDE 0: SPLASH SCREEN (HD IDENTICAL TO HOME)
+   ========================================================================== */
+.splash-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 14px;
+  padding-bottom: 30px;
+}
+
+.splash-logo-wrap {
+  width: 90px;
+  height: 90px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(99, 199, 247, 0.25) 0%, rgba(139, 124, 248, 0.25) 100%);
+  border: 1.5px solid rgba(99, 199, 247, 0.45);
+  box-shadow: inset 0px 1px 0px 1px rgba(255, 255, 255, 0.85),
+              0 18px 40px rgba(91, 141, 239, 0.24);
+  backdrop-filter: blur(14px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 6px;
+  animation: floatBreathing 3.6s ease-in-out infinite;
+}
+
+.splash-logo-img {
+  width: 56px;
+  height: auto;
+  max-height: 68px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(2, 132, 199, 0.35));
+}
+
+@keyframes floatBreathing {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: inset 0px 1px 0px 1px rgba(255, 255, 255, 0.85),
+                0 18px 40px rgba(91, 141, 239, 0.24);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: inset 0px 1px 0px 1px rgba(255, 255, 255, 0.95),
+                0 22px 46px rgba(91, 141, 239, 0.32);
+  }
+}
+
+.splash-wordmark-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.splash-wordmark-img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 3px 8px rgba(15, 45, 107, 0.18));
+}
+
+.splash-tagline-badge {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #5B8DEF;
+  background: rgba(91, 141, 239, 0.12);
+  padding: 5px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(91, 141, 239, 0.22);
+}
+
+.splash-desc {
+  font-family: var(--font-family-serif, 'Playfair Display', serif);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-secondary, #6B7391);
+  max-width: 270px;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   SLIDES 1, 2, 3: ONBOARDING STEPS
+   ========================================================================== */
+.illustration-stage {
+  width: 180px;
+  height: 180px;
+  max-height: 25vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.illustration-stage svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 12px 24px rgba(91, 141, 239, 0.16));
+}
+
+/* ==========================================================================
+   ONBOARDING ILLUSTRATION ANIMATIONS (LIVELY & HD)
+   ========================================================================== */
+.anim-card-left {
+  animation: floatCardLeft 3.8s ease-in-out infinite;
+  transform-origin: 65px 130px;
+}
+
+.anim-card-right {
+  animation: floatCardRight 4.2s ease-in-out infinite 0.6s;
+  transform-origin: 215px 130px;
+}
+
+@keyframes floatCardLeft {
+  0%, 100% { transform: rotate(-8deg) translateY(0); }
+  50% { transform: rotate(-5deg) translateY(-6px); }
+}
+
+@keyframes floatCardRight {
+  0%, 100% { transform: rotate(10deg) translateY(0); }
+  50% { transform: rotate(7deg) translateY(-7px); }
+}
+
+.anim-character-breathe {
+  animation: characterBreathe 3s ease-in-out infinite;
+  transform-origin: 140px 140px;
+}
+
+@keyframes characterBreathe {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50% { transform: scale(1.02) translateY(-2px); }
+}
+
+.anim-soundwave-1 {
+  animation: soundwavePulse 2.2s ease-in-out infinite;
+}
+
+.anim-soundwave-2 {
+  animation: soundwavePulse 2.2s ease-in-out infinite 0.7s;
+}
+
+@keyframes soundwavePulse {
+  0%, 100% { opacity: 0.25; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+.anim-head-bob {
+  animation: headBob 2.8s ease-in-out infinite;
+  transform-origin: 140px 140px;
+}
+
+@keyframes headBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3.5px); }
+}
+
+.anim-routine-hover {
+  animation: routineHover 3.6s ease-in-out infinite;
+}
+
+@keyframes routineHover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.anim-heart-pulse {
+  animation: heartPulse 1.8s ease-in-out infinite;
+  transform-origin: 140px 94px;
+}
+
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+
+.anim-rays-spin {
+  animation: raysGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes raysGlow {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+/* Text Content Area */
+.onboarding-info-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  max-width: 310px;
+  margin-top: 10px;
+}
+
+.category-pill-badge {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.badge-cyan {
+  background: #E0F5FE;
+  color: #0284C7;
+  border-color: #BAE6FD;
+}
+
+.badge-blue {
+  background: #EEF2FF;
+  color: #4F46E5;
+  border-color: #E0E7FF;
+}
+
+.badge-emerald {
+  background: #ECFDF5;
+  color: #059669;
+  border-color: #A7F3D0;
+}
+
+.step-headline {
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--color-text-primary, #1B2340);
+  letter-spacing: -0.3px;
+}
+
+.step-subtext {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text-secondary, #6B7391);
+  max-width: 290px;
+}
+
+/* Bottom Controls Area */
+.onboarding-bottom-controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+  margin-bottom: 8px;
+}
+
+/* Pagination Dots */
+.pagination-dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dot-pill {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #D1D5DB;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dot-pill.active {
+  width: 22px;
+  background: linear-gradient(135deg, #5BA8F5, #8B6CF0);
+  box-shadow: 0 2px 8px rgba(124, 107, 240, 0.35);
+}
+
+/* Next Button */
+.btn-onboarding-next {
+  width: 100%;
+  height: 50px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #5BA8F5 0%, #8B6CF0 100%);
+  color: #ffffff;
+  font-size: 15.5px;
+  font-weight: 700;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 10px 24px rgba(124, 107, 240, 0.35);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-onboarding-next:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(124, 107, 240, 0.42);
+}
+
+.btn-onboarding-next:active {
+  transform: translateY(0);
+}
+
+/* Swipe to Start Slider (Step 3) */
+.swipe-slider-track {
+  position: relative;
+  width: 100%;
+  height: 52px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid rgba(225, 230, 245, 0.9);
+  box-shadow: 0 6px 18px rgba(60, 70, 130, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 26px;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  overflow: hidden;
+  user-select: none;
+  cursor: pointer;
+}
+
+.swipe-slider-label {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6B7391;
+  letter-spacing: 0.2px;
+  padding-left: 28px;
+  transition: opacity 0.2s ease;
+}
+
+.swipe-slider-knob {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  bottom: 4px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6FA8F5 0%, #7C6BF0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(124, 107, 240, 0.4);
+  cursor: grab;
+  transition: transform 0.1s ease-out;
+}
+
+.swipe-slider-knob:active {
+  cursor: grabbing;
+}
+
+.terms-caption {
+  font-size: 11px;
+  color: var(--color-text-secondary, #9BA3B8);
+  text-align: center;
+  margin-top: -6px;
+}
+
+.terms-caption a {
+  color: #5B8DEF;
+  text-decoration: underline;
+}
