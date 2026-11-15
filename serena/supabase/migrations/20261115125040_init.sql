@@ -242,3 +242,4 @@ insert into achievements (code, title, description) values
   ('focus_3','Fokus 3x','Selesaikan 3 focus session'),
   ('mood_7','Refleksi 7 Hari','Catat mood 7 hari berturut-turut')
 on conflict (code) do nothing;
+
