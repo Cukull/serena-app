@@ -188,6 +188,6 @@ class AuthController extends GetxController {
     await authRepo.signOut();
     markSession(loggedIn: false, onboarded: false);
     user.value = null;
-    Get.offAllNamed(Routes.landing);
+    Get.offAllNamed(Routes.login);
   }
 }

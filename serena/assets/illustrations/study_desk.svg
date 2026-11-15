@@ -1,0 +1,24 @@
+<svg viewBox="0 0 200 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="charGradSuccess" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#38BDF8"/>
+                  <stop offset="100%" stop-color="#2563EB"/>
+                </linearGradient>
+              </defs>
+              <!-- Sun / Soft glow -->
+              <circle cx="170" cy="25" r="12" fill="#FEF08A" opacity="0.6"/>
+              <!-- Small plant pot -->
+              <rect x="150" y="58" width="12" height="14" rx="3" fill="#D97706"/>
+              <circle cx="156" cy="52" r="7" fill="#22C55E"/>
+              <!-- Desk -->
+              <rect x="30" y="70" width="140" height="6" rx="3" fill="#CBD5E1"/>
+              <!-- Laptop -->
+              <rect x="75" y="48" width="50" height="30" rx="4" fill="#93C5FD"/>
+              <line x1="70" y1="78" x2="130" y2="78" stroke="#60A5FA" stroke-width="3" stroke-linecap="round"/>
+              <!-- Character head -->
+              <circle cx="100" cy="30" r="14" fill="url(#charGradSuccess)"/>
+              <path d="M96 28 C98 26, 100 26, 101 28" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M103 28 C104 26, 106 26, 107 28" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+              <!-- Happy Smile -->
+              <path d="M98 34 C100 36, 102 36, 104 34" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>

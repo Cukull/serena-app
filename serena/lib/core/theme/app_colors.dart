@@ -259,4 +259,30 @@ class AppColors {
     end: Alignment.bottomRight,
     colors: [Color(0x2663C7F7), Color(0x268B7CF8)],
   );
+
+  // ------------------------------------------------- token desain serena-web
+  // Dipakai layar onboarding & auth agar sama dengan mockup HTML.
+  static const webHeading = Color(0xFF142042);
+  static const webSlate = Color(0xFF64748B);
+  static const webFieldBorder = Color(0xFFE2E8F0);
+  static const webLink = Color(0xFF2563EB);
+
+  static const LinearGradient webPageBg = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Color(0xFFFAF7F2), Color(0xFFEAF7FC), Color(0xFFF0EEFF)],
+    stops: [0, 0.4, 1],
+  );
+
+  static const LinearGradient webPrimary = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFF5BA8F5), Color(0xFF8B6CF0)],
+  );
+
+  static const LinearGradient webEmerald = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFF34D399), Color(0xFF10B981), Color(0xFF059669)],
+  );
 }

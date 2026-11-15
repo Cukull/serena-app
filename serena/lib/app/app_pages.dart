@@ -10,7 +10,6 @@ import 'package:serena/features/auth/login_page.dart';
 import 'package:serena/features/auth/onboarding_page.dart';
 import 'package:serena/features/auth/register_page.dart';
 import 'package:serena/features/auth/verify_page.dart';
-import 'package:serena/features/auth/welcome_page.dart';
 import 'package:serena/features/focus/deep_focus_page.dart';
 import 'package:serena/features/focus/exam_mode_page.dart';
 import 'package:serena/features/focus/focus_history_page.dart';
@@ -30,19 +29,18 @@ import 'package:serena/features/wellness/sleep_page.dart';
 abstract class AppPages {
   static final routes = <GetPage>[
     GetPage(
-      name: Routes.welcome,
-      page: () => const WelcomePage(),
-    ),
-    GetPage(
       name: Routes.landing,
       page: () => const LandingPage(),
       binding: LandingBinding(),
-      middlewares: [AuthMiddleware()],
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: Routes.login,
       page: () => const LoginPage(),
       binding: LoginBinding(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(name: Routes.register, page: () => const RegisterPage()),
     GetPage(
@@ -59,6 +57,8 @@ abstract class AppPages {
       name: Routes.main,
       page: () => const MainShell(),
       middlewares: [AuthMiddleware()],
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: Routes.plannerCreate,

@@ -1,7 +1,6 @@
 /// Konstanta named route GetX. Satu sumber kebenaran untuk navigasi.
 abstract class Routes {
   static const landing = '/landing';
-  static const welcome = '/welcome';
   static const login = '/login';
   static const register = '/register';
   static const forgotPassword = '/forgot-password';
