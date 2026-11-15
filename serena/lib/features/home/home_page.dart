@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -91,8 +92,31 @@ class _GreetingSection extends StatelessWidget {
 
 // ── Focus Hero Card ───────────────────────────────────────────────────────────
 
-class _FocusHeroCard extends StatelessWidget {
+class _FocusHeroCard extends StatefulWidget {
   const _FocusHeroCard();
+
+  @override
+  State<_FocusHeroCard> createState() => _FocusHeroCardState();
+}
+
+class _FocusHeroCardState extends State<_FocusHeroCard>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _gradientCtrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _gradientCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 7),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _gradientCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,167 +126,226 @@ class _FocusHeroCard extends StatelessWidget {
       final isPaused = focus.phase.value == FocusPhase.paused;
       final isActive = isRunning || isPaused;
 
-      return Container(
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF5BA8F5), Color(0xFF7C6BF0), Color(0xFF2BAE8E)],
-            stops: [0, 0.55, 1],
-          ),
-          borderRadius: BorderRadius.circular(28),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withAlpha(80),
-              blurRadius: 24,
-              offset: const Offset(0, 12),
+      return AnimatedBuilder(
+        animation: _gradientCtrl,
+        builder: (context, _) {
+          final t = _gradientCtrl.value;
+
+          // Menggerakkan arah rotasi dan alignment gradien
+          final beginAlignment = Alignment(
+            -1.0 + 0.35 * math.sin(t * math.pi),
+            -1.0 + 0.35 * math.cos(t * math.pi),
+          );
+          final endAlignment = Alignment(
+            1.0 - 0.35 * math.cos(t * math.pi),
+            1.0 + 0.35 * math.sin(t * math.pi),
+          );
+
+          // Interpolasi warna gradien hidup (violet - biru - toska - zamrud)
+          final color1 = Color.lerp(
+            const Color(0xFF8B5CF6),
+            const Color(0xFF6366F1),
+            t,
+          )!;
+          final color2 = Color.lerp(
+            const Color(0xFF5B8DEF),
+            const Color(0xFF3B82F6),
+            t,
+          )!;
+          final color3 = Color.lerp(
+            const Color(0xFF2DD4BF),
+            const Color(0xFF10B981),
+            t,
+          )!;
+
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: beginAlignment,
+                end: endAlignment,
+                colors: [color1, color2, color3],
+                stops: const [0.0, 0.52, 1.0],
+              ),
+              borderRadius: BorderRadius.circular(28),
+              boxShadow: [
+                BoxShadow(
+                  color: color2.withAlpha(90),
+                  blurRadius: 26,
+                  offset: const Offset(0, 12),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            // Decorative radial glow
-            Positioned(
-              right: -30,
-              top: -30,
-              child: IgnorePointer(
-                child: Container(
-                  width: 160,
-                  height: 160,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [Color(0x40FFFFFF), Color(0x00FFFFFF)],
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(28),
+              child: Stack(
+                children: [
+                  // Stripe aksen latar bawah sesuai focus-banner.css
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 26,
+                    height: 44,
+                    child: Container(
+                      color: Colors.white.withAlpha(16),
                     ),
                   ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: 24,
+                    child: Container(
+                      color: Colors.white.withAlpha(26),
+                    ),
+                  ),
+                  // Glow radial bergerak halus
+                  Positioned(
+                    right: -20 + 16 * math.sin(t * 2 * math.pi),
+                    top: -20 + 16 * math.cos(t * 2 * math.pi),
+                    child: IgnorePointer(
+                      child: Container(
+                        width: 190,
+                        height: 190,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: RadialGradient(
+                            colors: [
+                              Colors.white.withAlpha(85),
+                              Colors.white.withAlpha(0),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
                       children: [
-                        // Status badge
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withAlpha(30),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: Colors.white.withAlpha(60),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (isRunning)
-                                _PulsingDot()
-                              else
-                                const Icon(
-                                  LucideIcons.timer,
-                                  size: 10,
-                                  color: Colors.white,
+                              // Status badge
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
                                 ),
-                              const SizedBox(width: 6),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withAlpha(35),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color: Colors.white.withAlpha(70),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    if (isRunning)
+                                      _PulsingDot()
+                                    else
+                                      const Icon(
+                                        LucideIcons.timer,
+                                        size: 10,
+                                        color: Colors.white,
+                                      ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      isRunning
+                                          ? 'Sedang fokus'
+                                          : isPaused
+                                              ? 'Dijeda'
+                                              : 'Siap fokus',
+                                      style: AppTypography.caption.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              // Timer display
                               Text(
-                                isRunning
-                                    ? 'Sedang fokus'
-                                    : isPaused
-                                        ? 'Dijeda'
-                                        : 'Siap fokus',
-                                style: AppTypography.caption.copyWith(
+                                isActive
+                                    ? focus.formattedRemaining
+                                    : '25:00',
+                                style: AppTypography.h1.copyWith(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w600,
+                                  fontSize: 36,
+                                  letterSpacing: 2,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                isActive
+                                    ? focus.mode.value.label
+                                    : 'Pomodoro',
+                                style: AppTypography.body.copyWith(
+                                  color: Colors.white.withAlpha(200),
+                                ),
+                              ),
+                              const SizedBox(height: 14),
+                              // CTA button
+                              GestureDetector(
+                                onTap: () => _handleFocusTap(focus),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 18,
+                                    vertical: 10,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withAlpha(35),
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Colors.white.withAlpha(85),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        isRunning
+                                            ? LucideIcons.pause
+                                            : LucideIcons.play,
+                                        size: 16,
+                                        color: Colors.white,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        isRunning
+                                            ? 'Jeda Fokus'
+                                            : isPaused
+                                                ? 'Lanjutkan'
+                                                : 'Mulai Fokus',
+                                        style: AppTypography.button,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      const Icon(
+                                        Icons.chevron_right_rounded,
+                                        size: 18,
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        // Timer display
-                        Text(
-                          isActive
-                              ? focus.formattedRemaining
-                              : '25:00',
-                          style: AppTypography.h1.copyWith(
-                            color: Colors.white,
-                            fontSize: 36,
-                            letterSpacing: 2,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          isActive
-                              ? focus.mode.value.label
-                              : 'Pomodoro',
-                          style: AppTypography.body.copyWith(
-                            color: Colors.white.withAlpha(200),
-                          ),
-                        ),
-                        const SizedBox(height: 14),
-                        // CTA button
-                        GestureDetector(
-                          onTap: () => _handleFocusTap(focus),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 18,
-                              vertical: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withAlpha(30),
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.white.withAlpha(80),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  isRunning
-                                      ? LucideIcons.pause
-                                      : LucideIcons.play,
-                                  size: 16,
-                                  color: Colors.white,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  isRunning
-                                      ? 'Jeda Fokus'
-                                      : isPaused
-                                          ? 'Lanjutkan'
-                                          : 'Mulai Fokus',
-                                  style: AppTypography.button,
-                                ),
-                                const SizedBox(width: 6),
-                                const Icon(
-                                  Icons.chevron_right_rounded,
-                                  size: 18,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        const SizedBox(width: 8),
+                        // Jam Pasir Animasi Bulak-Balik
+                        const _AnimatedHourglassArt(),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  // Hourglass artwork
-                  _HourglassArt(progress: isActive ? focus.progress : 0),
                 ],
               ),
             ),
-          ],
-        ),
+          );
+        },
       );
     });
   }
@@ -323,90 +406,264 @@ class _PulsingDotState extends State<_PulsingDot>
   }
 }
 
-class _HourglassArt extends StatelessWidget {
-  const _HourglassArt({required this.progress});
-  final double progress;
+class _AnimatedHourglassArt extends StatefulWidget {
+  const _AnimatedHourglassArt();
+
+  @override
+  State<_AnimatedHourglassArt> createState() => _AnimatedHourglassArtState();
+}
+
+class _AnimatedHourglassArtState extends State<_AnimatedHourglassArt>
+    with TickerProviderStateMixin {
+  late final AnimationController _cycleCtrl;
+  late final AnimationController _tapSpinCtrl;
+
+  @override
+  void initState() {
+    super.initState();
+    // Siklus animasi jam pasir bulak-balik 8 detik
+    _cycleCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 8),
+    )..repeat();
+
+    // Animasi putar cepat 360 derajat jika diketuk
+    _tapSpinCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 700),
+    );
+  }
+
+  @override
+  void dispose() {
+    _cycleCtrl.dispose();
+    _tapSpinCtrl.dispose();
+    super.dispose();
+  }
+
+  void _onTap() {
+    if (!_tapSpinCtrl.isAnimating) {
+      _tapSpinCtrl.forward(from: 0);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 60,
-      height: 90,
-      child: CustomPaint(painter: _HourglassPainter(progress: progress)),
+    return GestureDetector(
+      onTap: _onTap,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_cycleCtrl, _tapSpinCtrl]),
+        builder: (context, _) {
+          final t = _cycleCtrl.value; // 0.0 - 1.0
+          double angle;
+          double sandLevel;
+          bool isFlipping = false;
+
+          // Siklus jam pasir bulak-balik:
+          // 0.00 - 0.42: Posisi tegak (angle 0), pasir turun habis
+          // 0.42 - 0.50: Berputar balik 180° (0 ke pi)
+          // 0.50 - 0.92: Posisi terbalik (angle pi), pasir turun habis
+          // 0.92 - 1.00: Berputar balik ke posisi awal (pi ke 2*pi)
+          if (t < 0.42) {
+            angle = 0.0;
+            sandLevel = t / 0.42;
+          } else if (t < 0.50) {
+            isFlipping = true;
+            sandLevel = 1.0;
+            final p = (t - 0.42) / 0.08;
+            angle = Curves.easeInOutBack.transform(p) * math.pi;
+          } else if (t < 0.92) {
+            angle = math.pi;
+            sandLevel = (t - 0.50) / 0.42;
+          } else {
+            isFlipping = true;
+            sandLevel = 1.0;
+            final p = (t - 0.92) / 0.08;
+            angle = math.pi + Curves.easeInOutBack.transform(p) * math.pi;
+          }
+
+          final tapSpin =
+              Curves.easeOutBack.transform(_tapSpinCtrl.value) * (2 * math.pi);
+          final totalAngle = angle + tapSpin;
+
+          return SizedBox(
+            width: 68,
+            height: 110,
+            child: CustomPaint(
+              painter: _HourglassPainter(
+                angle: totalAngle,
+                sandLevel: sandLevel,
+                isFlipping: isFlipping,
+                streamPhase: t * 45,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
 
 class _HourglassPainter extends CustomPainter {
-  _HourglassPainter({required this.progress});
-  final double progress;
+  const _HourglassPainter({
+    required this.angle,
+    required this.sandLevel,
+    required this.isFlipping,
+    required this.streamPhase,
+  });
+
+  final double angle;
+  final double sandLevel;
+  final bool isFlipping;
+  final double streamPhase;
 
   @override
   void paint(Canvas canvas, Size size) {
     final w = size.width;
     final h = size.height;
+    final cx = w / 2;
+    final cy = h / 2;
 
-    // Outline capsule
-    final capsulePaint = Paint()
-      ..color = Colors.white.withAlpha(50)
-      ..style = PaintingStyle.fill;
-    final capsuleBorder = Paint()
-      ..color = Colors.white.withAlpha(120)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
-
-    final rr = RRect.fromRectAndRadius(
-      Rect.fromLTWH(w * 0.1, h * 0.05, w * 0.8, h * 0.9),
-      Radius.circular(w * 0.4),
+    // 1. Kapsul Luar Kaca (Glass Capsule)
+    final capsuleRect = RRect.fromRectAndRadius(
+      Rect.fromCenter(center: Offset(cx, cy), width: 50, height: 96),
+      const Radius.circular(25),
     );
-    canvas.drawRRect(rr, capsulePaint);
-    canvas.drawRRect(rr, capsuleBorder);
 
-    // Sand gradient paint
+    // Latar belakang kaca transparan
+    canvas.drawRRect(
+      capsuleRect,
+      Paint()
+        ..color = Colors.white.withAlpha(35)
+        ..style = PaintingStyle.fill,
+    );
+
+    // Garis luar kapsul kaca
+    canvas.drawRRect(
+      capsuleRect,
+      Paint()
+        ..color = Colors.white.withAlpha(160)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.6,
+    );
+
+    // Kilauan refleksi kaca di sisi kiri
+    final shinePath = Path()
+      ..moveTo(cx - 16, cy - 30)
+      ..quadraticBezierTo(cx - 20, cy, cx - 16, cy + 30);
+    canvas.drawPath(
+      shinePath,
+      Paint()
+        ..color = Colors.white.withAlpha(85)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.0
+        ..strokeCap = StrokeCap.round,
+    );
+
+    // 2. Konten Jam Pasir yang Berputar (Sand Bulbs)
+    canvas.save();
+    canvas.translate(cx, cy);
+    canvas.rotate(angle);
+    canvas.translate(-cx, -cy);
+
+    // Shader gradien pasir ungu ke toska muda
+    final sandShader = const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [Color(0xFFC4A8FF), Color(0xFF7BE3D0)],
+    ).createShader(Rect.fromLTWH(cx - 20, cy - 38, 40, 76));
+
     final sandPaint = Paint()
-      ..shader = const LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [Color(0xFFC4A8FF), Color(0xFF7BE3D0)],
-      ).createShader(Rect.fromLTWH(0, 0, w, h));
+      ..shader = sandShader
+      ..style = PaintingStyle.fill;
 
-    // Upper sand (decreases as progress increases)
-    final topSandH = h * 0.4 * (1 - progress);
-    if (topSandH > 0) {
-      final topPath = Path()
-        ..moveTo(w * 0.15, h * 0.1)
-        ..lineTo(w * 0.85, h * 0.1)
-        ..lineTo(w * 0.5, h * 0.1 + topSandH)
-        ..close();
-      canvas.drawPath(topPath, sandPaint);
+    // Pasir di tabung atas (mengalir turun / menyusut)
+    final topRemaining = (1.0 - sandLevel).clamp(0.0, 1.0);
+    if (topRemaining > 0.04) {
+      final topSandPath = Path();
+      final sandTopY = cy - 4 - 30 * topRemaining;
+      final waistWidth = 6.0;
+      final topWidth = 10.0 + 22.0 * topRemaining;
+
+      topSandPath.moveTo(cx - topWidth / 2, sandTopY);
+      topSandPath.lineTo(cx + topWidth / 2, sandTopY);
+      topSandPath.quadraticBezierTo(
+        cx + waistWidth / 2 + 2,
+        cy - 4,
+        cx + waistWidth / 2,
+        cy - 2,
+      );
+      topSandPath.lineTo(cx - waistWidth / 2, cy - 2);
+      topSandPath.quadraticBezierTo(
+        cx - waistWidth / 2 - 2,
+        cy - 4,
+        cx - topWidth / 2,
+        sandTopY,
+      );
+      topSandPath.close();
+      canvas.drawPath(topSandPath, sandPaint);
     }
 
-    // Lower sand (increases as progress increases)
-    final botSandH = h * 0.4 * progress;
-    if (botSandH > 0) {
-      final botPath = Path()
-        ..moveTo(w * 0.15, h * 0.9)
-        ..lineTo(w * 0.85, h * 0.9)
-        ..lineTo(w * 0.5, h * 0.9 - botSandH)
-        ..close();
-      canvas.drawPath(botPath, sandPaint);
+    // Pasir di tabung bawah (menumpuk / naik)
+    final botFill = sandLevel.clamp(0.0, 1.0);
+    if (botFill > 0.04) {
+      final botSandPath = Path();
+      final botSandH = 30.0 * botFill;
+      final botBaseY = cy + 34;
+      final botSurfaceY = botBaseY - botSandH;
+      final baseWidth = 32.0;
+      final surfaceWidth = 10.0 + 22.0 * botFill;
+
+      botSandPath.moveTo(cx - surfaceWidth / 2, botSurfaceY);
+      botSandPath.lineTo(cx + surfaceWidth / 2, botSurfaceY);
+      botSandPath.quadraticBezierTo(
+        cx + baseWidth / 2,
+        botBaseY - 4,
+        cx + baseWidth / 2 - 4,
+        botBaseY,
+      );
+      botSandPath.lineTo(cx - baseWidth / 2 + 4, botBaseY);
+      botSandPath.quadraticBezierTo(
+        cx - baseWidth / 2,
+        botBaseY - 4,
+        cx - surfaceWidth / 2,
+        botSurfaceY,
+      );
+      botSandPath.close();
+      canvas.drawPath(botSandPath, sandPaint);
     }
 
-    // Sand stream line
-    final streamPaint = Paint()
-      ..color = const Color(0xFF7BE3D0).withAlpha(180)
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-    canvas.drawLine(
-      Offset(w * 0.5, h * 0.45),
-      Offset(w * 0.5, h * 0.55),
-      streamPaint,
-    );
+    canvas.restore();
+
+    // 3. Aliran Butiran Pasir Menetes (Selalu mengalir ke bawah ditarik gravitasi)
+    if (!isFlipping && sandLevel < 0.96) {
+      final streamPaint = Paint()
+        ..color = const Color(0xFF7BE3D0).withAlpha(230)
+        ..strokeWidth = 2.2
+        ..strokeCap = StrokeCap.round;
+
+      final streamTop = cy - 2;
+      final streamBot = cy + 32 - (28.0 * sandLevel);
+      if (streamBot > streamTop + 4) {
+        const dashLength = 4.0;
+        const dashSpace = 3.5;
+        double y = streamTop + (streamPhase % (dashLength + dashSpace));
+        while (y < streamBot) {
+          final nextY = math.min(y + dashLength, streamBot);
+          canvas.drawLine(Offset(cx, y), Offset(cx, nextY), streamPaint);
+          y += dashLength + dashSpace;
+        }
+      }
+    }
   }
 
   @override
-  bool shouldRepaint(_HourglassPainter old) => old.progress != progress;
+  bool shouldRepaint(_HourglassPainter old) =>
+      old.angle != angle ||
+      old.sandLevel != sandLevel ||
+      old.isFlipping != isFlipping ||
+      old.streamPhase != streamPhase;
 }
 
 // ── Stats Section ─────────────────────────────────────────────────────────────
