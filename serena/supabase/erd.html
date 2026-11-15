@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin: 0; padding: 24px; background: #fff; }
+  .mermaid { font-family: "Trebuchet MS", sans-serif; }
+</style>
+</head>
+<body>
+<pre class="mermaid">
+__DIAGRAM__
+</pre>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  themeVariables: {
+    fontFamily: 'Trebuchet MS, sans-serif',
+    fontSize: '13px',
+    primaryColor: '#e8f0fe',
+    primaryBorderColor: '#7a9cc6',
+    primaryTextColor: '#1a1a1a',
+    lineColor: '#4a5a8a',
+    tertiaryColor: '#ffffff'
+  }
+});
+await mermaid.run({ querySelector: '.mermaid' });
+document.body.dataset.ready = '1';
+</script>
+</body>
+</html>

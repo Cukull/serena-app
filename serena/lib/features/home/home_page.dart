@@ -41,16 +41,10 @@ class HomePage extends StatelessWidget {
                 onTap: () => MainController.to.goTab(2),
               ),
               _QuickCard(
-                icon: LucideIcons.heartPulse,
-                title: 'Wellness',
-                subtitle: 'Catat mood, habit & tidur',
-                onTap: () => MainController.to.goTab(3),
-              ),
-              _QuickCard(
                 icon: LucideIcons.user,
                 title: 'Profil',
                 subtitle: 'Lihat profil & pengaturan',
-                onTap: () => MainController.to.goTab(4),
+                onTap: () => MainController.to.goTab(3),
               ),
             ],
           );

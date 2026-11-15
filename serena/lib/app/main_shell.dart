@@ -9,7 +9,6 @@ import 'package:serena/features/focus/focus_page.dart';
 import 'package:serena/features/home/home_page.dart';
 import 'package:serena/features/planner/planner_page.dart';
 import 'package:serena/features/profile/profile_page.dart';
-import 'package:serena/features/wellness/wellness_page.dart';
 
 /// Shell bottom-tab. Tab diganti via MainController (IndexedStack),
 /// bukan route terpisah — state tiap tab terjaga.
@@ -21,7 +20,6 @@ class MainShell extends StatelessWidget {
     (LucideIcons.home, 'Beranda'),
     (LucideIcons.calendarDays, 'Jadwal'),
     (LucideIcons.timer, 'Fokus'),
-    (LucideIcons.heartPulse, 'Kesehatan'),
     (LucideIcons.user, 'Profil'),
   ];
 
@@ -37,7 +35,6 @@ class MainShell extends StatelessWidget {
             HomePage(),
             PlannerPage(),
             FocusPage(),
-            WellnessPage(),
             ProfilePage(),
           ],
         ),

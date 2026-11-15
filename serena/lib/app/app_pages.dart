@@ -20,9 +20,6 @@ import 'package:serena/features/planner/task_detail_page.dart';
 import 'package:serena/features/profile/achievements_page.dart';
 import 'package:serena/features/profile/edit_profile_page.dart';
 import 'package:serena/features/profile/settings_page.dart';
-import 'package:serena/features/wellness/habits_page.dart';
-import 'package:serena/features/wellness/mood_page.dart';
-import 'package:serena/features/wellness/sleep_page.dart';
 
 /// Daftar GetPage. AuthMiddleware menjaga route protected.
 /// Jangan pecah list ini per fitur untuk MVP.
@@ -93,21 +90,6 @@ abstract class AppPages {
     GetPage(
       name: Routes.focusHistory,
       page: () => const FocusHistoryPage(),
-      middlewares: [AuthMiddleware()],
-    ),
-    GetPage(
-      name: Routes.mood,
-      page: () => const MoodPage(),
-      middlewares: [AuthMiddleware()],
-    ),
-    GetPage(
-      name: Routes.habits,
-      page: () => const HabitsPage(),
-      middlewares: [AuthMiddleware()],
-    ),
-    GetPage(
-      name: Routes.sleep,
-      page: () => const SleepPage(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(

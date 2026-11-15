@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:serena/app/app_routes.dart';
 
 /// Index bottom-tab + navigasi lintas tab.
-/// Tab: 0 home · 1 planner · 2 focus · 3 wellness · 4 profile.
+/// Tab: 0 home · 1 planner · 2 focus · 3 profile.
 class MainController extends GetxController {
   static MainController get to => Get.find();
 

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:serena/app/app_routes.dart';
 import 'package:serena/models/profile.dart';
 import 'package:serena/repositories/auth_repository.dart';
-import 'package:serena/repositories/mood_repository.dart';
 import 'package:serena/repositories/profile_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -15,7 +14,6 @@ class AuthController extends GetxController {
   AuthController({
     required this.authRepo,
     required this.profileRepo,
-    required this.moodRepo,
   });
 
   /// Diisi oleh `main()` sebelum runApp, dipakai sebagai status sinkron
@@ -25,7 +23,6 @@ class AuthController extends GetxController {
 
   final AuthRepository authRepo;
   final ProfileRepository profileRepo;
-  final MoodRepository moodRepo;
 
   final isLoggedIn = false.obs;
   final onboardingDone = false.obs;
@@ -163,7 +160,6 @@ class AuthController extends GetxController {
 
   Future<void> completeOnboarding({
     required String goal,
-    required int moodScore,
   }) async {
     final id = authRepo.currentUserId;
     if (id == null) return;
@@ -173,7 +169,6 @@ class AuthController extends GetxController {
       if (goal.trim().isNotEmpty) {
         await profileRepo.insertGoal(id, goal.trim());
       }
-      await moodRepo.insertMood(userId: id, score: moodScore);
       await profileRepo.setOnboardingCompleted(id);
       onboardingDone.value = true;
       Get.offAllNamed(Routes.main);

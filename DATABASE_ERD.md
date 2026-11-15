@@ -1,6 +1,6 @@
 # Floréa — Database ERD
 
-> Status: Proposal — validasi sebelum migrasi Supabase
+> Status: Aktif — dicek langsung ke project Supabase `gkotywekltthwyobxuqj` (12 tabel public + relasi FK cocok dengan migrasi `0001_init.sql`)
 > DB: PostgreSQL (Supabase) | Auth: Supabase Auth (`auth.users`)
 
 ## 1. Aturan Global
@@ -118,6 +118,27 @@ erDiagram
         timestamptz unlocked_at
     }
 ```
+
+## 2a. Gambar ERD untuk Laporan
+
+- **Hasil gambar:** `DATABASE_ERD.png` (3570×1557 px, siap tempel di laporan)
+- **Sumber diagram:** `serena/supabase/erd.mmd` (Mermaid)
+- **Versi DBML:** `DATABASE_ERD.dbml`
+- **Render ulang setelah edit:** `python serena/supabase/render-erd.py`
+
+### Tempat generate gambar relasi
+
+Supabase Studio tidak punya fitur "Designer" seperti phpMyAdmin, jadi pakai salah satu:
+
+| Tool | Cara | Cocok untuk |
+|------|------|-------------|
+| **dbdiagram.io** | Buka <https://dbdiagram.io/d>, tempel isi `DATABASE_ERD.dbml`, atur posisi tabel, lalu **Export → PNG/PDF** | Paling mirip contoh phpMyAdmin, bisa atur layout |
+| **drawsql.app** | Import DBML yang sama, export PNG | Alternatif online |
+| **DBeaver** | Connect ke Postgres Supabase → klik schema `public` → **ER Diagram** → export PNG | Langsung dari DB asli |
+| **pgAdmin 4** | Klik kanan database → **ERD For Database** | Langsung dari DB asli |
+| **Mermaid Live** | Buka <https://mermaid.live>, tempel isi `erd.mmd`, **Actions → PNG** | Cepat, tanpa install |
+
+Untuk DBeaver/pgAdmin, ambil connection string dari Supabase Dashboard → **Project Settings → Database → Connection string** (pakai mode Session/URI + password DB).
 
 ## 3. Relasi per Fitur
 
