@@ -1,0 +1,64 @@
+<svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="stageGlow3" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#ECFDF5" stop-opacity="0.95" />
+                    <stop offset="70%" stop-color="#D1FAE5" stop-opacity="0.5" />
+                    <stop offset="100%" stop-color="#ECFDF5" stop-opacity="0" />
+                  </radialGradient>
+                  <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FFFFFF" />
+                    <stop offset="100%" stop-color="#F8FAFC" />
+                  </linearGradient>
+                  
+                </defs>
+
+                <!-- Aura Backdrop Circle -->
+                <circle cx="140" cy="140" r="115" fill="url(#stageGlow3)" />
+                <circle cx="140" cy="140" r="95" stroke="#A7F3D0" stroke-width="1.5" stroke-dasharray="3 5"
+                  opacity="0.8" />
+
+                <!-- Sparkles & Joy Rays (Animated Glow) -->
+                <g stroke="#10B981" stroke-width="2" stroke-linecap="round" opacity="0.8">
+                  <line x1="140" y1="42" x2="140" y2="52" />
+                  <line x1="75" y1="70" x2="82" y2="77" />
+                  <line x1="205" y1="70" x2="198" y2="77" />
+                  <line x1="50" y1="140" x2="60" y2="140" />
+                  <line x1="220" y1="140" x2="230" y2="140" />
+                </g>
+
+                <!-- Blue Hands & Character Holding Card (Animated Hover) -->
+                <!-- Main Upright Routine Card -->
+                <g>
+                  <rect x="96" y="68" width="88" height="124" rx="16" fill="url(#cardGrad3)" stroke="#E2E8F0"
+                    stroke-width="1.5" />
+
+                  <!-- Heart Pin / Badge at top (Animated Pulse) -->
+                  <g>
+                    <circle cx="140" cy="94" r="14" fill="#FEE2E2" />
+                    <path
+                      d="M140 102 C138 100, 133 96, 133 92 C133 89.5, 135 88, 137.5 88 C139 88, 140 89, 140 89 C140 89, 141 88, 142.5 88 C145 88, 147 89.5, 147 92 C147 96, 142 100, 140 102 Z"
+                      fill="#EF4444" />
+                  </g>
+
+                  <!-- Daily checklist lines -->
+                  <line x1="112" y1="122" x2="168" y2="122" stroke="#0F172A" stroke-width="2.5"
+                    stroke-linecap="round" />
+                  <line x1="112" y1="135" x2="156" y2="135" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" />
+                  <line x1="112" y1="148" x2="162" y2="148" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" />
+
+                  <!-- Completed check pill -->
+                  <rect x="112" y="160" width="56" height="14" rx="7" fill="#D1FAE5" />
+                  <polyline points="122,167 125,170 131,164" stroke="#059669" stroke-width="1.8" fill="none"
+                    stroke-linecap="round" />
+                  <line x1="135" y1="167" x2="158" y2="167" stroke="#059669" stroke-width="2" stroke-linecap="round" />
+                </g>
+
+                <!-- Cute holding paws / hands on card sides -->
+                <ellipse cx="94" cy="130" rx="9" ry="12" fill="#38BDF8" />
+                <ellipse cx="186" cy="130" rx="9" ry="12" fill="#38BDF8" />
+                <circle cx="94" cy="155" r="7" fill="#0284C7" />
+                <circle cx="186" cy="155" r="7" fill="#0284C7" />
+
+                <!-- Happy curve base below -->
+                <path d="M75 228 C115 240, 165 240, 205 228" stroke="#0F172A" stroke-width="6" stroke-linecap="round" />
+              </svg>

@@ -1,0 +1,78 @@
+<svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="stageGlow1" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#E0F2FE" stop-opacity="0.9" />
+                    <stop offset="70%" stop-color="#BAE6FD" stop-opacity="0.4" />
+                    <stop offset="100%" stop-color="#F0F9FF" stop-opacity="0" />
+                  </radialGradient>
+                  <linearGradient id="bodyBlue1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#38BDF8" />
+                    <stop offset="60%" stop-color="#0284C7" />
+                    <stop offset="100%" stop-color="#0369A1" />
+                  </linearGradient>
+                  
+                </defs>
+
+                <!-- Aura Backdrop Circle -->
+                <circle cx="140" cy="140" r="115" fill="url(#stageGlow1)" />
+                <circle cx="140" cy="140" r="95" stroke="#BAE6FD" stroke-width="1.5" stroke-dasharray="4 6"
+                  opacity="0.6" />
+
+                <!-- Floating Sparkles & Soft Petals -->
+                <circle cx="56" cy="85" r="5" fill="#38BDF8" opacity="0.5" />
+                <circle cx="228" cy="190" r="4" fill="#60A5FA" opacity="0.6" />
+                <path d="M215 75 C215 70, 222 70, 222 75 C222 80, 215 80, 215 75 Z" fill="#93C5FD" />
+                <path d="M68 195 C68 190, 75 190, 75 195 C75 200, 68 200, 68 195 Z" fill="#38BDF8" />
+
+                <!-- Left Floating Card (Reflect Note - Animated) -->
+                <g transform="rotate(-8 65 130)">
+                  <rect x="35" y="105" width="55" height="70" rx="10" fill="#FFFFFF" />
+                  <line x1="45" y1="120" x2="75" y2="120" stroke="#0284C7" stroke-width="2.5" stroke-linecap="round" />
+                  <line x1="45" y1="130" x2="70" y2="130" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" />
+                  <line x1="45" y1="140" x2="77" y2="140" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" />
+                  <line x1="45" y1="150" x2="62" y2="150" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" />
+                  <!-- Checkmark pill -->
+                  <circle cx="73" cy="160" r="6" fill="#E0F2FE" />
+                  <polyline points="70,160 72,162 76,158" stroke="#0284C7" stroke-width="1.5" fill="none"
+                    stroke-linecap="round" />
+                </g>
+
+                <!-- Right Floating Card (Feelings Checklist - Animated) -->
+                <g transform="rotate(10 215 130)">
+                  <rect x="190" y="105" width="55" height="70" rx="10" fill="#FFFFFF" />
+                  <circle cx="203" cy="122" r="4" fill="#38BDF8" />
+                  <line x1="213" y1="122" x2="233" y2="122" stroke="#475569" stroke-width="2" stroke-linecap="round" />
+                  <circle cx="203" cy="136" r="4" fill="#818CF8" />
+                  <line x1="213" y1="136" x2="231" y2="136" stroke="#475569" stroke-width="2" stroke-linecap="round" />
+                  <circle cx="203" cy="150" r="4" fill="#34D399" />
+                  <line x1="213" y1="150" x2="228" y2="150" stroke="#475569" stroke-width="2" stroke-linecap="round" />
+                </g>
+
+                <!-- Central Character (Soft blue friend reflecting - Animated Breathe) -->
+                <g>
+                  <!-- Body / Robe Base -->
+                  <ellipse cx="140" cy="225" rx="55" ry="32" fill="#0F172A" opacity="0.95" />
+                  <path d="M95 230 C95 190, 110 180, 140 180 C170 180, 185 190, 185 230 Z" fill="#1E293B" />
+
+                  <!-- Head -->
+                  <circle cx="140" cy="138" r="38" fill="url(#bodyBlue1)" />
+
+                  <!-- Calm smiling eyes & expression -->
+                  <path d="M124 135 C127 132, 131 132, 134 135" stroke="#FFFFFF" stroke-width="2.5"
+                    stroke-linecap="round" />
+                  <path d="M146 135 C149 132, 153 132, 156 135" stroke="#FFFFFF" stroke-width="2.5"
+                    stroke-linecap="round" />
+                  <!-- Gentle Smile -->
+                  <path d="M134 148 C137 152, 143 152, 146 148" stroke="#FFFFFF" stroke-width="2.2"
+                    stroke-linecap="round" />
+                  <!-- Rosy Cheeks -->
+                  <circle cx="123" cy="143" r="4" fill="#FDA4AF" opacity="0.8" />
+                  <circle cx="157" cy="143" r="4" fill="#FDA4AF" opacity="0.8" />
+
+                  <!-- Hand resting gently on chin/desk -->
+                  <path d="M152 165 C162 165, 168 152, 158 147" stroke="#38BDF8" stroke-width="4.5"
+                    stroke-linecap="round" fill="none" />
+                </g>
+                <!-- Bottom Desk Curve -->
+                <path d="M80 232 C115 240, 165 240, 200 232" stroke="#0F172A" stroke-width="7" stroke-linecap="round" />
+              </svg>

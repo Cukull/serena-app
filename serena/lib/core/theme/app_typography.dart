@@ -135,6 +135,15 @@ class AppTypography {
   static TextStyle get helper =>
       _jakarta(10.5, FontWeight.w500, color: AppColors.success);
 
+  /// Judul serif layar onboarding & auth (Playfair Display, sama dengan web).
+  static TextStyle serif(double size) => GoogleFonts.playfairDisplay(
+        fontSize: size,
+        fontWeight: FontWeight.w800,
+        height: 1.25,
+        letterSpacing: -0.4,
+        color: AppColors.webHeading,
+      );
+
   static TextStyle get tagline => _jakarta(
         11,
         FontWeight.w500,

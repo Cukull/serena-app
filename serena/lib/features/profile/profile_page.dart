@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:serena/app/app_routes.dart';
+import 'package:serena/controllers/auth_controller.dart';
 import 'package:serena/core/theme/app_colors.dart';
 import 'package:serena/core/theme/app_typography.dart';
 import 'package:serena/core/widgets/app_ui.dart';
@@ -312,9 +313,9 @@ class ProfilePage extends StatelessWidget {
               AppFilledButton(
                 label: 'Ya, keluar',
                 style: AppButtonStyle.danger,
-                onTap: () {
+                onTap: () async {
                   Navigator.of(context).pop();
-                  Get.offAllNamed<void>(Routes.welcome);
+                  await Get.find<AuthController>().logout();
                 },
               ),
               const SizedBox(height: 10),

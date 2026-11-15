@@ -51,7 +51,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 24),
-              Text('Apa tujuan utamamu?', style: Theme.of(context).textTheme.titleMedium),
+              Text('Apa tujuan utamamu?',
+                  style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               TextFormField(
                 controller: _goal,
@@ -62,7 +63,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 validator: AppValidators.required,
               ),
               const SizedBox(height: 24),
-              Text('Bagaimana perasaanmu sekarang?', style: Theme.of(context).textTheme.titleMedium),
+              Text('Bagaimana perasaanmu sekarang?',
+                  style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               Row(
                 children: List.generate(5, (i) {
@@ -89,7 +91,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           ),
                           child: Column(
                             children: [
-                              Text(_moodEmojis[i], style: const TextStyle(fontSize: 22)),
+                              Text(_moodEmojis[i],
+                                  style: const TextStyle(fontSize: 22)),
                               const SizedBox(height: 4),
                               Text('$value'),
                             ],

@@ -12,26 +12,27 @@ Future<void> main() async {
   await GetStorage.init();
   await dotenv.load();
 
+  // Onboarding penuh hanya pada buka pertama kali; setelah itu langsung login.
+  final store = GetStorage();
+  final seenOnboarding = store.read<bool>('onboarding_seen') ?? false;
+  if (!seenOnboarding) await store.write('onboarding_seen', true);
+
   final url = dotenv.env['SUPABASE_URL'] ?? '';
   final anonKey = dotenv.env['SUPABASE_ANON_KEY'] ?? '';
   await initSupabase(url: url, anonKey: anonKey);
 
-  // Bootstrap status auth secara sinkron agar AuthMiddleware punya
-  // nilai yang benar saat route awal (main/onboarding) di-resolve.
   final session = Supa.client.auth.currentSession;
+  final String initialRoute;
   if (session == null) {
-    AuthController.bootLoggedIn = false;
-    AuthController.bootOnboarded = false;
-    runApp(const SerenaApp());
-    return;
+    initialRoute = seenOnboarding ? Routes.login : Routes.landing;
+  } else {
+    final onboarded = await _isOnboarded(session.user.id);
+    AuthController.bootLoggedIn = true;
+    AuthController.bootOnboarded = onboarded;
+    initialRoute = onboarded ? Routes.main : Routes.onboarding;
   }
 
-  final onboarded = await _isOnboarded(session.user.id);
-  AuthController.bootLoggedIn = true;
-  AuthController.bootOnboarded = onboarded;
-  runApp(
-    SerenaApp(initialRoute: onboarded ? Routes.main : Routes.onboarding),
-  );
+  runApp(SerenaApp(initialRoute: initialRoute));
 }
 
 Future<bool> _isOnboarded(String userId) async {
