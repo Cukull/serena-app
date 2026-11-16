@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:serena/app/app_routes.dart';
 import 'package:serena/models/profile.dart';
@@ -30,13 +31,18 @@ class AuthController extends GetxController {
   final errorMessage = RxnString();
   final user = Rxn<Profile>();
 
+  String? _pendingEmail;
+  String? _pendingPassword;
+
   StreamSubscription<AuthState>? _sub;
 
   @override
   void onInit() {
     super.onInit();
     markSession(loggedIn: bootLoggedIn, onboarded: bootOnboarded);
-    _sub = authRepo.authStateChanges.listen(_onAuthState);
+    _sub = authRepo.authStateChanges.listen(
+      (state) => unawaited(_onAuthState(state)),
+    );
     _restore();
   }
 
@@ -55,8 +61,24 @@ class AuthController extends GetxController {
     await _applySession(authRepo.currentSession);
   }
 
-  void _onAuthState(AuthState state) {
-    _applySession(state.session);
+  Future<void> _onAuthState(AuthState state) async {
+    await _applySession(state.session);
+    // Deep link konfirmasi email / login sukses: sesi sudah ada, arahkan keluar
+    // dari halaman auth. Login manual juga lewat sini supaya tidak dobel.
+    if (state.event == AuthChangeEvent.signedIn ||
+        state.event == AuthChangeEvent.userUpdated) {
+      if (state.session != null) {
+        Get.snackbar(
+          'Email Terkonfirmasi',
+          'Selamat datang di Serena!',
+          backgroundColor: const Color(0xFF10B981),
+          colorText: Colors.white,
+        );
+        await Get.offAllNamed<void>(
+          onboardingDone.value ? Routes.main : Routes.onboarding,
+        );
+      }
+    }
   }
 
   Future<void> _applySession(Session? session) async {
@@ -78,13 +100,15 @@ class AuthController extends GetxController {
   }) async {
     isLoading.value = true;
     errorMessage.value = null;
+    _pendingEmail = email.trim();
+    _pendingPassword = password;
     try {
       await authRepo.signUp(
         email: email,
         password: password,
         fullName: fullName,
       );
-      Get.offAllNamed(Routes.verify);
+      await Get.offAllNamed<void>(Routes.verify);
     } on AuthError catch (e) {
       errorMessage.value = e.message;
     } on Object {
@@ -107,7 +131,7 @@ class AuthController extends GetxController {
       final profile = await profileRepo.fetchProfile(id);
       user.value = profile;
       onboardingDone.value = profile?.onboardingCompleted ?? false;
-      Get.offAllNamed(onboardingDone.value ? Routes.main : Routes.onboarding);
+      // Navigasi dilakukan oleh listener signedIn di _onAuthState.
     } on AuthError catch (e) {
       errorMessage.value = e.message;
     } on Object {
@@ -122,7 +146,7 @@ class AuthController extends GetxController {
     errorMessage.value = null;
     try {
       await authRepo.resetPassword(email);
-      Get.back();
+      Get.back<void>();
       Get.snackbar(
         'Terkirim',
         'Link reset password sudah dikirim ke email Anda.',
@@ -140,14 +164,41 @@ class AuthController extends GetxController {
   Future<void> confirmEmailVerified() async {
     isLoading.value = true;
     try {
-      await authRepo.refreshSession();
+      if (authRepo.currentSession != null) {
+        await authRepo.refreshSession();
+      } else if (_pendingEmail != null && _pendingPassword != null) {
+        // Coba login dengan kredensial pendaftaran yang baru dibuat
+        await authRepo.signIn(
+          email: _pendingEmail!,
+          password: _pendingPassword!,
+        );
+      } else {
+        throw const AuthError('Sesi tidak ditemukan.');
+      }
+
       final id = authRepo.currentUserId;
       if (id == null) return;
       final profile = await profileRepo.fetchProfile(id);
       user.value = profile;
       onboardingDone.value = profile?.onboardingCompleted ?? false;
       isLoggedIn.value = true;
-      Get.offAllNamed(onboardingDone.value ? Routes.main : Routes.onboarding);
+      Get.snackbar(
+        'Email Terkonfirmasi',
+        'Selamat datang di Serena!',
+        backgroundColor: const Color(0xFF10B981),
+        colorText: Colors.white,
+      );
+      await Get.offAllNamed<void>(
+        onboardingDone.value ? Routes.main : Routes.onboarding,
+      );
+    } on AuthError catch (e) {
+      Get.snackbar(
+        'Belum terverifikasi',
+        e.message.contains('Email not confirmed') ||
+                e.message.toLowerCase().contains('verifikasi')
+            ? 'Klik link verifikasi di email dulu.'
+            : e.message,
+      );
     } on Object {
       Get.snackbar(
         'Belum terverifikasi',
@@ -171,7 +222,7 @@ class AuthController extends GetxController {
       }
       await profileRepo.setOnboardingCompleted(id);
       onboardingDone.value = true;
-      Get.offAllNamed(Routes.main);
+      await Get.offAllNamed<void>(Routes.main);
     } on Object {
       errorMessage.value = 'Gagal menyimpan data onboarding.';
     } finally {
@@ -183,6 +234,6 @@ class AuthController extends GetxController {
     await authRepo.signOut();
     markSession(loggedIn: false, onboarded: false);
     user.value = null;
-    Get.offAllNamed(Routes.login);
+    await Get.offAllNamed<void>(Routes.login);
   }
 }

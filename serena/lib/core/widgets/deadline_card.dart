@@ -175,10 +175,12 @@ class DeadlineCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       // Badges Row
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      Wrap(
+                        alignment: WrapAlignment.end,
+                        spacing: 6,
+                        runSpacing: 4,
                         children: [
-                          for (final b in badges) ...[
+                          for (final b in badges)
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 9,
@@ -201,8 +203,6 @@ class DeadlineCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            if (b != badges.last) const SizedBox(width: 6),
-                          ],
                         ],
                       ),
                     ],

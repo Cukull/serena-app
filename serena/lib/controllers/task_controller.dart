@@ -15,11 +15,18 @@ class TaskController extends GetxController {
   final errorMessage = RxnString();
   final filter = Rxn<TaskStatus>();
 
-  String? get _uid => Get.find<AuthController>().user.value?.id;
+  String get _uid =>
+      Get.find<AuthController>().user.value?.id ??
+      Get.find<AuthController>().authRepo.currentUserId ??
+      'local_user';
 
   @override
   void onInit() {
     super.onInit();
+    final local = repo.getLocalTasks(_uid);
+    if (local.isNotEmpty) {
+      tasks.value = local;
+    }
     fetchTasks();
   }
 
@@ -31,13 +38,17 @@ class TaskController extends GetxController {
 
   Future<void> fetchTasks() async {
     final uid = _uid;
-    if (uid == null) return;
     isLoading.value = true;
     errorMessage.value = null;
     try {
       tasks.value = await repo.fetchTasks(uid);
     } on Object {
-      errorMessage.value = 'Gagal memuat task.';
+      final cached = repo.getLocalTasks(uid);
+      if (cached.isNotEmpty) {
+        tasks.value = cached;
+      } else {
+        errorMessage.value = 'Gagal memuat task.';
+      }
     } finally {
       isLoading.value = false;
     }
@@ -50,7 +61,6 @@ class TaskController extends GetxController {
     TaskPriority priority = TaskPriority.medium,
   }) async {
     final uid = _uid;
-    if (uid == null) return false;
     isLoading.value = true;
     try {
       final task = Task(
@@ -61,8 +71,14 @@ class TaskController extends GetxController {
         deadline: deadline,
         priority: priority,
       );
-      await repo.createTask(task);
-      await fetchTasks();
+      final created = await repo.createTask(task);
+      final current = tasks.toList();
+      final idx = current.indexWhere((t) => t.id == created.id);
+      if (idx == -1) {
+        tasks.insert(0, created);
+      } else {
+        tasks[idx] = created;
+      }
       return true;
     } on Object {
       return false;
@@ -107,7 +123,7 @@ class TaskController extends GetxController {
   Future<bool> deleteTask(String id) async {
     isLoading.value = true;
     try {
-      await repo.deleteTask(id);
+      await repo.deleteTask(id, userId: _uid);
       tasks.removeWhere((t) => t.id == id);
       return true;
     } on Object {

@@ -882,47 +882,46 @@ class _AgendaSection extends StatelessWidget {
               _buildTaskTimelineItem(todayTasks[i], i == todayTasks.length - 1),
             ],
           ] else ...[
-            const _AgendaTimelineItem(
-              time: '09:00',
-              category: 'KULIAH',
-              categoryColor: Color(0xFF4A8FE0),
-              dotColor: Color(0xFF6BAAFF),
-              accentBorderColor: Color(0xFF8B7CF8),
-              title: 'Kuliah UI/UX Design',
-              meta: '09:00–11:00 AM · Room E12',
-              tags: [
-                (
-                  label: 'Design',
-                  bg: Color(0x1F6BAAFF),
-                  textColor: Color(0xFF4A8FE0),
+            GestureDetector(
+              onTap: () => MainController.to.goTab(1),
+              child: Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 22, horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: const Color(0x33B4C5FF)),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x0A3C4682),
+                      blurRadius: 16,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
-                (
-                  label: 'Sem. 6',
-                  bg: Color(0x1FA78BFA),
-                  textColor: Color(0xFF8B7CF8),
+                child: Column(
+                  children: [
+                    Text(
+                      'Belum ada tugas hari ini 🎉',
+                      style: AppTypography.body.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Ketuk untuk melihat agenda lainnya di Jadwal',
+                      textAlign: TextAlign.center,
+                      style: AppTypography.caption.copyWith(
+                        color: AppColors.webSlate,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            const _AgendaTimelineItem(
-              time: '09:00',
-              category: 'TUGAS',
-              categoryColor: Color(0xFFE5646B),
-              dotColor: Color(0xFFE5646B),
-              accentBorderColor: Color(0xFFE5646B),
-              title: 'Kumpulkan Tugas Web Development',
-              tags: [
-                (
-                  label: 'Segera',
-                  bg: Color(0x24FF383C),
-                  textColor: Color(0xFFE5646B),
-                ),
-                (
-                  label: 'LMS',
-                  bg: Color(0x1FA78BFA),
-                  textColor: Color(0xFF8B7CF8),
-                ),
-              ],
-              isLast: true,
+              ),
             ),
           ],
         ],

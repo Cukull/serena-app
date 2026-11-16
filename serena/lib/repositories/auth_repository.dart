@@ -26,6 +26,13 @@ String _friendly(String? raw) {
   if (m.contains('password should be at least')) {
     return 'Password minimal 8 karakter.';
   }
+  if (m.contains('failed host lookup') ||
+      m.contains('socketexception') ||
+      m.contains('clientexception') ||
+      m.contains('timed out') ||
+      m.contains('connection')) {
+    return 'Tidak ada koneksi internet. Periksa jaringan lalu coba lagi.';
+  }
   return raw ?? 'Terjadi kesalahan. Coba lagi.';
 }
 
@@ -49,6 +56,7 @@ class AuthRepository {
         email: email,
         password: password,
         data: {'full_name': fullName},
+        emailRedirectTo: 'io.supabase.serena://login-callback',
       );
     } on AuthException catch (e) {
       throw AuthError(_friendly(e.message));
@@ -65,7 +73,10 @@ class AuthRepository {
 
   Future<void> resetPassword(String email) async {
     try {
-      await _auth.resetPasswordForEmail(email);
+      await _auth.resetPasswordForEmail(
+        email,
+        redirectTo: 'io.supabase.serena://login-callback',
+      );
     } on AuthException catch (e) {
       throw AuthError(_friendly(e.message));
     }

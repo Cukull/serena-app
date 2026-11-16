@@ -40,7 +40,11 @@ Proses:
 
 ### 3.2 `/verify` — Verification Code
 Supabase default memakai **email link** (bukan kode 6 digit). Dua opsi:
-- **Opsi A (disarankan MVP):** instruksikan user klik link di email → session terbentuk → redirect sesuai §2.
+- **Opsi A (dipakai):** link email → Supabase verifikasi → redirect ke deep link `io.supabase.serena://login-callback` / `serena://login-callback` → app terbuka, `supabase_flutter` menukar sesi, `AuthController` mendeteksi `signedIn` → onboarding/main.
+  - Redirect URL `io.supabase.serena://login-callback` dan `serena://login-callback` terdaftar di Supabase → Authentication → URL Configuration.
+  - Android: intent-filter di `AndroidManifest.xml`; iOS: `CFBundleURLTypes` di `Info.plist`.
+  - `signUp` mengirim `emailRedirectTo: 'io.supabase.serena://login-callback'`.
+  - Fallback: jika user kembali ke app manual dan klik "Saya sudah verifikasi", app otomatis login menggunakan kredensial pendaftaran yang tersimpan di sesi sementara.
 - **Opsi B:** aktifkan OTP 6-digit di Supabase Auth → input kode di screen ini → `verifyOTP`.
 Tim pilih A dulu kecuali board mewajibkan kode.
 
