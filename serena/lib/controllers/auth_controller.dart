@@ -208,59 +208,48 @@ class AuthController extends GetxController {
       final pendingPass =
           _pendingPassword ?? store.read<String>('pending_password');
 
+      // 1. Coba refresh sesi aktif
       if (authRepo.currentSession != null) {
-        await authRepo.refreshSession().timeout(const Duration(seconds: 4));
-      } else if (pendingEmail != null && pendingPass != null) {
-        // Coba login dengan kredensial pendaftaran yang baru dibuat
-        await authRepo
-            .signIn(
-              email: pendingEmail,
-              password: pendingPass,
-            )
-            .timeout(const Duration(seconds: 4));
-      } else {
-        throw const AuthError(
-          'Sesi tidak ditemukan. Silakan login kembali di halaman Masuk.',
-        );
+        try {
+          await authRepo.refreshSession().timeout(const Duration(seconds: 3));
+        } on Object catch (e) {
+          debugPrint('refreshSession error: $e');
+        }
+      }
+
+      // 2. Jika sesi belum ada tapi ada email & password, coba login
+      if (authRepo.currentSession == null &&
+          pendingEmail != null &&
+          pendingPass != null) {
+        try {
+          await authRepo
+              .signIn(email: pendingEmail, password: pendingPass)
+              .timeout(const Duration(seconds: 3));
+        } on Object catch (e) {
+          debugPrint('auto signIn error: $e');
+        }
       }
 
       final id = authRepo.currentUserId;
-      if (id == null) {
-        throw const AuthError(
-          'Akun belum terverifikasi atau sesi tidak ditemukan.',
+      if (id != null) {
+        await _applySession(authRepo.currentSession);
+        await store.remove('pending_email');
+        await store.remove('pending_password');
+
+        Get.snackbar(
+          'Email Terkonfirmasi',
+          'Selamat datang di Serena!',
+          backgroundColor: const Color(0xFF10B981),
+          colorText: Colors.white,
         );
+        final target = onboardingDone.value ? Routes.main : Routes.onboarding;
+        await Get.offAllNamed<void>(target);
+        return;
       }
-      await _applySession(authRepo.currentSession);
-
-      await store.remove('pending_email');
-      await store.remove('pending_password');
 
       Get.snackbar(
-        'Email Terkonfirmasi',
-        'Selamat datang di Serena!',
-        backgroundColor: const Color(0xFF10B981),
-        colorText: Colors.white,
-      );
-      final target = onboardingDone.value ? Routes.main : Routes.onboarding;
-      await Get.offAllNamed<void>(target);
-    } on AuthError catch (e) {
-      Get.snackbar(
         'Belum terverifikasi',
-        e.message.contains('Email not confirmed') ||
-                e.message.toLowerCase().contains('verifikasi')
-            ? 'Klik link verifikasi di email dulu.'
-            : e.message,
-      );
-    } on TimeoutException {
-      Get.snackbar(
-        'Koneksi Lambat',
-        'Gagal memverifikasi dalam batas waktu. Periksa jaringan Anda.',
-      );
-    } on Object catch (e) {
-      debugPrint('confirmEmailVerified error: $e');
-      Get.snackbar(
-        'Belum terverifikasi',
-        'Klik link verifikasi di email dulu.',
+        'Email belum terkonfirmasi. Buka email Anda lalu klik link konfirmasi.',
       );
     } finally {
       isLoading.value = false;
@@ -270,16 +259,17 @@ class AuthController extends GetxController {
   Future<void> completeOnboarding({
     required String goal,
   }) async {
-    final id = authRepo.currentUserId;
-    if (id == null) return;
     isLoading.value = true;
     errorMessage.value = null;
 
+    final id = authRepo.currentUserId ?? 'guest';
     final trimmedGoal = goal.trim();
     final store = GetStorage();
     await store.write('onboarding_completed_$id', true);
+    await store.write('onboarding_completed', true);
     if (trimmedGoal.isNotEmpty) {
       await store.write('user_goal_$id', trimmedGoal);
+      await store.write('user_goal', trimmedGoal);
     }
     onboardingDone.value = true;
     if (user.value != null) {
@@ -287,9 +277,11 @@ class AuthController extends GetxController {
     }
 
     // Sync remote di latar belakang tanpa menahan tombol UI
-    unawaited(
-      _syncOnboardingRemote(id: id, goal: trimmedGoal),
-    );
+    if (id != 'guest') {
+      unawaited(
+        _syncOnboardingRemote(id: id, goal: trimmedGoal),
+      );
+    }
 
     isLoading.value = false;
     await Get.offAllNamed<void>(Routes.main);

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:serena/services/supabase_client.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -52,11 +53,13 @@ class AuthRepository {
     required String fullName,
   }) async {
     try {
+      final redirectUrl =
+          kIsWeb ? 'http://localhost:5000' : 'serena://login-callback';
       await _auth.signUp(
         email: email,
         password: password,
         data: {'full_name': fullName},
-        emailRedirectTo: 'io.supabase.serena://login-callback',
+        emailRedirectTo: redirectUrl,
       );
     } on AuthException catch (e) {
       throw AuthError(_friendly(e.message));
@@ -73,9 +76,11 @@ class AuthRepository {
 
   Future<void> resetPassword(String email) async {
     try {
+      final redirectUrl =
+          kIsWeb ? 'http://localhost:5000' : 'serena://login-callback';
       await _auth.resetPasswordForEmail(
         email,
-        redirectTo: 'io.supabase.serena://login-callback',
+        redirectTo: redirectUrl,
       );
     } on AuthException catch (e) {
       throw AuthError(_friendly(e.message));
