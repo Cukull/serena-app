@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -47,6 +48,54 @@ Future<void> main() async {
     initialRoute = onboarded ? Routes.main : Routes.onboarding;
   }
 
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    debugPrint('FLUTTER_ERROR_CAUGHT: ${details.exception}');
+    return Material(
+      color: const Color(0xFFF8FAFC),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.info_outline_rounded, size: 48, color: Color(0xFF6366F1)),
+              const SizedBox(height: 12),
+              const Text(
+                'Terjadi kendala tampilan',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1E293B),
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '${details.exception}',
+                style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                textAlign: TextAlign.center,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => Get.offAllNamed<void>(Routes.main),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF6366F1),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text('Muat Ulang'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  };
+
   runApp(SerenaApp(initialRoute: initialRoute));
 }
 
@@ -60,7 +109,8 @@ Future<bool> _isOnboarded(String userId) async {
         .from('profiles')
         .select('onboarding_completed')
         .eq('id', userId)
-        .maybeSingle();
+        .maybeSingle()
+        .timeout(const Duration(seconds: 3));
     final val = (row?['onboarding_completed'] as bool?) ?? false;
     await store.write('onboarding_completed_$userId', val);
     return val;

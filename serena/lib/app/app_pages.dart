@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:serena/app/app_routes.dart';
+import 'package:serena/app/bindings/main_binding.dart';
 import 'package:serena/app/main_shell.dart';
 import 'package:serena/app/middlewares/auth_middleware.dart';
 import 'package:serena/features/auth/bindings/landing_binding.dart';
@@ -25,7 +26,7 @@ import 'package:serena/features/profile/stats_page.dart';
 /// Daftar GetPage. AuthMiddleware menjaga route protected.
 /// Jangan pecah list ini per fitur untuk MVP.
 abstract class AppPages {
-  static final routes = <GetPage>[
+  static final routes = <GetPage<dynamic>>[
     GetPage(
       name: Routes.landing,
       page: () => const LandingPage(),
@@ -54,6 +55,7 @@ abstract class AppPages {
     GetPage(
       name: Routes.main,
       page: () => const MainShell(),
+      binding: MainBinding(),
       middlewares: [AuthMiddleware()],
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),

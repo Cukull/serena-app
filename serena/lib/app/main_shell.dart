@@ -25,7 +25,9 @@ class MainShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<MainController>();
+    final controller = Get.isRegistered<MainController>()
+        ? Get.find<MainController>()
+        : Get.put(MainController(), permanent: true);
     return Obx(
       () => Scaffold(
         extendBody: true,

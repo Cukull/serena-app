@@ -71,7 +71,10 @@ class _GreetingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final auth = Get.find<AuthController>();
     return Obx(() {
-      final name = auth.user.value?.displayName.split(' ').first ?? 'Kamu';
+      final raw = auth.user.value?.displayName;
+      final name = (raw != null && raw.trim().isNotEmpty)
+          ? raw.trim().split(RegExp(r'\s+')).first
+          : 'Kamu';
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -161,6 +161,7 @@ void main() {
     final finishBtn = find.text('Selesai');
     await tester.ensureVisible(finishBtn);
     await tester.tap(finishBtn);
-    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pump(const Duration(milliseconds: 300));
   });
 }

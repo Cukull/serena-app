@@ -16,10 +16,10 @@ class AppBindings extends Bindings {
   @override
   void dependencies() {
     // Repositories (plain class, tidak perlu GetxController).
-    Get.lazyPut<AuthRepository>(AuthRepository.new);
-    Get.lazyPut<ProfileRepository>(ProfileRepository.new);
-    Get.lazyPut<TaskRepository>(TaskRepository.new);
-    Get.lazyPut<FocusRepository>(FocusRepository.new);
+    Get.lazyPut<AuthRepository>(AuthRepository.new, fenix: true);
+    Get.lazyPut<ProfileRepository>(ProfileRepository.new, fenix: true);
+    Get.lazyPut<TaskRepository>(TaskRepository.new, fenix: true);
+    Get.lazyPut<FocusRepository>(FocusRepository.new, fenix: true);
 
     // Controllers.
     Get.put<AuthController>(
@@ -29,12 +29,21 @@ class AppBindings extends Bindings {
       ),
       permanent: true,
     );
-    Get.lazyPut<UserController>(() => UserController(repo: Get.find()));
-    Get.lazyPut<TaskController>(() => TaskController(repo: Get.find()));
+    Get.put<UserController>(
+      UserController(repo: Get.find()),
+      permanent: true,
+    );
+    Get.put<TaskController>(
+      TaskController(repo: Get.find()),
+      permanent: true,
+    );
     Get.put<FocusController>(
       FocusController(repo: Get.find()),
       permanent: true,
     );
-    Get.lazyPut<MainController>(MainController.new);
+    Get.put<MainController>(
+      MainController(),
+      permanent: true,
+    );
   }
 }
