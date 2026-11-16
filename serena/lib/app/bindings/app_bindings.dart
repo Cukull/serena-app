@@ -22,13 +22,14 @@ class AppBindings extends Bindings {
   @override
   void dependencies() {
     // Repositories (plain class, tidak perlu GetxController).
-    Get.lazyPut<AuthRepository>(AuthRepository.new);
-    Get.lazyPut<ProfileRepository>(ProfileRepository.new);
-    Get.lazyPut<TaskRepository>(TaskRepository.new);
-    Get.lazyPut<MoodRepository>(MoodRepository.new);
-    Get.lazyPut<HabitRepository>(HabitRepository.new);
-    Get.lazyPut<SleepRepository>(SleepRepository.new);
-    Get.lazyPut<FocusRepository>(FocusRepository.new);
+
+    Get.lazyPut<AuthRepository>(AuthRepository.new, fenix: true);
+    Get.lazyPut<ProfileRepository>(ProfileRepository.new, fenix: true);
+    Get.lazyPut<TaskRepository>(TaskRepository.new, fenix: true);
+    Get.lazyPut<MoodRepository>(MoodRepository.new, fenix: true);
+    Get.lazyPut<HabitRepository>(HabitRepository.new, fenix: true);
+    Get.lazyPut<SleepRepository>(SleepRepository.new, fenix: true);
+    Get.lazyPut<FocusRepository>(FocusRepository.new, fenix: true);
 
     // Controllers.
     Get.put<AuthController>(
@@ -39,12 +40,30 @@ class AppBindings extends Bindings {
       ),
       permanent: true,
     );
-    Get.lazyPut<UserController>(() => UserController(repo: Get.find()));
-    Get.lazyPut<TaskController>(() => TaskController(repo: Get.find()));
-    Get.lazyPut<MoodController>(() => MoodController(repo: Get.find()));
-    Get.lazyPut<HabitController>(() => HabitController(repo: Get.find()));
-    Get.lazyPut<SleepController>(() => SleepController(repo: Get.find()));
-    Get.lazyPut<FocusController>(() => FocusController(repo: Get.find()));
-    Get.lazyPut<MainController>(MainController.new);
+    Get.lazyPut<MainController>(MainController.new, fenix: true);
+    Get.lazyPut<UserController>(
+      () => UserController(repo: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut<TaskController>(
+      () => TaskController(repo: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut<MoodController>(
+      () => MoodController(repo: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut<HabitController>(
+      () => HabitController(repo: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut<SleepController>(
+      () => SleepController(repo: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut<FocusController>(
+      () => FocusController(repo: Get.find()),
+      fenix: true,
+    );
   }
 }

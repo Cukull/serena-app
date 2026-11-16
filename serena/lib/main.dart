@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:serena/app/app.dart';
 import 'package:serena/app/app_routes.dart';
@@ -21,7 +22,16 @@ Future<void> main() async {
   final anonKey = dotenv.env['SUPABASE_ANON_KEY'] ?? '';
   await initSupabase(url: url, anonKey: anonKey);
 
-  final session = Supa.client.auth.currentSession;
+  var session = Supa.client.auth.currentSession;
+  if (session != null) {
+    try {
+      await Supa.client.auth.getUser();
+    } on AuthException {
+      await Supa.client.auth.signOut();
+      session = null;
+    } on Object {}
+  }
+
   final String initialRoute;
   if (session == null) {
     initialRoute = seenOnboarding ? Routes.login : Routes.landing;

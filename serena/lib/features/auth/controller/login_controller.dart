@@ -5,7 +5,6 @@ import 'package:serena/app/app_routes.dart';
 import 'package:serena/controllers/auth_controller.dart';
 
 class LoginController extends GetxController {
-  final formKey = GlobalKey<FormState>();
   final emailC = TextEditingController();
   final passC = TextEditingController();
 
@@ -22,11 +21,11 @@ class LoginController extends GetxController {
   String? validatePassword(String v) =>
       v.length >= 6 ? null : 'Minimal 6 karakter';
 
-  Future<void> submit() async {
+  Future<void> submit([GlobalKey<FormState>? formKey]) async {
     if (isLoading.value) return;
 
     autoValidate.value = true;
-    if (!(formKey.currentState?.validate() ?? false)) return;
+    if (formKey != null && !(formKey.currentState?.validate() ?? false)) return;
 
     FocusManager.instance.primaryFocus?.unfocus();
     isLoading.value = true;
