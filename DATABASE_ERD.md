@@ -1,6 +1,6 @@
 # Floréa — Database ERD
 
-> Status: Aktif — dicek langsung ke project Supabase `gkotywekltthwyobxuqj` (12 tabel public + relasi FK cocok dengan migrasi `0001_init.sql`)
+> Status: Aktif — 8 tabel `public` setelah migrasi `0002_remove_wellness.sql` (wellness & habit dihapus)
 > DB: PostgreSQL (Supabase) | Auth: Supabase Auth (`auth.users`)
 
 ## 1. Aturan Global
@@ -20,10 +20,6 @@ erDiagram
     PROFILES ||--o{ TASK_CATEGORIES : owns
     PROFILES ||--o{ TASKS : owns
     TASK_CATEGORIES ||--o{ TASKS : groups
-    PROFILES ||--o{ HABITS : owns
-    HABITS ||--o{ HABIT_LOGS : logs
-    PROFILES ||--o{ MOOD_LOGS : owns
-    PROFILES ||--o{ SLEEP_LOGS : owns
     PROFILES ||--o{ FOCUS_SESSIONS : owns
     PROFILES ||--o{ NOTIFICATIONS : owns
     PROFILES ||--o{ USER_ACHIEVEMENTS : unlocks
@@ -61,35 +57,6 @@ erDiagram
         text priority
         text status
         int progress
-    }
-    HABITS {
-        uuid id PK
-        uuid user_id FK
-        text title
-        text frequency
-        time reminder_time
-        bool is_active
-    }
-    HABIT_LOGS {
-        uuid id PK
-        uuid habit_id FK
-        uuid user_id FK
-        date logged_date
-        bool is_completed
-    }
-    MOOD_LOGS {
-        uuid id PK
-        uuid user_id FK
-        int mood_score
-        timestamptz logged_at
-    }
-    SLEEP_LOGS {
-        uuid id PK
-        uuid user_id FK
-        date sleep_date
-        timestamptz bedtime
-        timestamptz wake_time
-        int quality
     }
     FOCUS_SESSIONS {
         uuid id PK
@@ -143,9 +110,8 @@ Untuk DBeaver/pgAdmin, ambil connection string dari Supabase Dashboard → **Pro
 ## 3. Relasi per Fitur
 
 - **Planner:** profiles → task_categories → tasks. Task tanpa kategori diizinkan (`category_id NULL`).
-- **Habit:** habits → habit_logs. Unik per `(habit_id, logged_date)` agar tidak dobel log harian.
-- **Mood / Sleep / Focus:** langsung ke profiles (tidak ada tabel anak). Query statistik via agregasi tanggal.
-- **Notification:** milik user, `related_id` opsional menunjuk task/habit (tanpa FK keras agar fleksibel).
+- **Focus:** langsung ke profiles (tidak ada tabel anak). Statistik via agregasi tanggal.
+- **Notification:** milik user, `related_id` opsional menunjuk task (tanpa FK keras agar fleksibel).
 - **Achievement:** master `achievements` (seed) + `user_achievements` (composite PK).
 
 ## 4. Enums (Postgres)
@@ -153,10 +119,9 @@ Untuk DBeaver/pgAdmin, ambil connection string dari Supabase Dashboard → **Pro
 ```text
 task_priority: low | medium | high | urgent
 task_status: pending | in_progress | completed | cancelled
-habit_frequency: daily | weekly | custom
 focus_mode: pomodoro | deep_focus | exam_mode
 focus_status: active | paused | completed | cancelled
-notification_type: task | deadline | sleep | habit | wellness | hydration | eye_rest | focus_break
+notification_type: task | deadline | focus_break
 ```
 
 Dibuat via `CREATE TYPE ... AS ENUM`. Detail kolom lihat `DATABASE_SCHEMA.md`.
@@ -166,9 +131,6 @@ Dibuat via `CREATE TYPE ... AS ENUM`. Detail kolom lihat `DATABASE_SCHEMA.md`.
 ```text
 tasks(user_id, deadline)
 tasks(user_id, status)
-habit_logs(habit_id, logged_date)
-mood_logs(user_id, logged_at DESC)
-sleep_logs(user_id, sleep_date DESC)
 focus_sessions(user_id, started_at DESC)
 notifications(user_id, scheduled_for)
 ```

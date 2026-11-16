@@ -187,7 +187,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Get.offNamed<void>(Routes.login),
+                        onTap: () {
+                          if (Navigator.of(context).canPop()) {
+                            Get.back<void>();
+                          } else {
+                            Get.offNamed<void>(Routes.login);
+                          }
+                        },
                         child: Text(
                           'Masuk',
                           style: AppTypography.body.copyWith(

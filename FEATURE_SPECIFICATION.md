@@ -23,14 +23,14 @@ Status prioritas MVP semester:
 ## F1 — Login / Register & Onboarding (P0)
 
 Board: Email/Username, Password, Login, Register, Forgot Password, Google Login,
-Account Verification, User Goal, Wellness Goal, Initial Mood.
+Account Verification, User Goal.
 
 | Item | Keputusan |
 |---|---|
 | Route | `/login`, `/register`, `/forgot-password`, `/verify`, `/onboarding` |
 | Page | `features/auth/{login,register,forgot_password,verify,onboarding}_page.dart` |
-| Provider | `auth_controller` (session), `onboarding_controller` (goal + initial mood sementara) |
-| Tabel | `auth.users` via Supabase Auth, `profiles` (onboarding_completed, full_name, avatar), `user_goals`, `mood_logs` (initial mood = 1 entry) |
+| Provider | `auth_controller` (session + onboarding) |
+| Tabel | `auth.users` via Supabase Auth, `profiles` (onboarding_completed, full_name, avatar), `user_goals` |
 | Validasi | Email valid, password ≥ 8 char, forgot-password kirim link Supabase |
 | States | Loading saat Auth, error中华 (email sudah terdaftar / kredensial salah), empty tidak ada |
 | Test | Unit validator + widget login form |
@@ -53,16 +53,16 @@ Board: Name, Email, Password, Confirm Password, Verification Code, User Goal/Int
 
 ## F3 — Home Dashboard (P0)
 
-Board: Today's Overview, Task/Schedule, Upcoming Events, Mood Check, Habit Journey,
+Board: Today's Overview, Task/Schedule, Upcoming Events,
 Progress Overview, Notifications, Quick Action.
 
 | Item | Keputusan |
 |---|---|
 | Route | `/main` tab 0 (IndexedStack, bukan route sendiri) |
-| Page | `features/home/home_page.dart` + widget `today_overview_card, quick_action_bar, mood_check_sheet` |
-| Provider | `home_controller` (agregasi), reuse `task_controller`, `habit_controller`, `mood_controller` |
-| Tabel (read-only) | `tasks` (deadline hari ini + upcoming), `habit_logs` (today), `mood_logs` (today), `notifications` (unread count) |
-| Aksi | Quick Action → `/planner/create`, mood check → bottom sheet → insert `mood_logs`, tap notif → daftar notif |
+| Page | `features/home/home_page.dart` + widget `today_overview_card, quick_action_bar` |
+| Provider | `home_controller` (agregasi), reuse `task_controller` |
+| Tabel (read-only) | `tasks` (deadline hari ini + upcoming), `notifications` (unread count) |
+| Aksi | Quick Action → `/planner/create`, tap notif → daftar notif |
 | States | Skeleton saat agregasi, empty ("Belum ada task hari ini"), error retry |
 | Test | Widget home dengan 0 task vs N task |
 
@@ -99,33 +99,18 @@ Focus Shield, Soundscape, Eye Rest, Mini Walk, Quick Stretch, Hydration Reminder
 | Pelengkap | Soundscape P2 (asset audio lokal), Eye Rest / Mini Walk / Quick Stretch P1 (timer pendek + panduan teks, tanpa tabel baru), Hydration Reminder P1 (notif berulang) |
 | Test | Unit timer calc (actual_minutes dari selisih timestamp), widget start→finish 1 sesi |
 
-## F6 — Wellness Dashboard (P0 inti, P1 analitik)
+## F6 — Profile Dashboard (P0 dasar, P1 statistik)
 
-Board: Mood Tracking, Mood Analytics, Habit Tracking, Habit Journey, Sleep Tracking,
-Wellness Progress, Daily Wellness, Wellness Reminder.
-
-| Item | Keputusan |
-|---|---|
-| Route | `/main` tab 3 + `/wellness/mood`, `/wellness/habits`, `/wellness/sleep` |
-| Page | `wellness_page.dart` (tab Mood \| Habit \| Sleep) + sub-pages |
-| Provider | `mood_controller`, `habit_controller`, `sleep_controller` |
-| Tabel | `mood_logs` (score 1–5 + note), `habits` + `habit_logs` (unik per hari), `sleep_logs` (bedtime/wake/quality 1–5) |
-| Analitik | Mood Analytics + Wellness Progress = P1 via `fl_chart` (agregasi 7/30 hari). Daily Wellness = ringkasan read-only. Reminder via `notification_service` |
-| Validasi | Mood 1–5 wajib, sleep wake > bedtime, habit 1 log/hari |
-| Test | Unit streak habit + rata-rata mood mingguan |
-
-## F7 — Profile Dashboard (P0 dasar, P1 statistik)
-
-Board: Task/Focus Statistics, Habit Progress, Mood History, Wellness Progress,
-Achievement, Personalized Insight, Profile, Personal Information, Notifications,
+Board: Task/Focus Statistics, Achievement, Personalized Insight, Profile,
+Personal Information, Notifications,
 Privacy & Security, Account Settings, Logout (tertulis 2x di board = 1 aksi).
 
 | Item | Keputusan |
 |---|---|
-| Route | `/main` tab 4 + `/profile/edit`, `/profile/settings`, `/profile/achievements` |
+| Route | `/main` tab 3 + `/profile/edit`, `/profile/settings`, `/profile/achievements` |
 | Page | `profile_page.dart` + `edit_profile_page`, `settings_page`, `achievements_page` |
 | Controller | `user_controller`, `settings_controller` (theme, pref notif di `GetStorage`) |
-| Tabel | `profiles`, `user_achievements` + `achievements` (read), statistik = agregasi `tasks/focus_sessions/habit_logs/mood_logs` (tanpa tabel baru) |
+| Tabel | `profiles`, `user_achievements` + `achievements` (read), statistik = agregasi `tasks/focus_sessions` (tanpa tabel baru) |
 | Personalized Insight | P2 (rule sederhana dulu, mis. "3 hari fokus terbaikmu…"; tanpa LLM) |
 | Settings | Edit nama/avatar (Storage bila perlu) P0, Notifications toggle P0, Privacy & Security (ganti password via Supabase) P1, Logout P0 |
 | Test | Widget profile edit + logout clears session |
@@ -136,10 +121,9 @@ Privacy & Security, Account Settings, Logout (tertulis 2x di board = 1 aksi).
 
 ```text
 /login /register /forgot-password /verify /onboarding
-/main  (shell bottom-tab: home | planner | focus | wellness | profile via IndexedStack)
+/main  (shell bottom-tab: home | planner | focus | profile via IndexedStack)
 /planner/create /planner/detail/:id /planner/edit/:id
 /focus/pomodoro /focus/deep /focus/exam /focus/history
-/wellness/mood /wellness/habits /wellness/sleep
 /profile/edit /profile/settings /profile/achievements
 ```
 
@@ -148,14 +132,12 @@ Privacy & Security, Account Settings, Logout (tertulis 2x di board = 1 aksi).
 ```text
 profiles, user_goals
 task_categories, tasks
-habits, habit_logs
-mood_logs, sleep_logs
 focus_sessions
 notifications
 achievements, user_achievements
 ```
 
-Tidak ada tabel baru di luar ERD/SCHEMA. Insight & Daily Wellness = query agregasi.
+Tidak ada tabel baru di luar ERD/SCHEMA. Insight = query agregasi.
 
 ## Urutan Build (disarankan)
 
@@ -163,9 +145,8 @@ Tidak ada tabel baru di luar ERD/SCHEMA. Insight & Daily Wellness = query agrega
 1. F1+F2 Auth + profiles          (blokir semua fitur lain)
 2. F4 Planner CRUD + reminder      (nilai inti produktivitas)
 3. F5 Focus timer + history        (nilai inti fokus)
-4. F6 Mood/Habit/Sleep entry       (nilai inti wellness)
-5. F3 Home agregasi                (butuh 2–4 selesai dulu)
-6. F6 analitik + F7 statistik      (chart + achievements)
-7. F7 settings + insight sederhana
-8. P1/P2: Google login, Exam mode shield, soundscape, FCM
+4. F3 Home agregasi                (butuh 2–3 selesai dulu)
+5. F6 statistik                    (chart + achievements)
+6. F6 settings + insight sederhana
+7. P1/P2: Google login, Exam mode shield, soundscape, FCM
 ```

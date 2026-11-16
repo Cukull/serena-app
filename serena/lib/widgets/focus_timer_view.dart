@@ -55,8 +55,7 @@ class _FocusTimerViewState extends State<FocusTimerView> {
               _buildTopHeader(),
               Expanded(
                 child: Obx(() {
-                  final isThisModeActive =
-                      c.phase.value != FocusPhase.idle &&
+                  final isThisModeActive = c.phase.value != FocusPhase.idle &&
                       c.mode.value == widget.mode;
                   return ListView(
                     padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
@@ -246,9 +245,8 @@ class _FocusTimerViewState extends State<FocusTimerView> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
             decoration: BoxDecoration(
-              color: isRunning
-                  ? const Color(0x1F22C55E)
-                  : const Color(0x1A6366F1),
+              color:
+                  isRunning ? const Color(0x1F22C55E) : const Color(0x1A6366F1),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Row(
@@ -338,9 +336,9 @@ class _FocusTimerViewState extends State<FocusTimerView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     'Atur Durasi',
                     style: TextStyle(
@@ -357,7 +355,8 @@ class _FocusTimerViewState extends State<FocusTimerView> {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: const Color(0xFF6366F1),
                   borderRadius: BorderRadius.circular(20),
@@ -416,7 +415,8 @@ class _FocusTimerViewState extends State<FocusTimerView> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                 decoration: BoxDecoration(
                   color: const Color(0xFFF8FAFD),
                   borderRadius: BorderRadius.circular(10),
@@ -481,7 +481,8 @@ class _FocusTimerViewState extends State<FocusTimerView> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                 decoration: BoxDecoration(
                   color: const Color(0xFFF8FAFD),
                   borderRadius: BorderRadius.circular(10),
@@ -531,9 +532,9 @@ class _FocusTimerViewState extends State<FocusTimerView> {
               ),
             ],
           ),
-          child: Row(
+          child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Icon(LucideIcons.play, color: Colors.white, size: 18),
               SizedBox(width: 8),
               Text(
@@ -575,9 +576,7 @@ class _FocusTimerViewState extends State<FocusTimerView> {
                     children: [
                       Icon(
                         running ? LucideIcons.pause : LucideIcons.play,
-                        color: running
-                            ? const Color(0xFF334155)
-                            : Colors.white,
+                        color: running ? const Color(0xFF334155) : Colors.white,
                         size: 18,
                       ),
                       const SizedBox(width: 8),
@@ -586,9 +585,8 @@ class _FocusTimerViewState extends State<FocusTimerView> {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: running
-                              ? const Color(0xFF334155)
-                              : Colors.white,
+                          color:
+                              running ? const Color(0xFF334155) : Colors.white,
                         ),
                       ),
                     ],
@@ -618,9 +616,9 @@ class _FocusTimerViewState extends State<FocusTimerView> {
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(color: const Color(0xFFCBD5E1)),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(
                         LucideIcons.check,
                         color: Color(0xFF6366F1),

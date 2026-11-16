@@ -4,16 +4,81 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:serena/app/app_assets.dart';
+import 'package:serena/app/app_routes.dart';
+import 'package:serena/controllers/auth_controller.dart';
 import 'package:serena/core/theme/app_colors.dart';
 import 'package:serena/core/theme/app_typography.dart';
 import 'package:serena/core/widgets/app_auth_brand.dart';
 import 'package:serena/core/widgets/app_fill_button.dart';
 import 'package:serena/core/widgets/app_gradient_background.dart';
 import 'package:serena/core/widgets/app_pill_field.dart';
-import 'package:serena/features/auth/controller/login_controller.dart';
 
-class LoginPage extends GetView<LoginController> {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+  late final TextEditingController _emailC;
+  late final TextEditingController _passC;
+
+  bool _isLoading = false;
+  bool _autoValidate = false;
+
+  AuthController get _auth => Get.find<AuthController>();
+
+  @override
+  void initState() {
+    super.initState();
+    _emailC = TextEditingController();
+    _passC = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailC.dispose();
+    _passC.dispose();
+    super.dispose();
+  }
+
+  String? _validateEmail(String v) =>
+      GetUtils.isEmail(v.trim()) ? null : 'Email tidak valid';
+
+  String? _validatePassword(String v) =>
+      v.length >= 6 ? null : 'Minimal 6 karakter';
+
+  Future<void> _submit() async {
+    if (_isLoading) return;
+    setState(() => _autoValidate = true);
+    if (!(_formKey.currentState?.validate() ?? false)) return;
+
+    FocusManager.instance.primaryFocus?.unfocus();
+    setState(() => _isLoading = true);
+    try {
+      await _auth.login(email: _emailC.text.trim(), password: _passC.text);
+      final err = _auth.errorMessage.value;
+      if (err != null && err.isNotEmpty) {
+        Get.snackbar('Login gagal', err);
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  void _signInWithGoogle() {
+    Get.snackbar('Belum tersedia', 'Login dengan Google belum diaktifkan.');
+  }
+
+  void _goToSignUp() {
+    Get.toNamed<void>(Routes.register);
+  }
+
+  void _goToForgotPassword() {
+    Get.toNamed<void>(Routes.forgotPassword);
+  }
 
   static const _divider = Expanded(
     child: Divider(color: AppColors.divider),
@@ -47,168 +112,164 @@ class LoginPage extends GetView<LoginController> {
                         horizontal: 24,
                         vertical: 20,
                       ),
-                      child: Obx(
-                        () => Form(
-                          key: controller.formKey,
-                          autovalidateMode: controller.autoValidate.value
-                              ? AutovalidateMode.onUserInteraction
-                              : AutovalidateMode.disabled,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              AuthBrandHeader(onTap: () => Get.back<void>()),
-                              const SizedBox(height: 14),
-                              Center(
-                                child: SvgPicture.asset(
-                                  AppAssets.loginHammock,
-                                  height: 142,
-                                )
-                                    .animate(
-                                      onPlay: (c) => c.repeat(reverse: true),
-                                    )
-                                    .rotate(
-                                      begin: -0.012,
-                                      end: 0.012,
-                                      duration: 2200.ms,
-                                      curve: Curves.easeInOut,
-                                    )
-                                    .moveY(
-                                      begin: 0,
-                                      end: -3,
-                                      duration: 2200.ms,
-                                      curve: Curves.easeInOut,
-                                    ),
+                      child: Form(
+                        key: _formKey,
+                        autovalidateMode: _autoValidate
+                            ? AutovalidateMode.onUserInteraction
+                            : AutovalidateMode.disabled,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            AuthBrandHeader(onTap: () => Get.back<void>()),
+                            const SizedBox(height: 14),
+                            Center(
+                              child: SvgPicture.asset(
+                                AppAssets.loginHammock,
+                                height: 142,
+                              )
+                                  .animate(
+                                    onPlay: (c) => c.repeat(reverse: true),
+                                  )
+                                  .rotate(
+                                    begin: -0.012,
+                                    end: 0.012,
+                                    duration: 2200.ms,
+                                    curve: Curves.easeInOut,
+                                  )
+                                  .moveY(
+                                    begin: 0,
+                                    end: -3,
+                                    duration: 2200.ms,
+                                    curve: Curves.easeInOut,
+                                  ),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              'Selamat Datang Kembali',
+                              style: AppTypography.serif(26),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              'Atur jadwal kuliah, kelola tugas, '
+                              'dan raih fokus terbaikmu.',
+                              style: AppTypography.body.copyWith(
+                                fontSize: 13.5,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.webSlate,
                               ),
-                              const SizedBox(height: 12),
-                              Text(
-                                'Selamat Datang Kembali',
-                                style: AppTypography.serif(26),
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                'Atur jadwal kuliah, kelola tugas, '
-                                'dan raih fokus terbaikmu.',
-                                style: AppTypography.body.copyWith(
-                                  fontSize: 13.5,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.webSlate,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              AppPillField(
-                                controller: controller.emailC,
-                                hint: 'nama@student.edu',
-                                validator: (v) =>
-                                    controller.validateEmail(v ?? ''),
-                                keyboardType: TextInputType.emailAddress,
-                                textInputAction: TextInputAction.next,
-                                autofillHints: const [AutofillHints.email],
-                              ),
-                              const SizedBox(height: 14),
-                              AppPillField(
-                                controller: controller.passC,
-                                hint: 'Kata sandi',
-                                icon: LucideIcons.lock,
-                                obscure: true,
-                                validator: (v) =>
-                                    controller.validatePassword(v ?? ''),
-                                textInputAction: TextInputAction.done,
-                                autofillHints: const [AutofillHints.password],
-                                onSubmitted: (_) => controller.submit(),
-                              ),
-                              const SizedBox(height: 10),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: GestureDetector(
-                                  onTap: controller.goToForgotPassword,
-                                  behavior: HitTestBehavior.opaque,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 6,
-                                      horizontal: 4,
-                                    ),
-                                    child: Text(
-                                      'Lupa Kata Sandi?',
-                                      style: AppTypography.body.copyWith(
-                                        fontSize: 12.5,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.primary,
-                                      ),
+                            ),
+                            const SizedBox(height: 20),
+                            AppPillField(
+                              controller: _emailC,
+                              hint: 'nama@student.edu',
+                              validator: (v) => _validateEmail(v ?? ''),
+                              keyboardType: TextInputType.emailAddress,
+                              textInputAction: TextInputAction.next,
+                              autofillHints: const [AutofillHints.email],
+                            ),
+                            const SizedBox(height: 14),
+                            AppPillField(
+                              controller: _passC,
+                              hint: 'Kata sandi',
+                              icon: LucideIcons.lock,
+                              obscure: true,
+                              validator: (v) => _validatePassword(v ?? ''),
+                              textInputAction: TextInputAction.done,
+                              autofillHints: const [AutofillHints.password],
+                              onSubmitted: (_) => _submit(),
+                            ),
+                            const SizedBox(height: 10),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                onTap: _goToForgotPassword,
+                                behavior: HitTestBehavior.opaque,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 6,
+                                    horizontal: 4,
+                                  ),
+                                  child: Text(
+                                    'Lupa Kata Sandi?',
+                                    style: AppTypography.body.copyWith(
+                                      fontSize: 12.5,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.primary,
                                     ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 14),
-                              AppFillButton(
-                                label: 'Masuk',
-                                onPressed: controller.submit,
-                                isLoading: controller.isLoading.value,
-                                leading: const Icon(
-                                  LucideIcons.arrowRight,
-                                  size: 18,
-                                  color: Colors.white,
-                                ),
+                            ),
+                            const SizedBox(height: 14),
+                            AppFillButton(
+                              label: 'Masuk',
+                              onPressed: _submit,
+                              isLoading: _isLoading,
+                              leading: const Icon(
+                                LucideIcons.arrowRight,
+                                size: 18,
+                                color: Colors.white,
                               ),
-                              const SizedBox(height: 16),
-                              Row(
-                                children: [
-                                  _divider,
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 14,
-                                    ),
-                                    child: Text(
-                                      'atau lanjutkan dengan',
-                                      style: AppTypography.caption.copyWith(
-                                        color: AppColors.textFaint,
-                                        fontSize: 12,
-                                      ),
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: [
+                                _divider,
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                  ),
+                                  child: Text(
+                                    'atau lanjutkan dengan',
+                                    style: AppTypography.caption.copyWith(
+                                      color: AppColors.textFaint,
+                                      fontSize: 12,
                                     ),
                                   ),
-                                  _divider,
-                                ],
-                              ),
-                              const SizedBox(height: 16),
-                              AppFillButton(
-                                label: 'Lanjutkan dengan Google',
-                                variant: AppFillVariant.outline,
-                                onPressed: controller.signInWithGoogle,
-                                leading: SvgPicture.string(
-                                  _googleLogoSvg,
-                                  width: 20,
-                                  height: 20,
                                 ),
+                                _divider,
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            AppFillButton(
+                              label: 'Lanjutkan dengan Google',
+                              variant: AppFillVariant.outline,
+                              onPressed: _signInWithGoogle,
+                              leading: SvgPicture.string(
+                                _googleLogoSvg,
+                                width: 20,
+                                height: 20,
                               ),
-                              const SizedBox(height: 16),
-                              Wrap(
-                                alignment: WrapAlignment.center,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  Text(
-                                    'Belum punya akun? ',
+                            ),
+                            const SizedBox(height: 16),
+                            Wrap(
+                              alignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                Text(
+                                  'Belum punya akun? ',
+                                  style: AppTypography.body.copyWith(
+                                    fontSize: 13,
+                                    color: AppColors.webSlate,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: _goToSignUp,
+                                  child: Text(
+                                    'Buat Akun Baru',
                                     style: AppTypography.body.copyWith(
                                       fontSize: 13,
-                                      color: AppColors.webSlate,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.primary,
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: controller.goToSignUp,
-                                    child: Text(
-                                      'Buat Akun Baru',
-                                      style: AppTypography.body.copyWith(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.primary,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 22),
-                              const _SocialProof(),
-                            ],
-                          ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 22),
+                            const _SocialProof(),
+                          ],
                         ),
                       ),
                     ),

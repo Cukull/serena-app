@@ -34,5 +34,7 @@ florea/
 CAPSTONE PROJECT UI_UX FLOREA/
 CAPSTONE PROJECT UI_UX SERENA/
 
-# OS
+# OS & Office temps
 Thumbs.db
+~$*
+*.tmp

@@ -182,7 +182,6 @@ controllers/
 ├── user_controller.dart
 ├── task_controller.dart
 ├── focus_controller.dart
-├── wellness_controller.dart
 └── main_controller.dart   # bottom-tab index + cross-tab navigation
 ```
 
@@ -281,10 +280,6 @@ profiles
 user_goals
 tasks
 task_categories
-habits
-habit_logs
-mood_logs
-sleep_logs
 focus_sessions
 notifications
 achievements
@@ -298,10 +293,6 @@ profiles
    │
    ├── user_goals
    ├── tasks
-   ├── habits
-   │     └── habit_logs
-   ├── mood_logs
-   ├── sleep_logs
    ├── focus_sessions
    ├── notifications
    └── user_achievements
@@ -525,7 +516,6 @@ main
     ├── feature/home
     ├── feature/planner
     ├── feature/focus
-    ├── feature/wellness
     └── feature/profile
 ```
 
@@ -535,7 +525,6 @@ Strategi branch boleh disederhanakan bila tim kecil.
 
 ```text
 feat: add planner task creation
-feat: add mood tracking
 fix: correct focus timer reset
 refactor: extract task card widget
 docs: update technical specification
@@ -629,14 +618,6 @@ florea/
 │   │   │   ├── deep_focus_page.dart
 │   │   │   ├── exam_mode_page.dart
 │   │   │   └── focus_history_page.dart
-│   │   ├── wellness/
-│   │   │   ├── wellness_page.dart
-│   │   │   ├── mood_page.dart
-│   │   │   ├── sleep_page.dart
-│   │   │   ├── habits_page.dart
-│   │   │   ├── eye_rest_page.dart
-│   │   │   ├── mini_walk_page.dart
-│   │   │   └── quick_stretch_page.dart
 │   │   └── profile/
 │   │       └── profile_page.dart
 │   │
@@ -650,7 +631,6 @@ florea/
 │   │   ├── main_controller.dart
 │   │   ├── task_controller.dart
 │   │   ├── focus_controller.dart
-│   │   ├── wellness_controller.dart
 │   │   └── settings_controller.dart
 │   │
 │   ├── repositories/            # Supabase queries

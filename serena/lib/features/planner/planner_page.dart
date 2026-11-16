@@ -76,7 +76,8 @@ class _PlannerPageState extends State<PlannerPage> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Dasbor Perencana', style: AppTypography.h2.copyWith(fontSize: 20)),
+                  Text('Dasbor Perencana',
+                      style: AppTypography.h2.copyWith(fontSize: 20)),
                   Text(
                     '${_safeFormatMonth(_focusedMonth)} · $total tugas',
                     style: AppTypography.subtitle,
@@ -148,7 +149,6 @@ class _CalendarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppCard(
-      padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           // Month navigation
@@ -157,7 +157,6 @@ class _CalendarCard extends StatelessWidget {
               AppCircleButton(
                 icon: Icons.chevron_left_rounded,
                 size: 36,
-                iconSize: 20,
                 onTap: () => onMonthChanged(
                   DateTime(focusedMonth.year, focusedMonth.month - 1),
                 ),
@@ -173,7 +172,6 @@ class _CalendarCard extends StatelessWidget {
               AppCircleButton(
                 icon: Icons.chevron_right_rounded,
                 size: 36,
-                iconSize: 20,
                 onTap: () => onMonthChanged(
                   DateTime(focusedMonth.year, focusedMonth.month + 1),
                 ),
@@ -252,9 +250,7 @@ class _CalendarCard extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               gradient: isSelected ? AppColors.primaryGradient : null,
-              color: isToday && !isSelected
-                  ? AppColors.primaryTint
-                  : null,
+              color: isToday && !isSelected ? AppColors.primaryTint : null,
               shape: BoxShape.circle,
             ),
             child: Column(
@@ -279,9 +275,7 @@ class _CalendarCard extends StatelessWidget {
                     width: 4,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: isSelected
-                          ? Colors.white
-                          : AppColors.primary,
+                      color: isSelected ? Colors.white : AppColors.primary,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -393,7 +387,8 @@ class _AgendaList extends StatelessWidget {
         ),
         child: Column(
           children: [
-            const Icon(LucideIcons.calendarX2, size: 36, color: AppColors.textFaint),
+            const Icon(LucideIcons.calendarX2,
+                size: 36, color: AppColors.textFaint),
             const SizedBox(height: 8),
             Text(
               'Tidak ada tugas pada hari ini',

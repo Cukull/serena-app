@@ -6,8 +6,8 @@
 > Sumber: FLOREA_TECH_STACK.md + Project Board + Desain UI/UX
 
 ## 1. Konteks Singkat
-Aplikasi mobile untuk mahasiswa agar seimbang antara akademik dan kesehatan mental.
-Fitur inti: Login/Register/Onboarding, Home, Planner (task, deadline, kalender), Focus (Pomodoro, Deep Focus, Exam Mode), Wellness (mood, habit, sleep, hidrasi, eye-rest, stretch), Statistik, Achievement, Notifikasi, Profile.
+Aplikasi mobile untuk mahasiswa agar seimbang antara akademik dan kehidupan pribadi.
+Fitur inti: Login/Register/Onboarding, Home, Planner (task, deadline, kalender), Focus (Pomodoro, Deep Focus, Exam Mode), Statistik, Achievement, Notifikasi, Profile.
 
 Design system: Fraunces (heading) + DM Sans (body). Warna contoh sementara (JANGAN DIKUNCI, diganti saat dev): `#FAF7F2`, `#8B7CF8`, `#EAF7FC`.
 

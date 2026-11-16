@@ -10,6 +10,5 @@ class DeepFocusPage extends StatelessWidget {
   Widget build(BuildContext context) => const FocusTimerView(
         mode: FocusMode.deepFocus,
         initialMinutes: 45,
-        allowAdjust: true,
       );
 }

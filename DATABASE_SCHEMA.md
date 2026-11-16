@@ -11,10 +11,9 @@ create extension if not exists "pgcrypto";
 -- Enums
 create type task_priority as enum ('low','medium','high','urgent');
 create type task_status as enum ('pending','in_progress','completed','cancelled');
-create type habit_frequency as enum ('daily','weekly','custom');
 create type focus_mode as enum ('pomodoro','deep_focus','exam_mode');
 create type focus_status as enum ('active','paused','completed','cancelled');
-create type notification_type as enum ('task','deadline','sleep','habit','wellness','hydration','eye_rest','focus_break');
+create type notification_type as enum ('task','deadline','focus_break');
 
 -- Trigger updated_at
 create or replace function set_updated_at()
@@ -104,83 +103,7 @@ create policy "tasks_owner" on tasks
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 ```
 
-## 5. habits + habit_logs
-
-```sql
-create table habits (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  title text not null,
-  description text,
-  frequency habit_frequency not null default 'daily',
-  target_per_week int check (target_per_week between 1 and 7),
-  color text,
-  icon text,
-  reminder_time time,
-  is_active boolean not null default true,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
-);
-create index idx_habits_user on habits(user_id);
-
-create table habit_logs (
-  id uuid primary key default gen_random_uuid(),
-  habit_id uuid not null references habits(id) on delete cascade,
-  user_id uuid not null references auth.users(id) on delete cascade,
-  logged_date date not null,
-  is_completed boolean not null default true,
-  note text,
-  created_at timestamptz not null default now(),
-  unique(habit_id, logged_date)
-);
-create index idx_habit_logs_habit_date on habit_logs(habit_id, logged_date);
-
-alter table habits enable row level security;
-create policy "habits_owner" on habits
-  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-alter table habit_logs enable row level security;
-create policy "habit_logs_owner" on habit_logs
-  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-```
-
-## 6. mood_logs
-
-```sql
-create table mood_logs (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  mood_score int not null check (mood_score between 1 and 5),
-  mood_label text,
-  note text,
-  logged_at timestamptz not null default now()
-);
-create index idx_mood_logs_user_time on mood_logs(user_id, logged_at desc);
-alter table mood_logs enable row level security;
-create policy "mood_logs_owner" on mood_logs
-  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-```
-
-## 7. sleep_logs
-
-```sql
-create table sleep_logs (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  sleep_date date not null,
-  bedtime timestamptz,
-  wake_time timestamptz,
-  quality int check (quality between 1 and 5),
-  note text,
-  created_at timestamptz not null default now(),
-  unique(user_id, sleep_date)
-);
-create index idx_sleep_logs_user_date on sleep_logs(user_id, sleep_date desc);
-alter table sleep_logs enable row level security;
-create policy "sleep_logs_owner" on sleep_logs
-  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-```
-
-## 8. focus_sessions
+## 5. focus_sessions
 
 ```sql
 create table focus_sessions (
@@ -200,7 +123,7 @@ create policy "focus_owner" on focus_sessions
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 ```
 
-## 9. notifications
+## 6. notifications
 
 ```sql
 create table notifications (
@@ -220,7 +143,7 @@ create policy "notifications_owner" on notifications
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 ```
 
-## 10. achievements
+## 7. achievements
 
 ```sql
 create table achievements (
@@ -248,18 +171,17 @@ alter table achievements enable row level security;
 create policy "achievements_read" on achievements for select using (true);
 ```
 
-## 11. Seed awal (contoh)
+## 8. Seed awal (contoh)
 
 ```sql
 insert into achievements (code, title, description) values
   ('first_task','Langkah Pertama','Selesaikan 1 task pertama'),
-  ('focus_3','Fokus 3x','Selesaikan 3 focus session'),
-  ('mood_7','Refleksi 7 Hari','Catat mood 7 hari berturut-turut')
+  ('focus_3','Fokus 3x','Selesaikan 3 focus session')
 on conflict (code) do nothing;
 ```
 
-## 12. Checklist Migrasi
+## 9. Checklist Migrasi
 
 - [ ] Jalankan di Supabase SQL Editor / `supabase/migrations/`
 - [ ] Test RLS: user A tidak bisa baca data user B
-- [ ] Test Flutter: CRUD 1 task + 1 mood + 1 focus session
+- [ ] Test Flutter: CRUD 1 task + 1 focus session

@@ -4,6 +4,6 @@ import 'package:serena/features/auth/controller/login_controller.dart';
 class LoginBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<LoginController>(LoginController.new);
+    Get.lazyPut<LoginController>(LoginController.new, fenix: true);
   }
 }

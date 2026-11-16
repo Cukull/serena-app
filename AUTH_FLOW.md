@@ -25,7 +25,7 @@ App start
 
 /login ──(belum punya akun)──> /register ──> /verify ──> /login
 /login ──(lupa password)─────> /forgot-password ──(link email)──> /login
-/login ──(sukses + onboarding false)──> /onboarding ──(simpan goal + initial mood)──> /main
+/login ──(sukses + onboarding false)──> /onboarding ──(simpan goal)──> /main
 ```
 
 ## 3. Detail per Screen
@@ -54,8 +54,7 @@ Input email → `resetPasswordFor(email, redirectTo: <deep-link>)` → toast "li
 Reset password finalisasi di browser/webview, lalu user login ulang di app.
 
 ### 3.5 `/onboarding`
-Langkah: (1) user goal → insert `user_goals`, (2) wellness goal → insert `user_goals` kedua atau kolom di profiles (pilih: tabel `user_goals`, bedakan via kolom `kind` bila perlu — tambah hanya jika disetujui),
-(3) initial mood → insert 1 baris `mood_logs`.
+Langkah: user goal → insert `user_goals`.
 Tombol Selesai → `profiles.onboarding_completed = true` → `/main`.
 Onboarding bisa di-skip? **Tidak untuk MVP** — flag harus true agar Home punya data awal. Tombol Lewati hanya bila tim setuju (tambah backlog).
 

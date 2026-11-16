@@ -268,9 +268,7 @@ class _FocusHeroCardState extends State<_FocusHeroCard>
                               const SizedBox(height: 10),
                               // Timer display
                               Text(
-                                isActive
-                                    ? focus.formattedRemaining
-                                    : '25:00',
+                                isActive ? focus.formattedRemaining : '25:00',
                                 style: AppTypography.h1.copyWith(
                                   color: Colors.white,
                                   fontSize: 36,
@@ -280,9 +278,7 @@ class _FocusHeroCardState extends State<_FocusHeroCard>
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                isActive
-                                    ? focus.mode.value.label
-                                    : 'Pomodoro',
+                                isActive ? focus.mode.value.label : 'Pomodoro',
                                 style: AppTypography.body.copyWith(
                                   color: Colors.white.withAlpha(200),
                                 ),
@@ -458,7 +454,7 @@ class _AnimatedHourglassArtState extends State<_AnimatedHourglassArt>
           final t = _cycleCtrl.value; // 0.0 - 1.0
           double angle;
           double sandLevel;
-          bool isFlipping = false;
+          var isFlipping = false;
 
           // Siklus jam pasir bulak-balik:
           // 0.00 - 0.42: Posisi tegak (angle 0), pasir turun habis
@@ -583,7 +579,7 @@ class _HourglassPainter extends CustomPainter {
     if (topRemaining > 0.04) {
       final topSandPath = Path();
       final sandTopY = cy - 4 - 30 * topRemaining;
-      final waistWidth = 6.0;
+      const waistWidth = 6.0;
       final topWidth = 10.0 + 22.0 * topRemaining;
 
       topSandPath.moveTo(cx - topWidth / 2, sandTopY);
@@ -612,7 +608,7 @@ class _HourglassPainter extends CustomPainter {
       final botSandH = 30.0 * botFill;
       final botBaseY = cy + 34;
       final botSurfaceY = botBaseY - botSandH;
-      final baseWidth = 32.0;
+      const baseWidth = 32.0;
       final surfaceWidth = 10.0 + 22.0 * botFill;
 
       botSandPath.moveTo(cx - surfaceWidth / 2, botSurfaceY);
@@ -648,7 +644,7 @@ class _HourglassPainter extends CustomPainter {
       if (streamBot > streamTop + 4) {
         const dashLength = 4.0;
         const dashSpace = 3.5;
-        double y = streamTop + (streamPhase % (dashLength + dashSpace));
+        var y = streamTop + (streamPhase % (dashLength + dashSpace));
         while (y < streamBot) {
           final nextY = math.min(y + dashLength, streamBot);
           canvas.drawLine(Offset(cx, y), Offset(cx, nextY), streamPaint);
@@ -684,20 +680,17 @@ class _StatsSection extends StatelessWidget {
                 t.status != TaskStatus.cancelled,
           )
           .length;
-      final completed = tasks.tasks
-          .where((t) => t.status == TaskStatus.completed)
-          .length;
+      final completed =
+          tasks.tasks.where((t) => t.status == TaskStatus.completed).length;
 
       // Focus minutes today
       final today = DateTime.now();
-      final todayMinutes = focus.sessions
-          .where((s) {
-            final d = s.startedAt;
-            return d.year == today.year &&
-                d.month == today.month &&
-                d.day == today.day;
-          })
-          .fold<int>(0, (sum, s) => sum + (s.actualMinutes ?? 0));
+      final todayMinutes = focus.sessions.where((s) {
+        final d = s.startedAt;
+        return d.year == today.year &&
+            d.month == today.month &&
+            d.day == today.day;
+      }).fold<int>(0, (sum, s) => sum + (s.actualMinutes ?? 0));
 
       final focusLabel = todayMinutes >= 60
           ? '${todayMinutes ~/ 60}j ${todayMinutes % 60}m'
@@ -848,11 +841,6 @@ class _DeadlineSection extends StatelessWidget {
             DeadlineCard(
               title: 'Tugas Web Development',
               subtitle: 'Batas waktu: Hari ini, 23.59 WIB',
-              progress: 0.58,
-              badges: const [
-                (label: 'Segera', isUrgent: true),
-                (label: 'LMS', isUrgent: false),
-              ],
               onTap: () => MainController.to.goTab(1),
             ),
         ],
@@ -944,20 +932,16 @@ class _AgendaSection extends StatelessWidget {
 
   Widget _buildTaskTimelineItem(Task task, bool isLast) {
     final deadline = task.deadline?.toLocal();
-    final timeStr = deadline != null
-        ? DateFormat('HH:mm').format(deadline)
-        : 'Hari ini';
+    final timeStr =
+        deadline != null ? DateFormat('HH:mm').format(deadline) : 'Hari ini';
 
     final isUrgent = task.priority == TaskPriority.urgent;
-    final dotColor = isUrgent
-        ? const Color(0xFFE5646B)
-        : const Color(0xFF6BAAFF);
-    final accentBorderColor = isUrgent
-        ? const Color(0xFFE5646B)
-        : const Color(0xFF8B7CF8);
-    final categoryColor = isUrgent
-        ? const Color(0xFFE5646B)
-        : const Color(0xFF4A8FE0);
+    final dotColor =
+        isUrgent ? const Color(0xFFE5646B) : const Color(0xFF6BAAFF);
+    final accentBorderColor =
+        isUrgent ? const Color(0xFFE5646B) : const Color(0xFF8B7CF8);
+    final categoryColor =
+        isUrgent ? const Color(0xFFE5646B) : const Color(0xFF4A8FE0);
 
     return _AgendaTimelineItem(
       time: timeStr,
@@ -1064,111 +1048,112 @@ class _AgendaTimelineItem extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 12),
-              child: GestureDetector(
-                onTap: onTap,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: const Color(0xFFF1F3FA)),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x0F3C4682),
-                        blurRadius: 12,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          left: 0,
-                          top: 0,
-                          bottom: 0,
-                          width: 4.5,
-                          child: Container(color: accentBorderColor),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 14,
-                            right: 14,
-                            top: 12,
-                            bottom: 12,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                category,
-                                style: TextStyle(
-                                  fontSize: 9.5,
-                                  fontWeight: FontWeight.w800,
-                                  letterSpacing: 0.5,
-                                  color: categoryColor,
-                                ),
-                              ),
-                              const SizedBox(height: 3),
-                              Text(
-                                title,
-                                style: const TextStyle(
-                                  fontSize: 14.5,
-                                  fontWeight: FontWeight.w800,
-                                  color: AppColors.textPrimary,
-                                  height: 1.25,
-                                ),
-                              ),
-                              if (meta != null) ...[
-                                const SizedBox(height: 3),
-                                Text(
-                                  meta!,
-                                  style: const TextStyle(
-                                    fontSize: 10.5,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.textMuted,
-                                  ),
-                                ),
-                              ],
-                              const SizedBox(height: 8),
-                              Wrap(
-                                spacing: 6,
-                                runSpacing: 4,
-                                children: [
-                                  for (final tag in tags)
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
-                                        vertical: 2.5,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: tag.bg,
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Text(
-                                        tag.label,
-                                        style: TextStyle(
-                                          fontSize: 9.5,
-                                          fontWeight: FontWeight.w700,
-                                          color: tag.textColor,
-                                        ),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ],
-                          ),
+                child: GestureDetector(
+                  onTap: onTap,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: const Color(0xFFF1F3FA)),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x0F3C4682),
+                          blurRadius: 12,
+                          offset: Offset(0, 4),
                         ),
                       ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 0,
+                            top: 0,
+                            bottom: 0,
+                            width: 4.5,
+                            child: Container(color: accentBorderColor),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 14,
+                              right: 14,
+                              top: 12,
+                              bottom: 12,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  category,
+                                  style: TextStyle(
+                                    fontSize: 9.5,
+                                    fontWeight: FontWeight.w800,
+                                    letterSpacing: 0.5,
+                                    color: categoryColor,
+                                  ),
+                                ),
+                                const SizedBox(height: 3),
+                                Text(
+                                  title,
+                                  style: const TextStyle(
+                                    fontSize: 14.5,
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.textPrimary,
+                                    height: 1.25,
+                                  ),
+                                ),
+                                if (meta != null) ...[
+                                  const SizedBox(height: 3),
+                                  Text(
+                                    meta!,
+                                    style: const TextStyle(
+                                      fontSize: 10.5,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.textMuted,
+                                    ),
+                                  ),
+                                ],
+                                const SizedBox(height: 8),
+                                Wrap(
+                                  spacing: 6,
+                                  runSpacing: 4,
+                                  children: [
+                                    for (final tag in tags)
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 2.5,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: tag.bg,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Text(
+                                          tag.label,
+                                          style: TextStyle(
+                                            fontSize: 9.5,
+                                            fontWeight: FontWeight.w700,
+                                            color: tag.textColor,
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    ],
-  );
-}
+          ],
+        ),
+      ],
+    );
+  }
 }

@@ -3,15 +3,10 @@ erDiagram
     auth_users ||--o{ user_goals : "punya"
     auth_users ||--o{ task_categories : "punya"
     auth_users ||--o{ tasks : "punya"
-    auth_users ||--o{ habits : "punya"
-    auth_users ||--o{ habit_logs : "punya"
-    auth_users ||--o{ mood_logs : "punya"
-    auth_users ||--o{ sleep_logs : "punya"
     auth_users ||--o{ focus_sessions : "punya"
     auth_users ||--o{ notifications : "punya"
     auth_users ||--o{ user_achievements : "punya"
     task_categories ||--o{ tasks : "mengelompokkan"
-    habits ||--o{ habit_logs : "dicatat"
     achievements ||--o{ user_achievements : "diberikan"
 
     auth_users {
@@ -58,47 +53,6 @@ erDiagram
         timestamptz completed_at
         timestamptz created_at
         timestamptz updated_at
-    }
-    habits {
-        uuid id PK
-        uuid user_id FK
-        text title
-        text description
-        habit_frequency frequency
-        int target_per_week
-        text color
-        text icon
-        time reminder_time
-        boolean is_active
-        timestamptz created_at
-        timestamptz updated_at
-    }
-    habit_logs {
-        uuid id PK
-        uuid habit_id FK
-        uuid user_id FK
-        date logged_date
-        boolean is_completed
-        text note
-        timestamptz created_at
-    }
-    mood_logs {
-        uuid id PK
-        uuid user_id FK
-        int mood_score
-        text mood_label
-        text note
-        timestamptz logged_at
-    }
-    sleep_logs {
-        uuid id PK
-        uuid user_id FK
-        date sleep_date
-        timestamptz bedtime
-        timestamptz wake_time
-        int quality
-        text note
-        timestamptz created_at
     }
     focus_sessions {
         uuid id PK
