@@ -6,6 +6,7 @@ import 'package:serena/controllers/auth_controller.dart';
 import 'package:serena/features/auth/bindings/login_binding.dart';
 import 'package:serena/features/auth/forgot_password_page.dart';
 import 'package:serena/features/auth/login_page.dart';
+import 'package:serena/features/auth/onboarding_page.dart';
 import 'package:serena/features/auth/register_page.dart';
 import 'package:serena/models/profile.dart';
 import 'package:serena/repositories/auth_repository.dart';
@@ -117,5 +118,49 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('test@student.edu'), findsOneWidget);
+  });
+
+  testWidgets('Kenalan Dulu onboarding page renders and submits goal',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 2.0;
+    addTearDown(tester.view.reset);
+
+    final auth = AuthController(
+      authRepo: _FakeAuthRepo(),
+      profileRepo: _FakeProfileRepo(),
+    );
+    Get.put(auth);
+
+    await tester.pumpWidget(
+      GetMaterialApp(
+        initialRoute: Routes.onboarding,
+        getPages: [
+          GetPage(
+            name: Routes.onboarding,
+            page: () => const OnboardingPage(),
+          ),
+          GetPage(
+            name: Routes.main,
+            page: () => const Scaffold(body: Text('Main Dashboard')),
+          ),
+        ],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Kenalan Dulu'), findsOneWidget);
+    expect(find.text('Selamat datang di Serena! 🌿'), findsOneWidget);
+    expect(find.text('Apa tujuan utamamu?'), findsOneWidget);
+    expect(find.text('Selesai'), findsOneWidget);
+
+    final goalField = find.byType(TextFormField).first;
+    await tester.enterText(goalField, 'Jaga produktivitas tetap terstruktur');
+    await tester.pump();
+
+    final finishBtn = find.text('Selesai');
+    await tester.ensureVisible(finishBtn);
+    await tester.tap(finishBtn);
+    await tester.pump();
   });
 }

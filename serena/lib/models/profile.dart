@@ -25,6 +25,21 @@ class Profile {
       ? (email ?? 'Pengguna')
       : fullName!.trim();
 
+  Profile copyWith({
+    String? id,
+    String? email,
+    String? fullName,
+    String? avatarUrl,
+    bool? onboardingCompleted,
+  }) =>
+      Profile(
+        id: id ?? this.id,
+        email: email ?? this.email,
+        fullName: fullName ?? this.fullName,
+        avatarUrl: avatarUrl ?? this.avatarUrl,
+        onboardingCompleted: onboardingCompleted ?? this.onboardingCompleted,
+      );
+
   Map<String, dynamic> toJson() => {
         'id': id,
         'email': email,
